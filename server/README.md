@@ -19,9 +19,7 @@ set-db.sh
 ```
 And generate python-runnable RPC code:
 ```shell script
-cd rpc
-
-`python -m grpc_tools.protoc -I protos --python_out=rpccode --grpc_python_out=rpccode protos/api2msl.proto`
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
 ```
 
 ## Demo

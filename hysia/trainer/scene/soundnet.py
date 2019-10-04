@@ -2,24 +2,24 @@
 # Required package: librosa: A python package for music and audio analysis.
 # $ pip install librosa
 
-from trainer.scene.soundnet_layers import batch_norm, conv2d, relu, maxpool, dense, denseBN
-from models.scene.audio.audio_util import preprocess, load_from_list, load_audio
+import argparse
+import csv
+import math
+import os
+import pickle
+import time
+from glob import glob
+from random import shuffle
+
+import librosa
+import numpy as np
+import tensorflow as tf
+from tensorflow.python.tools import freeze_graph
+
+from models.scene.audio.audio_util import preprocess, load_from_list, load_audio, local_config
 from models.scene.audio.data_util import unison_shuffled_copies
 from models.scene.audio.dataset_util import get_dataconfig
-from tensorflow.python.tools import freeze_graph
-from random import shuffle
-from glob import glob
-
-import tensorflow as tf
-import numpy as np
-import argparse
-import librosa
-import pickle
-import json
-import math
-import time
-import os
-import csv
+from trainer.scene.soundnet_layers import batch_norm, conv2d, relu, maxpool, dense, denseBN
 
 
 class SoundNet:
@@ -288,7 +288,7 @@ class SoundNet:
 
         output = []
         for i in range(len(values)):
-            item = {}
+            item = dict()
             item['labels'] = labels[i]
             item['scores'] = values[i]
             output.append(item)

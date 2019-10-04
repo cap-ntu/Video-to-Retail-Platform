@@ -216,10 +216,10 @@ def visual_process(video, video_path, models_to_apply):
     # Process visual content
     # Read frame count through imageio
     # TODO: add get_frame_cnt function to Hysia decoder
-    vid = imageio.get_reader(video_path, "ffmpeg")
-    frame_cnt = vid.get_meta_data()["nframes"]
-    video.frame_cnt = frame_cnt
-    del vid
+    with imageio.get_reader(video_path, "ffmpeg") as vid:
+        frame_cnt = vid.count_frames()
+        video.frame_cnt = frame_cnt
+
     # Initiate Hysia GPU decoder
     decoder = PyDecoder.Decoder(settings.DECODING_HARDWARE)
     decoder.ingestVideo(video_path)

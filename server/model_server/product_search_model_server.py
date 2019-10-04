@@ -9,7 +9,7 @@ import grpc
 from hysia.search.product_search import ProductSearch
 from hysia.utils.logger import Logger
 from model_server.utils import StreamSuppressor
-from rpc.rpccode import api2msl_pb2, api2msl_pb2_grpc
+from protos import api2msl_pb2, api2msl_pb2_grpc
 
 SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 

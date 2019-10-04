@@ -90,7 +90,8 @@ db.sqlite3
 output/
 
 # rpc
-rpc/rpccode/
+protos/*.py
+!protos/__init__.py
 
 ### Override ###
 !/restapi/fixtures/dlmodels.json

@@ -3,12 +3,14 @@
 # @Site    : zhanghuaizheng.info
 # @File    : TVQA_indexer.py
 
-from subtitles import SubtitleHandler
-from frames import FrameHandler
-from features import FeatureHandler
-import pickle
 import os.path as osp
+import pickle
+
 import numpy as np
+
+from .features import FeatureHandler
+from .frames import FrameHandler
+from .subtitles import SubtitleHandler
 
 
 class TVQA_indexer(object):
