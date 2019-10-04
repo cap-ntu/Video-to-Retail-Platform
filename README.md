@@ -1,7 +1,8 @@
-# Video to Online Platform [V1.0]
-An intelligence multimodal learning based system for video, product and ads analysis. Based on the system, you can do a lot of downstream applications such as product recommendation, video retrieval, etc. We provide several examples.
+# Hysia Video to Online Platform \[V1.0\]
+An intelligence learning based multimodal system for video, product and ads analysis. You can build various downstream 
+applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
-V2 is under active development. You are kindly invited to pull request here. We will credit it.
+**V2** is under active development currently. You are welcome to create a issue, pull request here. We will credit them into V2.
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
@@ -48,7 +49,7 @@ V2 is under active development. You are kindly invited to pull request here. We 
 
 ## Installation
 
-We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 with CUDA9.0 and CUDNN7.  
+We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 x86-64 with CUDA9.0 and CUDNN7.  
 
 Please try `chmod +x <script>` if something does not work.  
 
@@ -96,6 +97,8 @@ python manage.py makemigrations restapi
 python manage.py migrate
 python manage.py loaddata dlmodels.json
 python manage.py createsuperuser
+
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
 
 unset BASE_DIR
 ```
@@ -148,11 +151,18 @@ chmod +x ./build.sh
 ```
 
 ## Download Data
-Pretrained model weights need to be downloaded. Download the weights from [Google Drive](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX) and unzip it:
+1\. Download Pretrained model weights. Download the weights from [Google Drive](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
 ```shell script
 tar xvzf weights.tar.gz
 # and remove the weights zip
 rm -f weights.tar.gz
+```
+2\. Download object detection data in third library from [Google Drive](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) and unzip it:
+```shell script
+mv object-detection-data.tar.gz third/object_detection
+cd third/object_detection
+tar xvzf object-detction-data.tar.gz
+rm object-detection-data.tar.gz
 ```
 
 ## Configuration
@@ -194,9 +204,13 @@ Then you can go to http://127.0.0.1:8000.
 - Model profiling
 - Multimodality data testbed
 
-## Contribute to Hysia-T2O
+## Credits
 
-You are kindly welcome to pull request. We will credit it in our version 2.0.
+Here is a list of models that we used in Hysia-V2O. 
+
+## Contribute to Hysia-V2O
+
+You are welcome to pull request. We will credit it in our version 2.0.
 
 ### Maintainers
 - Huaizheng Zhang
