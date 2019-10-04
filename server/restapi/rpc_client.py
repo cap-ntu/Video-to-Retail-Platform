@@ -1,6 +1,7 @@
 import grpc
+
 # gRPC imports
-from rpc.rpccode import api2msl_pb2, api2msl_pb2_grpc
+from protos import api2msl_pb2, api2msl_pb2_grpc
 
 
 class RpcClient:

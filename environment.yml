@@ -3,163 +3,158 @@ channels:
   - pytorch
   - defaults
 dependencies:
-  - absl-py=0.6.1
-  - alabaster=0.7.12
-  - astor=0.7.1
-  - async-timeout=3.0.1
-  - attrs=18.2.0
-  - automat=0.7.0
-  - babel=2.6.0
+  - _libgcc_mutex=0.1
+  - _tflow_select=2.1.0
+  - absl-py=0.8.0
+  - astor=0.8.0
   - blas=1.0
+  - bzip2=1.0.8
+  - c-ares=1.15.0
   - ca-certificates=2019.8.28
+  - cairo=1.14.12
   - certifi=2019.9.11
-  - cffi=1.11.5
-  - chardet=3.0.4
-  - click=7.0
-  - cloudpickle=0.6.1
-  - constantly=15.1.0
-  - cuda90=1.0
+  - cffi=1.12.3
+  - cloudpickle=1.2.2
+  - cudatoolkit=9.0
+  - cudnn=7.6.0
+  - cupti=9.0.176
   - cycler=0.10.0
-  - cython=0.29
-  - dask=0.20.1
-  - decorator=4.3.0
+  - cython=0.29.13
+  - cytoolz=0.10.0
+  - dask-core=2.5.0
+  - dbus=1.13.6
+  - decorator=4.4.0
   - django=2.1.5
-  - docutils=0.14
-  - faiss-gpu=1.4.0
+  - expat=2.2.6
+  - ffmpeg=4.0
+  - fontconfig=2.13.0
+  - freeglut=3.0.0
   - freetype=2.9.1
-  - gast=0.2.0
-  - h5py=2.8.0
-  - hyperlink=18.0.0
-  - jinja2=2.10
-  - joblib=0.13.0
+  - gast=0.3.2
+  - glib=2.56.2
+  - graphite2=1.3.13
+  - grpcio=1.16.1
+  - grpcio-tools=1.16.1
+  - gst-plugins-base=1.14.0
+  - gstreamer=1.14.0
+  - harfbuzz=1.8.8
+  - hdf5=1.10.2
+  - icu=58.2
+  - imageio=2.5.0
+  - intel-openmp=2019.4
+  - jasper=2.0.14
   - jpeg=9b
-  - kiwisolver=1.0.1
-  - idna=2.7
-  - imageio=2.4.1
-  - imagesize=1.1.0
-  - incremental=17.5.0
-  - intel-openmp=2019.0
-  - libedit=3.1.20170329
+  - kiwisolver=1.1.0
+  - libedit=3.1.20181209
   - libffi=3.2.1
-  - libgcc=7.2.0
-  - libgcc-ng=8.2.0
+  - libgcc-ng=9.1.0
   - libgfortran-ng=7.3.0
-  - libpng=1.6.35
-  - libstdcxx-ng=8.2.0
-  - libtiff=4.0.9
-  - llvmlite=0.25.0
-  - markdown=3.0.1
-  - markupsafe=1.1.0
-  - matplotlib=2.2.2
-  - mkl=2018.0.3
-  - mkl_fft=1.0.6
-  - mkl_random=1.0.1
-  - mysqlclient=1.3.13
+  - libglu=9.0.0
+  - libopencv=3.4.2
+  - libopus=1.3
+  - libpng=1.6.37
+  - libprotobuf=3.9.2
+  - libstdcxx-ng=9.1.0
+  - libtiff=4.0.10
+  - libuuid=1.0.3
+  - libvpx=1.7.0
+  - libxcb=1.13
+  - libxml2=2.9.9
+  - markdown=3.1.1
+  - matplotlib=2.2.3
+  - mkl=2019.4
+  - mkl-service=2.3.0
+  - mkl_fft=1.0.14
+  - mkl_random=1.1.0
   - ncurses=6.1
-  - networkx=2.2
-  - ninja=1.8.2
-  - numexpr=2.6.8
-  - numpy=1.15.4
-  - numpy-base=1.15.4
+  - networkx=2.3
+  - ninja=1.9.0
+  - numpy=1.17.2
+  - numpy-base=1.17.2
   - olefile=0.46
+  - opencv=3.4.2
   - openssl=1.1.1d
-  - packaging=18.0
-  - pandas=0.23.4
-  - pillow=5.3.0
-  - pip=19.1.1
-  - protobuf=3.6.1
+  - pandas=0.25.1
+  - patsy=0.5.1
+  - pcre=8.43
+  - pillow=6.1.0
+  - pip=19.2.3
+  - pixman=0.38.0
+  - protobuf=3.9.2
   - psutil=5.6.3
   - py-cpuinfo=5.0.0
+  - py-opencv=3.4.2
+  - pybind11=2.4.2
   - pycparser=2.19
-  - pybind11=2.2.4
-  - pygments=2.2.0
-  - pyhamcrest=1.9.0
-  - pyparsing=2.3.0
-  - pytables=3.4.4
-  - python=3.6.7
-  - python-dateutil=2.7.5
+  - pyparsing=2.4.2
+  - pyqt=5.9.2
+  - python=3.6.9
+  - python-dateutil=2.8.0
   - pytorch=0.4.1
-  - pytz=2018.7
-  - pywavelets=1.0.1
+  - pytz=2019.2
+  - pywavelets=1.0.3
   - pyyaml=3.13
+  - qt=5.9.7
   - readline=7.0
-  - requests=2.20.1
-  - scikit-image=0.14.1
-  - scikit-learn=0.20.0
-  - scipy=1.1.0
+  - scikit-image=0.15.0
   - seaborn=0.9.0
-  - setuptools=39.1.0
-  - simplejson=3.16.0
-  - six=1.11.0
-  - snowballstemmer=1.2.1
-  - sphinx=1.8.1
-  - sphinxcontrib-websupport=1.1.0
-  - sqlite=3.25.2
-  - tabulate=0.8.2
+  - setuptools=41.2.0
+  - sip=4.19.8
+  - six=1.12.0
+  - sqlite=3.29.0
+  - statsmodels=0.10.1
   - tensorboard=1.9.0
+  - tensorflow=1.9.0
+  - tensorflow-base=1.9.0
   - tensorflow-gpu=1.9.0
   - termcolor=1.1.0
   - tk=8.6.8
-  - toolz=0.9.0
+  - toolz=0.10.0
   - torchvision=0.2.1
-  - tqdm=4.28.1
-  - twisted=18.9.0
-  - urllib3=1.24.1
-  - werkzeug=0.14.1
-  - wheel=0.32.2
+  - tornado=6.0.3
+  - tqdm=4.36.1
+  - werkzeug=0.16.0
+  - wheel=0.33.6
   - xz=5.2.4
+  - yaml=0.1.7
   - zlib=1.2.11
+  - zstd=1.3.7
   - pip:
-      - addict==2.2.0
-      - aioredis==1.2.0
-      - asgiref==2.3.2
-      - audioread==2.1.6
-      - autobahn==19.1.1
-      - channels==2.1.7
-      - channels-redis==2.3.3
-      - commonmark==0.5.4
-      - coreapi==2.3.3
-      - coreschema==0.0.4
-      - daphne==2.2.5
-      - deepdish==0.3.6
-      - django-cors-headers==2.4.0
-      - django-crispy-forms==1.7.2
-      - django-rest-swagger==2.2.0
-      - djangorestframework==3.8.2
-      - easydict==1.8
-      - googleapis-common-protos==1.5.3
-      - gputil==1.4.0
-      - grpcio==1.15.0
-      - grpcio-tools==1.15.0
-      - hiredis==1.0.0
-      - horovod==0.15.2
-      - itypes==1.1.0
-      - librosa==0.6.2
-      - mmcv==0.2.0
-      - msgpack==0.6.1
-      - numba==0.40.1
-      - openapi-codec==1.3.2
-      - opencv-python==3.4.3.18
-      - plumbum==1.6.7
-      - purepng==0.2.0
-      - pycocotools==2.0.0
-      - pydub==0.23.0
-      - recommonmark==0.4.0
-      - resampy==0.2.1
-      - rinoh-typeface-dejavuserif==0.1.1
-      - rinoh-typeface-texgyrecursor==0.1.1
-      - rinoh-typeface-texgyreheros==0.1.1
-      - rinoh-typeface-texgyrepagella==0.1.1
-      - rinohtype==0.3.1
-      - rpyc==4.0.2
-      - scenedetect==0.5
-      - soundfile==0.10.2
-      - tensorboardx==1.4
-      - tensorflow-hub==0.1.1
-      - terminaltables==3.1.0
-      - torchstat==0.0.7
-      - txaio==18.8.1
-      - uritemplate==3.0.0
-      - zope-interface==4.6.0
+    - asgiref==3.2.2
+    - asn1crypto==1.0.0
+    - attrs==19.2.0
+    - audioread==2.1.8
+    - autobahn==19.10.1
+    - automat==0.7.0
+    - channels==2.3.0
+    - click==7.0
+    - constantly==15.1.0
+    - cryptography==2.7
+    - daphne==2.3.0
+    - django-cors-headers==3.1.1
+    - django-crispy-forms==1.7.2
+    - django-rest-framework==0.1.0
+    - djangorestframework==3.10.3
+    - easydict==1.8
+    - faiss-gpu==1.6.0
+    - gputil==1.4.0
+    - hyperlink==19.0.0
+    - idna==2.8
+    - imageio-ffmpeg==0.3.0
+    - incremental==17.5.0
+    - joblib==0.14.0
+    - librosa==0.6.2
+    - llvmlite==0.29.0
+    - numba==0.45.1
+    - pyhamcrest==1.9.0
+    - resampy==0.2.2
+    - scenedetect==0.5.1.1
+    - scikit-learn==0.21.3
+    - scipy==1.3.1
+    - soundfile==0.10.2
+    - tensorflow-hub==0.1.1
+    - twisted==19.7.0
+    - txaio==18.8.1
+    - zope-interface==4.6.0
 prefix: /home/lym/anaconda3/envs/Hysia
 

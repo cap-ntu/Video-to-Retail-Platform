@@ -16,7 +16,7 @@ from hysia.models.object.audioset_feature_extractor import AudiosetFeatureExtrac
 from hysia.models.scene.detector import scene_visual
 from hysia.utils.logger import Logger
 from model_server.utils import StreamSuppressor
-from rpc.rpccode import api2msl_pb2, api2msl_pb2_grpc
+from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Time constant
 _ONE_DAY_IN_SECONDS = 24 * 60 * 60

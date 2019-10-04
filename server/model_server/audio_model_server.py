@@ -8,7 +8,7 @@ import grpc
 import tensorflow as tf
 
 from hysia.utils.logger import Logger
-from rpc.rpccode import api2msl_pb2, api2msl_pb2_grpc
+from protos import api2msl_pb2, api2msl_pb2_grpc
 from .utils import StreamSuppressor
 
 with StreamSuppressor():

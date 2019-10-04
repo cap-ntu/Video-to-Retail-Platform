@@ -1,9 +1,9 @@
-from qa import QAHandler
-from subtitles import SubtitleHandler
-from frames import FrameHandler
-from features import FeatureHandler
-import time
 import cv2
+
+from .features import FeatureHandler
+from .frames import FrameHandler
+from .qa import QAHandler
+from .subtitles import SubtitleHandler
 
 
 class DatasetHandler(object):
