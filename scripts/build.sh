@@ -2,11 +2,8 @@
 
 BASE_DIR=${PWD}
 
-# update submodules
-git submodules update --init --recursive
-
 # install Conda virtual environment
-conda env create -y -f environment.yml
+conda env create -f environment.yml
 
 # compile decode module
 cd "${BASE_DIR}"/hysia/core/HysiaDecode || return 1
@@ -24,3 +21,6 @@ chmod +x ./compile.sh
 cd "${BASE_DIR}"/server || return 1
 chmod +x ./reset-db.sh
 ./reset-db.sh
+
+# generate rpc
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto

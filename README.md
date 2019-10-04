@@ -48,21 +48,17 @@ V2 is under active development. You are kindly invited to pull request here. We 
 
 ## Installation
 
-We recommend that you are installing in a UNIX like system. These script are tested on Ubuntu 16.04 with CUDA9.0 and CUDNN7.  
+We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 with CUDA9.0 and CUDNN7.  
 
 Please try `chmod +x <script>` if something does not work.  
 
 #### Option 1. Step-by-step installation 
 ```shell script
-# Firtly, make sure that your Conda is setup corretly and have CUDA,
-# CUDNN on your system.
-
-# Clone the repository and update submodules
-git clone --recurse-submodules https://github.com/HuaizhengZhang/Video-to-Online-Platform.git
-git submodules update --init --recursive
+# Firstly, make sure that your Conda is setup corretly and have CUDA,
+# CUDNN installed on your system.
 
 # Install Conda virtual environment
-conda env create -y -f environment.yml
+conda env create -f environment.yml
 
 conda activate Hysia
 
