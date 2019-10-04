@@ -1,0 +1,45 @@
+cc = g++
+flag = -std=c++11 -fpermissive -g
+flag += -Wdeprecated-declarations
+LDFLAGS = -Wl,-rpath=/home/wyj/code/HysiaDecode/lib/ffmpeg -L/home/wyj/code/HysiaDecode/lib/ffmpeg -lavformat -lavcodec -lavutil -lswscale  -Wl,-rpath=/home/wyj/code/HysiaDecode/lib/opencv -L/home/wyj/code/HysiaDecode/lib/opencv  -lopencv_core -lopencv_imgproc -lopencv_highgui -lz -lpthread
+# nvcuvid library path
+LDFLAGS += -L../lib/nvcuvid -lnvcuvid
+# CUDA library path
+LDFLAGS += -L$(CUDA_PATH)/lib64/stubs -lcuda
+LDFLAGS += -L$(CUDA_PATH)/lib64 -lcudart
+
+# CUDA path
+CUDA_PATH ?= /usr/local/cuda-9.0
+
+# NVCC path
+NVCC ?= $(CUDA_PATH)/bin/nvcc
+
+# Project includes
+INCLUDES = -I../include -I../include/opencv -I../include/ffmpeg -I../include/NvDecoder -I../include/cuda -I../include/Utils
+# CUDA includes
+INCLUDES += -I$(CUDA_PATH)/include
+
+Decoder: CPUDecoder.o GPUDecoder.o NvDecoder.o DeviceChecker.o ColorSpace.o test_decoder.o
+	g++ $(flag) -o Decoder CPUDecoder.o GPUDecoder.o NvDecoder.o ColorSpace.o DeviceChecker.o test_decoder.o $(LDFLAGS)
+
+test_decoder.o: test_decoder.cpp
+	g++ $(flag) -o test_decoder.o -c test_decoder.cpp $(INCLUDES)
+
+CPUDecoder.o: ../src/CpuDec.cpp
+	g++ $(flag) -c ../src/CpuDec.cpp -o CPUDecoder.o $(INCLUDES)
+
+GPUDecoder.o: ../src/GpuDec.cpp
+	g++ $(flag) -c ../src/GpuDec.cpp -o GPUDecoder.o $(INCLUDES)
+
+NvDecoder.o: ../src/NvDecoder/NvDecoder.cpp
+	g++ $(flag) -c ../src/NvDecoder/NvDecoder.cpp -o NvDecoder.o $(INCLUDES)
+
+DeviceChecker.o: ../src/CheckDevice.cpp
+	g++ $(flag) -c ../src/CheckDevice.cpp -o DeviceChecker.o $(INCLUDES)
+
+ColorSpace.o: ../src/Utils/ColorSpace.cu
+	$(NVCC) -std=c++11 -c ../src/Utils/ColorSpace.cu -o ColorSpace.o $(INCLUDES)
+
+clean:
+	rm -rf Decoder CPUDecoder.o GPUDecoder.o NvDecoder.o ColorSpace.o DeviceChecker.o test_decoder.o
+

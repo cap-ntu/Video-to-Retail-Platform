@@ -1,0 +1,16 @@
+### JetBrains ###
+/.idea/
+
+### Dependencies ###
+/node_modules/
+
+### Build files ###
+build/
+dist/
+
+### Packages ###
+package-lock.json
+yarn.lock
+
+### Log ###
+*.log

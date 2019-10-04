@@ -1,0 +1,16 @@
+cc=g++
+flag=-std=c++11 -fpermissive
+flag+= -Wdeprecated-declarations -Wdeprecated-declarations
+LDFLAGS=-Wl,-rpath=/home/wyj/code/HysiaDecode/lib/ffmpeg -L/home/wyj/code/HysiaDecode/lib/ffmpeg -lavformat -lavcodec -lavutil -lswscale -lswresample -lpthread -lz
+//LDFLAGS = -L/usr/local/lib -lavformat -lavcodec -lavutil -lswscale -lswresample -lpthread -lz
+AudioDec:AudioDec.o test_audiodecode.o
+	g++ $(flag) -Wdeprecated-declarations -g -o AudioDec AudioDec.o test_audiodecode.o $(LDFLAGS)
+
+test_audiodecode.o:test_audiodecode.cpp
+	g++ $(flag) -Wdeprecated-declarations -g -c test_audiodecode.cpp -o test_audiodecode.o -I ../include/ 
+
+AudioDec.o:../src/AudioDec.cpp
+	g++ $(flag) -Wdeprecated-declarations -g -c ../src/AudioDec.cpp -o AudioDec.o -I ../include -I ../include/ffmpeg #../../audio_decode/include
+
+clean:
+	-rm AudioDec.o AudioDec test_audiodecode.o

@@ -1,0 +1,31 @@
+// Protocol buffer that defines the gRPC communication between RESTfull API layer and Model schedule layer
+// Written by: Jiang Wenbo
+// Date: 06/09/2018
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.api2msl";
+option java_outer_classname = "A2MProto";
+option objc_class_prefix = "A2M";
+
+package api2visual;
+
+service Api2Msl {
+  // Interface for sending encoded video frame and get predicted Json path
+  rpc GetJson(BundleRequest) returns (JsonReply) {}
+}
+
+message BundleRequest {
+  // Bytes (etc. encoded frame)
+  bytes buf = 1;
+  // Meta data
+  string meta = 2;
+}
+
+message JsonReply {
+  // Json as string
+  string json = 1;
+  // Meta data
+  string meta = 2;
+}

@@ -1,0 +1,112 @@
+[
+  {
+    "model": "restapi.dlmodel",
+    "pk": 1,
+    "fields": {
+      "type": "OBJECT",
+      "name": "SSD-mobilenet",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 2,
+    "fields": {
+      "type": "OBJECT",
+      "name": "SSD-inception",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 3,
+    "fields": {
+      "type": "TEXT",
+      "name": "ctpn",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 4,
+    "fields": {
+      "type": "SCENE",
+      "name": "soundnet",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 5,
+    "fields": {
+      "type": "SCENE",
+      "name": "res18-places365",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 6,
+    "fields": {
+      "type": "FACE",
+      "name": "mtcnn",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 7,
+    "fields": {
+      "type": "FACE",
+      "name": "sphere",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 8,
+    "fields": {
+      "type": "TEXT",
+      "name": "CRNN",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 9,
+    "fields": {
+      "type": "OBJECT",
+      "name": "Mask-RCNN",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 10,
+    "fields": {
+      "type": "OBJECT",
+      "name": "Audioset-VGG",
+      "model": "",
+      "label": ""
+    }
+  },
+  {
+    "model": "restapi.dlmodel",
+    "pk": 11,
+    "fields": {
+      "type": "TEXT",
+      "name": "USE_large",
+      "model": "",
+      "label": ""
+    }
+  }
+]

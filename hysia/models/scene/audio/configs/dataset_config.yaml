@@ -1,0 +1,36 @@
+dataset:
+  dcase2016:
+    features:
+      soundnet: soundnet
+      logmel: logmel
+    labels:
+      - beach
+      - bus
+      - cafe/restaurant
+      - car
+      - city_center
+      - forest_path
+      - grocery_store
+      - home
+      - library
+      - metro_station
+      - office
+      - park
+      - residential_area
+      - train
+      - tram
+  dcase2018:
+    features:
+      soundnet: soundnet
+      logmel: logmel
+    labels:
+      - airport
+      - shopping_mall
+      - metro_station
+      - street_pedestrian
+      - public_square
+      - street_traffic
+      - tram
+      - bus
+      - metro
+      - park

@@ -1,0 +1,16 @@
+{% extends 'dashboard/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div style="width: 300px; height: 700px; margin: auto; margin-top: 100px">
+<form method="post" novalidate>
+{% csrf_token %}
+<input type="hidden" name="next" value="{{ next }}">
+{{ form|crispy }}
+<button type="submit" class="btn btn-success">Sign up</button>
+</form>
+</div>
+
+{% endblock %}

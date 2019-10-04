@@ -1,0 +1,6 @@
+[submodule "hysia/core/HysiaDecode"]
+	path = hysia/core/HysiaDecode
+	url = https://github.com/HuaizhengZhang/HysiaDecode.git
+[submodule "hysia/server/react-front"]
+	path = hysia/server/react-front
+	url = git@github.com:YuanmingLeee/Hysia-ServerFront.git

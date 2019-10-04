@@ -1,0 +1,51 @@
+# Desc: Hysia dockerfile with anaconda.
+# Author: Zhou Shengsheng
+# Date: 28-03-19
+
+FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+
+RUN mkdir /hysia
+WORKDIR /hysia
+
+# Install binary dependencies
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE 1
+RUN apt-get update && apt-get install -y apt-transport-https wget && apt-get purge -y nodejs npm && \
+    wget https://deb.nodesource.com/setup_8.x -O setup_nodejs.sh && bash setup_nodejs.sh && rm setup_nodejs.sh && \
+    apt-get install -y --allow-unauthenticated python3 python3-pip python3-tk vim \
+      libzmq5 libzmq5-dev redis-server libsodium18 build-essential libglib2.0-0 libsm6 libxext6 tk libssl-dev \
+      libswscale-dev libswresample-dev libva-drm1 libva-x11-1 libopenblas-dev libvpx-dev libsndfile1 nodejs \
+      libtheora0 libvorbis-dev libvdpau-dev libnuma-dev && \
+    rm -rf /var/cache/apt/archives && \
+    rm -rf /usr/bin/python && rm -rf /usr/bin/pip && \
+    ln -s /usr/bin/python3 /usr/bin/python && ln -s /usr/bin/pip3 /usr/bin/pip
+
+# Install anaconda
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2018.12-Linux-x86_64.sh -O anaconda.sh && \
+    bash anaconda.sh -b -p ${HOME}/anaconda3
+
+# Modify the environment variables
+ENV PATH /usr/local/cuda/bin:${HOME}/anaconda3/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:${LD_LIBRARY_PATH}
+
+# Copy hysia project
+COPY hysia /hysia/hysia
+COPY third /hysia/third
+COPY weights /hysia/weights
+COPY conda_environment.yml /hysia/
+COPY scripts /hysia/
+
+# TODO: Copy hysia data (video data, image data, etc...)
+
+# Setup python envrionment via conda
+# WARN: prometheus relies on protobuf-py3 but tensorflow 1.9.0 can only run with protobuf,
+#       so uninstall protobuf-py3 protobuf first and reinstall tensorflow
+RUN /bin/bash -c "source ${HOME}/anaconda3/bin/activate && conda env create -f conda_environment.yml && conda activate Hysia && \
+    pip uninstall -y protobuf-py3 protobuf 2> /dev/null || true && \
+    pip install --no-cache-dir tensorboard==1.9.0 tensorboardx==1.4 tensorflow-gpu==1.9.0 tensorflow-hub==0.1.1"
+RUN echo "source ${HOME}/anaconda3/bin/activate && conda activate Hysia" >> ${HOME}/.bashrc
+
+# Build hysia
+RUN /bin/bash -c "source ${HOME}/anaconda3/bin/activate && conda activate Hysia && bash build.sh"
+
+# ENTRYPOINT ["/hysia/docker_entry.sh"]
+ENTRYPOINT ["/bin/bash", "/hysia/docker_entry.sh"]

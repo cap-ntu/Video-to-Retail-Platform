@@ -1,0 +1,13 @@
+cc=nvcc
+
+check_device:check_device.o test_checkdevice.o
+	nvcc -g check_device.o test_checkdevice.o -o check_device 
+	
+test_checkdevice.o:./test_checkdevice.cpp
+	nvcc -g -c test_checkdevice.cpp -o test_checkdevice.o -I/opt/cuda/include -I ../include -I ../include/cuda
+
+check_device.o:../src/CheckDevice.cpp
+	nvcc -g -c ../src/CheckDevice.cpp -o check_device.o -I ../include/cuda/ -I ../include/
+
+clean:
+	-rm check_device check_device.o test_checkdevice.o
