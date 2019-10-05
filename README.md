@@ -1,5 +1,5 @@
 # Hysia Video to Online Platform \[V1.0\]
-An intelligence learning based multimodal system for video, product and ads analysis. You can build various downstream 
+An intelligent learning-based multimodal system for video, product and ads analysis. You can build various downstream 
 applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
 **V2** is under active development currently. You are welcome to create a issue, pull request here. We will credit them into V2.
@@ -7,7 +7,7 @@ applications with the system, such as product recommendation, video retrieval. S
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
 ## Highlights
-- Multimodal learning based video analysis:
+- Multimodal learning-based video analysis:
     - Scene / Object / Face detection and recognition
     - Multimodality data preprocessing
     - Results align and store
@@ -55,7 +55,7 @@ Please try `chmod +x <script>` if something does not work.
 
 #### Option 1. Step-by-step installation 
 ```shell script
-# Firstly, make sure that your Conda is setup corretly and have CUDA,
+# Firstly, make sure that your Conda is setup correctly and have CUDA,
 # CUDNN installed on your system.
 
 # Install Conda virtual environment
@@ -151,13 +151,13 @@ chmod +x ./build.sh
 ```
 
 ## Download Data
-1\. Download Pretrained model weights. Download the weights from [Google Drive](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
+1\. Download pretrained model weights from [Google Drive](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
 ```shell script
 tar xvzf weights.tar.gz
 # and remove the weights zip
 rm -f weights.tar.gz
 ```
-2\. Download object detection data in third library from [Google Drive](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) and unzip it:
+2\. Download object detection data in third-party library from [Google Drive](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) and unzip it:
 ```shell script
 mv object-detection-data.tar.gz third/object_detection
 cd third/object_detection
