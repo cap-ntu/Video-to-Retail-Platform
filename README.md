@@ -49,7 +49,18 @@ applications with the system, such as product recommendation, video retrieval. S
 
 ## Installation
 
-We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 x86-64 with CUDA9.0 and CUDNN7.  
+We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 x86-64 with 
+CUDA9.0 and CUDNN7.  
+
+In case some dependent libraries used in Hysia Decoder haven't been installed in your system, you can kindly download
+them from [Google Drive](https://drive.google.com/open?id=16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa) (Linux x86-64 only), and 
+unzip it before installation:
+```shell script
+mv hysia-decoder-lib-linux-x86-64.tar.gz hysia/core/HysiaDecode
+cd hysia/core/HysiaDecode
+tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
+cd ../../../
+```
 
 Please try `chmod +x <script>` if something does not work.  
 
