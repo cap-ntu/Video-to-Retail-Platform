@@ -47,24 +47,75 @@ applications with the system, such as product recommendation, video retrieval. S
     
 ![view-ads](docs/img/view-ads.gif)
 
+## Download Data
+
+Here is a summary of required data / packed libraries.
+
+| File name     | Description | File ID | Unzipped directory  |
+| ------------- | ----------- | ------- | ------------------- |
+| [hysia-decoder-lib-linux-x86-64.tar.gz](https://drive.google.com/open?id=16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa) | Hysia Decoder dependent lib | 16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa | `hysia/core/HysiaDecode` |
+| [weights.tar.gz](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) | Pretrained model weights | 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX | `.` |
+| [object-detection-data.tar.gz](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) | Object detection data | 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG | `third/object_detection` |
+
+#### Option 1: Auto-download
+```shell script
+# Make sure this script is run from project root
+sh scripts/download-data.sh
+cd ..
+```
+
+#### Option 2: Step-by-step download
+
+Note: You can use a `curl` to **download from Google Drive directly** from [amit-chahar's Gist](https://gist.github.com/amit-chahar/db49ce64f46367325293e4cce13d2424). File names and file IDs are available from the above table:
+```shell script
+fileid=<file id>
+filename=<file name>
+curl -c ./cookie -s -L "https://drive.google.com/uc?export=download&id=${fileid}" > /dev/null
+curl -Lb ./cookie "https://drive.google.com/uc?export=download&confirm=`awk '/download/ {print $NF}' ./cookie`&id=${fileid}" -o ${filename}
+rm .cookie
+```
+Please `cd` to the specific folder (from the above table, column `Unzipped directory`) before execute `curl`.
+
+1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/open?id=16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa) and unzip it:
+```shell script
+deocder_path=hysia/core/HysiaDecode
+mv hysia-decoder-lib-linux-x86-64.tar.gz "${deocder_path}" && cd "${deocder_path}"
+tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
+rm -f hysia-decoder-lib-linux-x86-64.tar.gz
+cd ../../../
+```
+
+2\. Download pretrained [model weights](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
+```shell script
+tar xvzf weights.tar.gz
+# and remove the weights zip
+rm -f weights.tar.gz
+```
+
+3\. Download object detection data in third-party library from [Google Drive](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) and unzip it:
+```shell script
+mv object-detection-data.tar.gz third/object_detection
+cd third/object_detection
+tar xvzf object-detction-data.tar.gz
+rm object-detection-data.tar.gz
+cd ../../
+```
+
 ## Installation
 
 We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 x86-64 with 
 CUDA9.0 and CUDNN7.  
-
-In case some dependent libraries used in Hysia Decoder haven't been installed in your system, you can kindly download
-them from [Google Drive](https://drive.google.com/open?id=16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa) (Linux x86-64 only), and 
-unzip it before installation:
-```shell script
-mv hysia-decoder-lib-linux-x86-64.tar.gz hysia/core/HysiaDecode
-cd hysia/core/HysiaDecode
-tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
-cd ../../../
-```
-
 Please try `chmod +x <script>` if something does not work.  
 
-#### Option 1. Step-by-step installation 
+#### Option 1: Auto-installation
+Run the following script:
+```shell script
+# Execute this script at project root
+sh ./scripts/build.sh
+cd ..
+```
+
+#### Option 2. Step-by-step installation 
 ```shell script
 # Firstly, make sure that your Conda is setup correctly and have CUDA,
 # CUDNN installed on your system.
@@ -114,15 +165,6 @@ python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2m
 unset BASE_DIR
 ```
 
-#### Option 2: Auto-installation
-Run the following script:
-```shell script
-cd scripts
-chmod build.sh
-./build.sh
-cd ..
-```
-
 #### * Optional: Rebuild the frontend  
 You can omit this part as we have provided a pre-built frontend. If the frontend is updated, please run the following:  
 
@@ -159,21 +201,6 @@ Option 2: auto-rebuild
 cd server/react-build
 chmod +x ./build.sh
 ./build.sh
-```
-
-## Download Data
-1\. Download pretrained model weights from [Google Drive](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
-```shell script
-tar xvzf weights.tar.gz
-# and remove the weights zip
-rm -f weights.tar.gz
-```
-2\. Download object detection data in third-party library from [Google Drive](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) and unzip it:
-```shell script
-mv object-detection-data.tar.gz third/object_detection
-cd third/object_detection
-tar xvzf object-detction-data.tar.gz
-rm object-detection-data.tar.gz
 ```
 
 ## Configuration
