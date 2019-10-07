@@ -54,6 +54,11 @@ git clone https://github.com/iversonicter/HysiaDecode.git
 cd HysiaDecode
 
 ```
+Download dependent libraries from [Google Drive](https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O), and unzip:
+```shell script
+tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
+```
+
 If the required hardware or driver is not available:
 ```
 make CPU_ONLY=TRUE

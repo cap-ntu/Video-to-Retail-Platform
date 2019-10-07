@@ -4,7 +4,7 @@ GCC ?= g++
 
 CCFLAGS := -std=c++11 -g 
 
-CUDA_PATH ?= /usr/local/cuda-9.0
+CUDA_PATH ?= /usr/local/cuda
 
 NVCC := $(CUDA_PATH)/bin/nvcc
  
@@ -16,10 +16,16 @@ LDFLAGS += -L$(CUDA_PATH)/lib64/stubs -lcuda
 LDFLAGS += -L$(CUDA_PATH)/lib64 -lcudart
 LDFLAGS += -shared
 
-ifndef CPU_ONLY
-LDFLAGS += -Wl,-rpath=/usr/lib/nvidia-415 -L/usr/lib/nvidia-415 -lnvcuvid # nvcuvid
+ifdef NV_VERSION
+CPU_ONLY := TRUE
 else
+CPU_ONLY := FALSE
+endif
+
+ifdef CPU_ONLY
 LDFLAGS += -Wl,-rpath=$(PROJECT_ROOT)/lib/nvcuvid -L$(PROJECT_ROOT)/lib/nvcuvid -lnvcuvid
+else
+LDFLAGS += -Wl,-rpath=/usr/lib/nvidia-$(NV_VERSION) -L/usr/lib/nvidia-$(NV_VERSION) -lnvcuvid # nvcuvid
 endif
 
 # Project includes

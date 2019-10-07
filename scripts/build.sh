@@ -5,22 +5,33 @@ BASE_DIR=${PWD}
 # install Conda virtual environment
 conda env create -f environment.yml
 
+eval "$(conda shell.bash hook)"
+conda activate Hysia
+
 # compile decode module
 cd "${BASE_DIR}"/hysia/core/HysiaDecode || return 1
-# if the nvidia driver is lower than 396, uncomment below
-# make CPU_ONLY=TRUE
-# otherwise
-make clean && make CPU_ONLY=TRUE
+make clean
+
+# obtain nv driver version
+version=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1)
+major=${version%.*}
+# check if nv driver major version higher than 396
+if ((major > 396))
+then
+  make
+else
+  make NV_VERSION="${major}"
+fi
 
 # build mmdect
+echo "Building mmdect"
 cd "${BASE_DIR}"/third || return 1
-chmod +x ./compile.sh
-./compile.sh
+bash ./compile.sh
 
 # build server
+echo "Building server"
 cd "${BASE_DIR}"/server || return 1
-chmod +x ./reset-db.sh
-./reset-db.sh
+bash ./reset-db.sh
 
 # generate rpc
 python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
