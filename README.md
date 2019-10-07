@@ -6,6 +6,19 @@ applications with the system, such as product recommendation, video retrieval. S
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
+## Table of Contents
+
+1. [Highlights](#highlights)
+2. [Showcase](#showcase)
+3. [Download Data](#download-data)
+4. [Installation](#installation)
+5. [Configuration](#configuration)
+6. [Demo](#demo)
+7. [Some Useful Tools](#some-useful-tools)
+8. [Credits](#credits)
+9. [Contribute to Hysia-V2O](#contribute-to-hysia-v2o)
+10. [About Us](#about-us)
+
 ## Highlights
 - Multimodal learning-based video analysis:
     - Scene / Object / Face detection and recognition
@@ -24,8 +37,6 @@ applications with the system, such as product recommendation, video retrieval. S
 #### 1. Upload video and process it by selecting different models  
 
 ![select-models](docs/img/select-models.gif)
-    
-![upload-video](docs/img/upload-video.gif)
 
 #### 2. Display video processing result  
 
@@ -53,7 +64,7 @@ Here is a summary of required data / packed libraries.
 
 | File name     | Description | File ID | Unzipped directory  |
 | ------------- | ----------- | ------- | ------------------- |
-| [hysia-decoder-lib-linux-x86-64.tar.gz](https://drive.google.com/open?id=16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa) | Hysia Decoder dependent lib | 16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa | `hysia/core/HysiaDecode` |
+| [hysia-decoder-lib-linux-x86-64.tar.gz](https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O) | Hysia Decoder dependent lib | 1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O | `hysia/core/HysiaDecode` |
 | [weights.tar.gz](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) | Pretrained model weights | 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX | `.` |
 | [object-detection-data.tar.gz](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) | Object detection data | 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG | `third/object_detection` |
 
@@ -72,17 +83,18 @@ fileid=<file id>
 filename=<file name>
 curl -c ./cookie -s -L "https://drive.google.com/uc?export=download&id=${fileid}" > /dev/null
 curl -Lb ./cookie "https://drive.google.com/uc?export=download&confirm=`awk '/download/ {print $NF}' ./cookie`&id=${fileid}" -o ${filename}
-rm .cookie
+rm cookie
 ```
 Please `cd` to the specific folder (from the above table, column `Unzipped directory`) before execute `curl`.
 
-1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/open?id=16FfKT1IRXFwv7PjqNvhOEXzUxRAD-3Sa) and unzip it:
+1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O) and unzip it:
 ```shell script
 deocder_path=hysia/core/HysiaDecode
-mv hysia-decoder-lib-linux-x86-64.tar.gz "${deocder_path}" && cd "${deocder_path}"
+mv hysia-decoder-lib-linux-x86-64.tar.gz "${deocder_path}"
+cd "${deocder_path}"
 tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
 rm -f hysia-decoder-lib-linux-x86-64.tar.gz
-cd ../../../
+cd -
 ```
 
 2\. Download pretrained [model weights](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
@@ -98,10 +110,18 @@ mv object-detection-data.tar.gz third/object_detection
 cd third/object_detection
 tar xvzf object-detction-data.tar.gz
 rm object-detection-data.tar.gz
-cd ../../
+cd -
 ```
 
 ## Installation
+
+Requirements:
+- Conda
+- Nvidia driver
+- CUDA
+- CUDNN
+- g++
+- zlib1g-dev
 
 We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 x86-64 with 
 CUDA9.0 and CUDNN7.  
@@ -129,7 +149,9 @@ export BASE_DIR=${PWD}
 
 # Compile HysiaDecoder
 cd "${BASE_DIR}"/hysia/core/HysiaDecode
-make clean && make CPU_ONLY=TRUE
+make clean
+# If nvidia driver is higher than 396, set NV_VERSION=<your nvidia major version>
+make NV_VERSION=<your nvidia driver major version>
 
 # Build mmdetect
 # ROI align op
@@ -199,8 +221,7 @@ rm -r tmp
 Option 2: auto-rebuild
 ```shell script
 cd server/react-build
-chmod +x ./build.sh
-./build.sh
+sh ./build.sh
 ```
 
 ## Configuration
@@ -249,6 +270,8 @@ Here is a list of models that we used in Hysia-V2O.
 ## Contribute to Hysia-V2O
 
 You are welcome to pull request. We will credit it in our version 2.0.
+
+## About Us
 
 ### Maintainers
 - Huaizheng Zhang
