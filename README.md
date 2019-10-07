@@ -1,8 +1,9 @@
 # Hysia Video to Online Platform \[V1.0\]
-An intelligent learning-based multimodal system for video, product and ads analysis. You can build various downstream 
+An intelligent multimodal-learning based system for video, product and ads analysis. You can build various downstream 
 applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
-**V2** is under active development currently. You are welcome to create a issue, pull request here. We will credit them into V2.
+**V2** is under active development currently. You are welcome to create a issue, pull request here. We will credit them
+into V2.
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
@@ -15,9 +16,10 @@ applications with the system, such as product recommendation, video retrieval. S
 5. [Configuration](#configuration)
 6. [Demo](#demo)
 7. [Some Useful Tools](#some-useful-tools)
-8. [Credits](#credits)
-9. [Contribute to Hysia-V2O](#contribute-to-hysia-v2o)
-10. [About Us](#about-us)
+8. [Todo List](#todo-list)
+9. [Credits](#credits)
+10. [Contribute to Hysia-V2O](#contribute-to-hysia-v2o)
+11. [About Us](#about-us)
 
 ## Highlights
 - Multimodal learning-based video analysis:
@@ -71,7 +73,7 @@ Here is a summary of required data / packed libraries.
 #### Option 1: Auto-download
 ```shell script
 # Make sure this script is run from project root
-sh scripts/download-data.sh
+bash scripts/download-data.sh
 cd ..
 ```
 
@@ -118,20 +120,19 @@ cd -
 Requirements:
 - Conda
 - Nvidia driver
-- CUDA
+- CUDA = 9[*](#todo-list)
 - CUDNN
 - g++
 - zlib1g-dev
 
 We recommend to install this V2O platform in a UNIX like system. These scripts are tested on Ubuntu 16.04 x86-64 with 
 CUDA9.0 and CUDNN7.  
-Please try `chmod +x <script>` if something does not work.  
 
 #### Option 1: Auto-installation
 Run the following script:
 ```shell script
 # Execute this script at project root
-sh ./scripts/build.sh
+bash ./scripts/build.sh
 cd ..
 ```
 
@@ -157,16 +158,12 @@ make NV_VERSION=<your nvidia driver major version>
 # ROI align op
 cd "${BASE_DIR}"/third/
 cd mmdet/ops/roi_align
-if [ -d "build" ]; then
-    rm -r build
-fi
+rm -rf build
 python setup.py build_ext --inplace
 
 # ROI pool op
 cd ../roi_pool
-if [ -d "build" ]; then
-    rm -r build
-fi
+rm -rf build
 python setup.py build_ext --inplace
 
 # NMS op
@@ -190,7 +187,13 @@ unset BASE_DIR
 #### * Optional: Rebuild the frontend  
 You can omit this part as we have provided a pre-built frontend. If the frontend is updated, please run the following:  
 
-Option 1: Step-by-step rebuild  
+Option 1: auto-rebuild
+```shell script
+cd server/react-build
+bash ./build.sh
+```
+
+Option 2: Step-by-step rebuild  
 ```shell script
 cd server/react-front
 
@@ -216,12 +219,6 @@ rm -r ../static/static/
 
 # clear temp
 rm -r tmp
-```
-
-Option 2: auto-rebuild
-```shell script
-cd server/react-build
-sh ./build.sh
 ```
 
 ## Configuration
@@ -262,6 +259,12 @@ Then you can go to http://127.0.0.1:8000.
 - Video/audio decoding
 - Model profiling
 - Multimodality data testbed
+
+## Todo List
+
+- CUDA 10 support
+- Docker support
+- Frontend separation
 
 ## Credits
 

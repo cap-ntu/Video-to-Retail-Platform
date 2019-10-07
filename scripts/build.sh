@@ -5,7 +5,7 @@ BASE_DIR=${PWD}
 # install Conda virtual environment
 conda env create -f environment.yml
 
-source ~/anaconda3/etc/profile.d/conda.sh
+eval "$(conda shell.bash hook)"
 conda activate Hysia
 
 # compile decode module
@@ -16,7 +16,7 @@ make clean
 version=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1)
 major=${version%.*}
 # check if nv driver major version higher than 396
-if (("${major}" > 396))
+if ((major > 396))
 then
   make
 else
@@ -24,12 +24,14 @@ else
 fi
 
 # build mmdect
+echo "Building mmdect"
 cd "${BASE_DIR}"/third || return 1
-sh ./compile.sh
+bash ./compile.sh
 
 # build server
+echo "Building server"
 cd "${BASE_DIR}"/server || return 1
-sh ./reset-db.sh
+bash ./reset-db.sh
 
 # generate rpc
 python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
