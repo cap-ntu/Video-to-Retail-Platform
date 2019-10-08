@@ -262,13 +262,23 @@ Then you can go to http://127.0.0.1:8000.
 
 ## Todo List
 
-- CUDA 10 support
-- Docker support
-- Frontend separation
+- [ ] Improve models
+- [ ] Improve documents
+- [ ] CUDA 10 support
+- [ ] Docker support
+- [ ] Frontend separation
 
 ## Credits
 
 Here is a list of models that we used in Hysia-V2O. 
+
+| Models        | GitHub Repo           | License  |
+| ------------- |:-------------:| -----:|
+| MMDetection      |  | |
+| Google Object detection  |  |  |
+| Scene Recognition | | |
+| Audio Recognition | | |
+| Image Retrieval | | |
 
 ## Contribute to Hysia-V2O
 
