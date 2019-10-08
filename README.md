@@ -279,6 +279,10 @@ Here is a list of models that we used in Hysia-V2O.
 | Scene Recognition | | |
 | Audio Recognition | | |
 | Image Retrieval | | |
+| Face Detection | | |
+| Face Recognition | | |
+| Text Detection| | |
+| Text Recognition| | |
 
 ## Contribute to Hysia-V2O
 
