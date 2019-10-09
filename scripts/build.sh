@@ -2,12 +2,6 @@
 
 BASE_DIR=${PWD}
 
-# install Conda virtual environment
-conda env create -f environment.yml
-
-eval "$(conda shell.bash hook)"
-conda activate Hysia
-
 # compile decode module
 cd "${BASE_DIR}"/hysia/core/HysiaDecode || return 1
 make clean
@@ -31,7 +25,9 @@ bash ./compile.sh
 # build server
 echo "Building server"
 cd "${BASE_DIR}"/server || return 1
+export HYSIA_BUILD=TRUE
 bash ./reset-db.sh
+unset HYSIA_BUILD
 
 # generate rpc
 python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto

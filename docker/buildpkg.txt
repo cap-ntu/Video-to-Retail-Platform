@@ -1,0 +1,8 @@
+apt-transport-https
+wget
+curl
+git
+bzip2
+make
+g++
+zlib1g-dev

@@ -136,7 +136,7 @@ CUDA9.0 and CUDNN7.
 Run the following script:
 ```shell script
 # Execute this script at project root
-bash ./scripts/build.sh
+bash ./scripts/install-build.sh
 cd ..
 ```
 
@@ -255,7 +255,7 @@ python start_model_servers.py
 python manage.py runserver 0.0.0.0:8000
 ```
 
-Then you can go to http://127.0.0.1:8000.
+Then you can go to http://localhost:8000. Use username: admin and password: admin to login.
 
 ## Some Useful Tools
 
@@ -269,8 +269,9 @@ Then you can go to http://127.0.0.1:8000.
 - [ ] Improve models
 - [ ] Improve documents
 - [ ] CUDA 10 support
-- [ ] Docker support
+- [x] Docker support
 - [ ] Frontend separation
+- [ ] A minimal product database 
 
 ## Credits
 

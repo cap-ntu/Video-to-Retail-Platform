@@ -5,6 +5,7 @@ Email: jian0085@e.ntu.edu.sg
 """
 import json
 import math
+import os
 import os.path as osp
 import pickle
 import subprocess
@@ -16,12 +17,20 @@ import tqdm
 from django.conf import settings
 from django.db import transaction
 
-# Import Hysia's own hardware decoding module
-from hysia.core.HysiaDecode.build import PyDecoder
 from hysia.models.scene.shot_detecor import Shot_Detector
 from restapi.models import Scene
 from restapi.rpc_client import RpcClient
 from restapi.serializers import FrameSerializer
+
+# Do set HYSIA_BUILD=TRUE when reset django. As PyDecoder will seeking for CUDA if HYSIA_BUILD is not set. This will
+# lead to an libcuda.so not found error if you do not have cuda support during building (e.g. in docker)
+try:
+    build_flag = os.environ['HYSIA_BUILD'].capitalize() == 'TRUE'
+except KeyError:
+    build_flag = False
+if not build_flag:
+    # Import Hysia's own hardware decoding module
+    from hysia.core.HysiaDecode.build import PyDecoder
 
 
 # Decode media with FFmpeg
