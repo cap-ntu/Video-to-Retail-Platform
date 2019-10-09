@@ -262,13 +262,27 @@ Then you can go to http://127.0.0.1:8000.
 
 ## Todo List
 
-- CUDA 10 support
-- Docker support
-- Frontend separation
+- [ ] Improve models
+- [ ] Improve documents
+- [ ] CUDA 10 support
+- [ ] Docker support
+- [ ] Frontend separation
 
 ## Credits
 
 Here is a list of models that we used in Hysia-V2O. 
+
+| Models        | GitHub Repo           | License  |
+| ------------- |:-------------:| -----:|
+| MMDetection      |  | |
+| Google Object detection  |  |  |
+| Scene Recognition | | |
+| Audio Recognition | | |
+| Image Retrieval | | |
+| Face Detection | | |
+| Face Recognition | | |
+| Text Detection| | |
+| Text Recognition| | |
 
 ## Contribute to Hysia-V2O
 
@@ -277,7 +291,12 @@ You are welcome to pull request. We will credit it in our version 2.0.
 ## About Us
 
 ### Maintainers
-- Huaizheng Zhang
-- Yuanming Li yli056@e.ntu.edu.sg
-- Qiming Ai
-- Shengsheng Zhou
+- Huaizheng Zhang [[GitHub]](https://github.com/HuaizhengZhang)
+- Yuanming Li yli056@e.ntu.edu.sg [[GitHub]](https://github.com/YuanmingLeee)
+- Qiming Ai [[GitHub]](https://github.com/QimingAi)
+- Shengsheng Zhou [[GitHub]](https://github.com/ZhouShengsheng)
+
+### Previous Contributors
+- Wenbo Jiang (Now, Shopee) [[GitHub]](https://github.com/Lancerchiang)
+- Ziyuan Liu (Now, Tencent) [[GitHub]](https://github.com/ProgrammerYuan)
+- Yongjie Wang (Now, NTU PhD) [[GitHub]](https://github.com/iversonicter)
