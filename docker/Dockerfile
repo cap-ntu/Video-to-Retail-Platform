@@ -41,8 +41,7 @@ RUN curl -so /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.5.4-
  && rm /miniconda.sh
 
 # Create a Python 3.6 environment
-RUN conda install -y nomkl \
- && conda env update --name base --file /content/environment.yml \
+RUN conda env update --name base --file /content/environment.yml \
  && conda clean -ya \
  && rm -rf ~/.cache/pip
 RUN (find ${CONDA_ROOT}/ -follow -type f -name '*.a' -delete 2> /dev/null || :) \
@@ -65,4 +64,4 @@ RUN xargs apt-get remove -y < /content/docker/buildpkg.txt \
  && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ['/bin/bash', 'scripts/docker_entry.sh']
+ENTRYPOINT ["/bin/bash", "/content/scripts/docker_entry.sh"]

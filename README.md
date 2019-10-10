@@ -197,6 +197,9 @@ cd server/react-build
 bash ./build.sh
 ```
 
+Option 2: Docker  
+See [Run with Docker](docker/README.md) to build and install. 
+
 Option 2: Step-by-step rebuild  
 ```shell script
 cd server/react-front

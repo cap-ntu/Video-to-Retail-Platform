@@ -25,7 +25,7 @@ from restapi.serializers import FrameSerializer
 # Do set HYSIA_BUILD=TRUE when reset django. As PyDecoder will seeking for CUDA if HYSIA_BUILD is not set. This will
 # lead to an libcuda.so not found error if you do not have cuda support during building (e.g. in docker)
 try:
-    build_flag = os.environ['HYSIA_BUILD'].capitalize() == 'TRUE'
+    build_flag = os.environ['HYSIA_BUILD'].upper() == 'TRUE'
 except KeyError:
     build_flag = False
 if not build_flag:
