@@ -3,18 +3,10 @@
 ## Build Docker Image
 
 Enter the root directory of Hysia and run the following command:
-```bash
-docker build -t hysia -f docker/hysia-conda-Dockerfile .
+```shell script
+docker build -t hysia -f docker/Dockerfile .
 ```
 
-This build will use `Anaconda` to manage `Hysia`'s dependencies.
-We also provided `pip` version, however, with `pip` version the `search` module cannot be used.
-Run the following command if you prefer the `pip` version:
-```bash
-docker build -t hysia -f docker/hysia-pip-Dockerfile .
-```
-
-The building process is quite slow as it will install all of the dependencies.
 Once built, a docker image with tag `hysia:latest` will be generated.
 
 Optionally use the following command to check if Hysia image is built successfully:
@@ -34,7 +26,7 @@ Optionally use the following command to check if Hysia is running correctly:
 docker ps | grep hysia:latest
 ```
 
-To visit the deployed Hysia dashboard, visit the following address:
+Visit the following address and use username=admin, password=admin for login:
 ```
-http://your-server-ip:8000
+http://locahost:8000
 ```

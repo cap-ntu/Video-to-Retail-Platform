@@ -70,6 +70,8 @@ Here is a summary of required data / packed libraries.
 | [weights.tar.gz](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) | Pretrained model weights | 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX | `.` |
 | [object-detection-data.tar.gz](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) | Object detection data | 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG | `third/object_detection` |
 
+For users without Google Drive access, you can download from [Baidu Wangpan](https://pan.baidu.com/s/12ZsA__TSNPl0riQ6hSciFQ) and unzip files correspondingly. (See [Option 2](#option-2-step-by-step-download))
+
 #### Option 1: Auto-download
 ```shell script
 # Make sure this script is run from project root
@@ -79,7 +81,7 @@ cd ..
 
 #### Option 2: Step-by-step download
 
-Note: You can use a `curl` to **download from Google Drive directly** from [amit-chahar's Gist](https://gist.github.com/amit-chahar/db49ce64f46367325293e4cce13d2424). File names and file IDs are available from the above table:
+Note: `curl` can be used to **download from Google Drive directly** according to [amit-chahar's Gist](https://gist.github.com/amit-chahar/db49ce64f46367325293e4cce13d2424). File names and file IDs are available from the above table:
 ```shell script
 fileid=<file id>
 filename=<file name>
@@ -99,14 +101,16 @@ rm -f hysia-decoder-lib-linux-x86-64.tar.gz
 cd -
 ```
 
-2\. Download pretrained [model weights](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing) and unzip it:
+2\. Download pretrained [model weights](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing)
+and unzip it:
 ```shell script
 tar xvzf weights.tar.gz
 # and remove the weights zip
 rm -f weights.tar.gz
 ```
 
-3\. Download object detection data in third-party library from [Google Drive](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing) and unzip it:
+3\. Download [object detection data](https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing)
+in third-party library and unzip it:
 ```shell script
 mv object-detection-data.tar.gz third/object_detection
 cd third/object_detection
@@ -132,7 +136,7 @@ CUDA9.0 and CUDNN7.
 Run the following script:
 ```shell script
 # Execute this script at project root
-bash ./scripts/build.sh
+bash ./scripts/install-build.sh
 cd ..
 ```
 
@@ -193,6 +197,9 @@ cd server/react-build
 bash ./build.sh
 ```
 
+Option 2: Docker  
+See [Run with Docker](docker/README.md) to build and install. 
+
 Option 2: Step-by-step rebuild  
 ```shell script
 cd server/react-front
@@ -251,7 +258,7 @@ python start_model_servers.py
 python manage.py runserver 0.0.0.0:8000
 ```
 
-Then you can go to http://127.0.0.1:8000.
+Then you can go to http://localhost:8000. Use username: admin and password: admin to login.
 
 ## Some Useful Tools
 
@@ -265,8 +272,9 @@ Then you can go to http://127.0.0.1:8000.
 - [ ] Improve models
 - [ ] Improve documents
 - [ ] CUDA 10 support
-- [ ] Docker support
+- [x] Docker support
 - [ ] Frontend separation
+- [ ] A minimal product database 
 
 ## Credits
 

@@ -47,4 +47,5 @@ if __name__ == "__main__":
                 time.sleep(_ONE_DAY_IN_SECONDS)
             except KeyboardInterrupt:
                 logger.info("Shutting down model servers")
+                pool.terminate()
                 exit(0)
