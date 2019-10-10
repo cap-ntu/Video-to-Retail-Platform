@@ -3,7 +3,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
 
 # Reset database
 rm -f "${DIR}"/db.sqlite3
-rm -r "${DIR}"/restapi/migrations
+rm -rf "${DIR}"/restapi/migrations
 
 # Clean up files
 rm -rf "${DIR}"/output
@@ -28,4 +28,7 @@ mkdir -p "${DIR}"/output/{audios,images/{product/{retrieved,uploaded},retrieved,
 python manage.py makemigrations restapi
 python manage.py migrate
 python manage.py loaddata dlmodels.json
-python manage.py createsuperuser
+# create super user with username=admin, password=admin
+echo "Creating super user"
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(
+  'admin', 'admin@mhysia.com', 'admin')" | python manage.py shell
