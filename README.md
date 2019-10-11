@@ -140,7 +140,10 @@ bash ./scripts/install-build.sh
 cd ..
 ```
 
-#### Option 2. Step-by-step installation 
+#### Option 2: Docker  
+See [Run with Docker](docker/README.md) to build and install. 
+
+#### Option 3. Step-by-step installation 
 ```shell script
 # Firstly, make sure that your Conda is setup correctly and have CUDA,
 # CUDNN installed on your system.
@@ -196,9 +199,6 @@ Option 1: auto-rebuild
 cd server/react-build
 bash ./build.sh
 ```
-
-Option 2: Docker  
-See [Run with Docker](docker/README.md) to build and install. 
 
 Option 2: Step-by-step rebuild  
 ```shell script
