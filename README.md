@@ -1,4 +1,8 @@
 # Hysia Video to Online Platform \[V1.0\]
+<sub>* This project is supported by 
+[Cloud Application and Platform Lab](https://wiki.withcap.org) 
+led by [Prof. Yonggang Wen](https://www.ntu.edu.sg/home/ygwen/)</sub>  
+
 An intelligent multimodal-learning based system for video, product and ads analysis. You can build various downstream 
 applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
