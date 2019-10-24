@@ -13,13 +13,13 @@ and request handling is supported by Django Rest Framework.
 
 ## Installation
 
-Initially, we need to reset Django database by:
-```shell script
-bash reset-db.sh
-```
-And generate python-runnable RPC code:
+Initially, we need to generate python-runnable gRPC code reset Django database by:
 ```shell script
 python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
+```
+And reset database:
+```shell script
+bash reset-db.sh
 ```
 
 ## Demo

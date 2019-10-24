@@ -185,12 +185,12 @@ make PYTHON=python
 # Initialize Django
 # This will prompt some input from you
 cd "${BASE_DIR}"/server
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
+
 python manage.py makemigrations restapi
 python manage.py migrate
 python manage.py loaddata dlmodels.json
 python manage.py createsuperuser
-
-python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
 
 unset BASE_DIR
 ```

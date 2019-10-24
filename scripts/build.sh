@@ -25,9 +25,9 @@ bash ./compile.sh
 # build server
 echo "Building server"
 cd "${BASE_DIR}"/server || return 1
+# generate rpc
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
+
 export HYSIA_BUILD=TRUE
 bash ./reset-db.sh
 unset HYSIA_BUILD
-
-# generate rpc
-python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
