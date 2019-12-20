@@ -23,7 +23,8 @@ into V2.
 8. [Todo List](#todo-list)
 9. [Credits](#credits)
 10. [Contribute to Hysia-V2O](#contribute-to-hysia-v2o)
-11. [About Us](#about-us)
+11. [Paper Citation](#paper-citation)
+12. [About Us](#about-us)
 
 ## Highlights
 - Multimodal learning-based video analysis:
@@ -299,6 +300,11 @@ Here is a list of models that we used in Hysia-V2O.
 ## Contribute to Hysia-V2O
 
 You are welcome to pull request. We will credit it in our version 2.0.
+
+## Paper Citation
+
+Coming soon!
+
 
 ## About Us
 
