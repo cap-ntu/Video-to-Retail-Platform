@@ -14,17 +14,35 @@ into V2.
 ## Table of Contents
 
 1. [Highlights](#highlights)
-2. [Showcase](#showcase)
-3. [Download Data](#download-data)
-4. [Installation](#installation)
-5. [Configuration](#configuration)
-6. [Demo](#demo)
-7. [Some Useful Tools](#some-useful-tools)
-8. [Todo List](#todo-list)
+2. [Updates](#updates)
+3. [Showcase](#showcase)
+4. [Download Data](#download-data)
+5. [Installation](#installation)
+6. [Configuration](#configuration)
+7. [Demo](#demo)
+8. [Some Useful Tools](#some-useful-tools)
 9. [Credits](#credits)
 10. [Contribute to Hysia-V2O](#contribute-to-hysia-v2o)
 11. [Paper Citation](#paper-citation)
 12. [About Us](#about-us)
+
+
+## Updates
+
+V1.3:
+
+To be updated.
+
+V1.2:
+- [ ] A light model database
+- [ ] model exporter
+
+V1.1:
+
+- [x] Docker support
+- [x] Frontend separation
+- [x] More models
+- [ ] Improve documents
 
 ## Highlights
 - Multimodal learning-based video analysis:
@@ -272,14 +290,6 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 - Model profiling
 - Multimodality data testbed
 
-## Todo List
-
-- [ ] Improve models
-- [ ] Improve documents
-- [ ] CUDA 10 support
-- [x] Docker support
-- [ ] Frontend separation
-- [ ] A minimal product database 
 
 ## Credits
 
