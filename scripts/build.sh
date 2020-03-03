@@ -14,7 +14,7 @@ if ((major > 396))
 then
   make
 else
-  make NV_VERSION="${major}"
+  make CPU_ONLY
 fi
 
 # build mmdect
