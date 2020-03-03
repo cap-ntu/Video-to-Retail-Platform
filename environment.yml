@@ -1,4 +1,4 @@
-name: Hysia
+name: V2O
 channels:
   - pytorch
   - defaults
@@ -157,5 +157,5 @@ dependencies:
     - twisted==19.7.0
     - txaio==18.8.1
     - zope-interface==4.6.0
-prefix: /home/lym/anaconda3/envs/Hysia
+prefix: /home/lym/anaconda3/envs/V2O
 
