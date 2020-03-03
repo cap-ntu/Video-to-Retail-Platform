@@ -155,7 +155,7 @@ See [Run with Docker](docker/README.md) to build and install.
 # Install Conda virtual environment
 conda env create -f environment.yml
 
-conda activate Hysia
+conda activate V2O
 
 export BASE_DIR=${PWD}
 
