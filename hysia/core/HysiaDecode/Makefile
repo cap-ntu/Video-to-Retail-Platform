@@ -16,16 +16,11 @@ LDFLAGS += -L$(CUDA_PATH)/lib64/stubs -lcuda
 LDFLAGS += -L$(CUDA_PATH)/lib64 -lcudart
 LDFLAGS += -shared
 
-ifdef NV_VERSION
-CPU_ONLY := TRUE
-else
-CPU_ONLY := FALSE
-endif
-
-ifdef CPU_ONLY
-LDFLAGS += -Wl,-rpath=$(PROJECT_ROOT)/lib/nvcuvid -L$(PROJECT_ROOT)/lib/nvcuvid -lnvcuvid
-else
+ifndef CPU_ONLY
+NV_VERSION := $(shell nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1 | cut -d. -f1)
 LDFLAGS += -Wl,-rpath=/usr/lib/nvidia-$(NV_VERSION) -L/usr/lib/nvidia-$(NV_VERSION) -lnvcuvid # nvcuvid
+else
+LDFLAGS += -Wl,-rpath=$(PROJECT_ROOT)/lib/nvcuvid -L$(PROJECT_ROOT)/lib/nvcuvid -lnvcuvid
 endif
 
 # Project includes

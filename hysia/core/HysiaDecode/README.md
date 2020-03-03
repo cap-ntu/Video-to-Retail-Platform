@@ -6,7 +6,7 @@ The whole pipeline of the HysiaDecode can be illustrated in the following diagra
 
 
 
-![](https://github.com/iversonicter/HysiaDecode/blob/develop/images/pipeline.png)
+![](images/pipeline.png)
 
 
 
@@ -60,11 +60,11 @@ tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
 ```
 
 If the required hardware or driver is not available:
-```
+```shell script
 make CPU_ONLY=TRUE
 ```
 Otherwise:
-```
+```shell script
 make
 ```
 
