@@ -14,7 +14,7 @@ if ((major > 396))
 then
   make
 else
-  make CPU_ONLY
+  make CPU_ONLY=TRUE
 fi
 
 # build mmdect

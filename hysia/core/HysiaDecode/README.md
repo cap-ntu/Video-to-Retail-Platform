@@ -61,14 +61,11 @@ tar xvzf hysia-decoder-lib-linux-x86-64.tar.gz
 
 If the required hardware or driver is not available:
 ```shell script
-make
+make CPU_ONLY=TRUE
 ```
 Otherwise:
 ```shell script
-# obtain nv driver version
-version=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1)
-major=${version%.*}
-make NV_VERSION={major}
+make
 ```
 
 After compliation and link, this reporistory will generate a shared file like this 'PyDecoder.cpython-3xm-x86_64-linux-gnu.so' in build directory. You can import it in Python like this, don't forget add it into the system path unless you will meet this error " no moudle named PyDecoder ":
