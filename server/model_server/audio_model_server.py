@@ -49,7 +49,7 @@ def load_soundnet():
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
         super().__init__()
-        os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+        os.environ['CUDA_VISIBLE_DEVICES'] = '2'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
         self.soundnet = load_soundnet()
 

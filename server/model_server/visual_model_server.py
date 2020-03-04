@@ -25,7 +25,7 @@ from hysia.models.scene import detector as places365_detector
 # Import ctpn models
 from hysia.models.text.tf_detector import TF_CTPN as CtpnEngine
 from hysia.utils.logger import Logger
-from model_server.utils import StreamSuppressor
+from model_server.utils import StreamSuppressor, timeit
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Load detector graph
@@ -48,6 +48,9 @@ SSD_mobile_path = SERVER_ROOT + \
 SSD_inception_path = SERVER_ROOT + \
                      '../../weights/ssd_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
 
+FASTERRCNN_resnet101_path = SERVER_ROOT + \
+                     '../../weights/faster_rcnn_resnet101_coco_2018_01_28/frozen_inference_graph.pb'
+
 PATH_TO_LABELS = SERVER_ROOT + '../../third/object_detection/data/mscoco_label_map.pbtxt'
 
 # Load text detector graph
@@ -65,14 +68,14 @@ minisize = 25
 PLACES365_MODEL_PATH = SERVER_ROOT + '../../weights/places365/{}.pth'
 PLACES365_LABEL_PATH = SERVER_ROOT + '../../weights/places365/categories.txt'
 
-
-def load_detector_engine():
+@timeit
+def load_detector_engine(model_path=SSD_inception_path):
     # Load the TensorFlow graph
     with StreamSuppressor():
         detection_graph = tf.Graph()
         with detection_graph.as_default():
             od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(SSD_inception_path, 'rb') as fid:
+            with tf.gfile.GFile(model_path, 'rb') as fid:
                 serialized_graph = fid.read()
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
@@ -80,11 +83,11 @@ def load_detector_engine():
     # Instantiate a DetectorEngine
     with StreamSuppressor():
         detector_engine = DetectorEngine(detection_graph, PATH_TO_LABELS, NUM_CLASS)
-    logger.info('Finished loading SSD-inception detector')
+    logger.info('Finished loading {} detector'.format(model_path))
 
     return detector_engine
 
-
+@timeit
 def load_ctpn_engine():
     with StreamSuppressor():
         text_detection_graph = tf.Graph()
@@ -101,7 +104,7 @@ def load_ctpn_engine():
     logger.info('Finished loading text detector')
     return ctpn_engine
 
-
+@timeit
 def load_face_engine():
     # Instantiate a face detection and recognition engine
     with StreamSuppressor():
@@ -112,11 +115,11 @@ def load_face_engine():
     logger.info('Finished loading face models')
     return face_engine
 
-
+@timeit
 def load_places365_engine():
     # Instantiate a place365 model
     with StreamSuppressor():
-        places365_engine = places365_detector.scene_visual('resnet18', PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
+        places365_engine = places365_detector.scene_visual('resnet50', PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
                                                            'cuda:0')
     logger.info('Finished loading scene classifier')
     return places365_engine
@@ -128,10 +131,10 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         super().__init__()
         os.environ['CUDA_VISIBLE_DEVICES'] = '1'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
-        self.detector_engine = load_detector_engine()
+        # self.detector_engine = load_detector_engine(SSD_mobile_path)
         self.ctpn_engine = load_ctpn_engine()
-        self.face_engine = load_face_engine()
-        self.places365_engine = load_places365_engine()
+        # self.face_engine = load_face_engine()
+        # self.places365_engine = load_places365_engine()
 
     def GetJson(self, request, context):
         img = cv2.imdecode(np.fromstring(request.buf, dtype=np.uint8), -1)
