@@ -119,7 +119,7 @@ def load_face_engine():
 def load_places365_engine():
     # Instantiate a place365 model
     with StreamSuppressor():
-        places365_engine = places365_detector.scene_visual('resnet50', PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
+        places365_engine = places365_detector.scene_visual('densenet161', PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
                                                            'cuda:0')
     logger.info('Finished loading scene classifier')
     return places365_engine
@@ -132,9 +132,9 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         os.environ['CUDA_VISIBLE_DEVICES'] = '1'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
         # self.detector_engine = load_detector_engine(SSD_mobile_path)
-        self.ctpn_engine = load_ctpn_engine()
+        # self.ctpn_engine = load_ctpn_engine()
         # self.face_engine = load_face_engine()
-        # self.places365_engine = load_places365_engine()
+        self.places365_engine = load_places365_engine()
 
     def GetJson(self, request, context):
         img = cv2.imdecode(np.fromstring(request.buf, dtype=np.uint8), -1)

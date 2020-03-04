@@ -33,7 +33,16 @@ class scene_visual(object):
         self.model = models.__dict__[self.network](num_classes=365)
         self.model_file = model_file.format(self.network)
         checkpoint = torch.load(self.model_file, map_location=lambda storage, loc: storage)
-        state_dict = {str.replace(k, 'module.', ''): v for k, v in checkpoint['state_dict'].items()}
+        if self.network == "densenet161":
+            state_dict = {str.replace(k,'module.',''): v for k,v in checkpoint['state_dict'].items()}
+            state_dict = {str.replace(k,'norm.','norm'): v for k,v in state_dict.items()}
+            state_dict = {str.replace(k,'conv.','conv'): v for k,v in state_dict.items()}
+            state_dict = {str.replace(k,'normweight','norm.weight'): v for k,v in state_dict.items()}
+            state_dict = {str.replace(k,'normrunning','norm.running'): v for k,v in state_dict.items()}
+            state_dict = {str.replace(k,'normbias','norm.bias'): v for k,v in state_dict.items()}
+            state_dict = {str.replace(k,'convweight','conv.weight'): v for k,v in state_dict.items()}
+        else:
+            state_dict = {str.replace(k, 'module.', ''): v for k, v in checkpoint['state_dict'].items()}
         self.model.load_state_dict(state_dict)
         self.device = device
         self.model.to(self.device)
