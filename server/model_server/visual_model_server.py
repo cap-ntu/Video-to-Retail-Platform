@@ -129,6 +129,7 @@ def load_places365_engine():
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
         super().__init__()
+        # todo(zhz): use device_placement.yml device
         os.environ['CUDA_VISIBLE_DEVICES'] = '1'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
         # self.detector_engine = load_detector_engine(SSD_mobile_path)
