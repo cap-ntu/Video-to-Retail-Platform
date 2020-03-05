@@ -1,6 +1,6 @@
 import os
 import sys
-
+import time
 
 class StreamSuppressor:
     def __enter__(self):
@@ -10,3 +10,5 @@ class StreamSuppressor:
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout.close()
         sys.stdout = self._original_stdout
+
+

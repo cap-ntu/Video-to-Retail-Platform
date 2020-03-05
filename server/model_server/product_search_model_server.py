@@ -33,7 +33,7 @@ def load_search_machine():
 # Custom request servicer
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
-        os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+        os.environ['CUDA_VISIBLE_DEVICES'] = '2'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
         self.search_machine = load_search_machine()
 
