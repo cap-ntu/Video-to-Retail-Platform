@@ -25,9 +25,9 @@ from hysia.models.scene import detector as places365_detector
 # Import ctpn models
 from hysia.models.text.tf_detector import TF_CTPN as CtpnEngine
 from hysia.utils.logger import Logger
-from model_server.utils import StreamSuppressor
-from protos import api2msl_pb2, api2msl_pb2_grpc
+from hysia.utils.perf import StreamSuppressor
 from hysia.utils.perf import timeit
+from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Load detector graph
 

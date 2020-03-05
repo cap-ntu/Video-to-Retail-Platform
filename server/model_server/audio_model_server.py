@@ -8,8 +8,8 @@ import grpc
 import tensorflow as tf
 
 from hysia.utils.logger import Logger
+from hysia.utils.perf import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
-from .utils import StreamSuppressor
 
 with StreamSuppressor():
     from hysia.models.scene.soundnet_classifier import SoundNetClassifier
