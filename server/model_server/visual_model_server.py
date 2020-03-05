@@ -25,8 +25,9 @@ from hysia.models.scene import detector as places365_detector
 # Import ctpn models
 from hysia.models.text.tf_detector import TF_CTPN as CtpnEngine
 from hysia.utils.logger import Logger
-from model_server.utils import StreamSuppressor, timeit
+from model_server.utils import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
+from hysia.utils.perf import timeit
 
 # Load detector graph
 
@@ -132,9 +133,9 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         # todo(zhz): use device_placement.yml device
         os.environ['CUDA_VISIBLE_DEVICES'] = '1'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
-        # self.detector_engine = load_detector_engine(SSD_mobile_path)
-        # self.ctpn_engine = load_ctpn_engine()
-        # self.face_engine = load_face_engine()
+        self.detector_engine = load_detector_engine(SSD_mobile_path)
+        self.ctpn_engine = load_ctpn_engine()
+        self.face_engine = load_face_engine()
         self.places365_engine = load_places365_engine()
 
     def GetJson(self, request, context):
