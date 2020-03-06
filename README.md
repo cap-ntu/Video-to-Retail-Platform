@@ -287,7 +287,8 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 - [x] Docker support
 - [ ] Frontend separation
 - [ ] A minimal product database 
-- [ ] HysiaDecode 18.04 support 
+- [ ] HysiaDecode 18.04 support
+- [ ] HysiaDecode Docker GPU support
 
 ## Credits
 
