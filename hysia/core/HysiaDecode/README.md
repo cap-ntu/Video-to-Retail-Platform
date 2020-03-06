@@ -109,11 +109,11 @@ Hysia Decode:
 
 | Hardware            | Init time (ms) | Throughput (FPS) |
 |:-------------------:|:--------------:|:----------------:|
-| i9<sup>1</sup>      | 12.02          | 298.1            |
-| Xeon<sup>2</sup>    | 15.57          | 188.4            |
-| TITAN X<sup>3</sup> | 253.4          | 800.0            |
-| RTX 2080<sup>4</sup>| 116.0          | 1065             |
-| V100 <sup>5</sup>   | 150.4          | 901.6            |
+| i9<sup>1</sup>      |                | ~300             |
+| Xeon<sup>2</sup>    |                | ~200             |
+| TITAN X<sup>3</sup> |                | ~800             |
+| RTX 2080<sup>4</sup>|                | ~1200            |
+| V100 <sup>5</sup>   |                | ~800             |
 
 Baseline:
 
