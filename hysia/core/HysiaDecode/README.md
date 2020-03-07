@@ -120,8 +120,7 @@ Baseline:
 | API                      | Hardware        | Init time (ms) | Throughput (FPS) |
 |:------------------------:|:---------------:|:--------------:|:----------------:|
 | VideoCapture<sup>†</sup> | CPU<sup>1</sup> |                | 375              |
-| VideoCapture*            | CPU<sup>1</sup> |                | 399              |
-| VideoReader<sup>×</sup>  | GPU<sup>3</sup> |                | 865              |
+
 
 \[1] Intel<sup>Ⓡ</sup> Core™ i9-9940X
 \[2] Intel<sup>Ⓡ</sup> Xeon<sup>Ⓡ</sup> E5-2698 v4  
@@ -130,8 +129,6 @@ Baseline:
 \[5] NVIDIA<sup>Ⓡ</sup> Tesla V100-DGX 32GB  
 
 † Run with OpenCV Python API `cv2`.  
-\* Run with OpenCV C++ API `cv`.  
-× Run with OpenCV CUDA-accelerated C++ API `cv:cudacodec`.
 
 #  Issues
 
