@@ -95,7 +95,7 @@ rm cookie
 ```
 Please `cd` to the specific folder (from the above table, column `Unzipped directory`) before execute `curl`.
 
-1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O) and unzip it:
+1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/file/d/1O1ewejZbMWj43IxL7NInuJss7fNjYc3R) and unzip it:
 ```shell script
 deocder_path=hysia/core/HysiaDecode
 mv hysia-decoder-lib-linux-x86-64.tar.gz "${deocder_path}"
@@ -233,23 +233,31 @@ rm -r tmp
 ```
 
 ## Configuration
+<ul>
+<li> Decode hardware:  
 
-- Decode hardware:  
-    Change the configuration [here](server/HysiaREST/settings.py) at last line:  
-    ```python
-    DECODING_HARDWARE = 'CPU'
-    ```
-    Value can be `CPU` or `GPU:<number>` (e.g. `GPU:0`)
-- ML model running hardware:
-    Change the configuration of model servers under this [directory](server/model_server):
-    ```python
-    # Custom request servicer
-    class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
-        def __init__(self):
-            ...
-            os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-    ```
-    A possible value can be your device ID `0`, `0,1`, ...
+Change the configuration [here](server/HysiaREST/settings.py) at last line:  
+```python
+DECODING_HARDWARE = 'CPU'
+```
+Value can be `CPU` or `GPU:<number>` (e.g. `GPU:0`)
+</li>
+<li> ML model running hardware:
+
+Change the configuration of model servers under this [directory](server/model_server):
+```python
+import os
+
+# Custom request servicer
+class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
+    def __init__(self):
+        ...
+        os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+```
+A possible value can be your device ID `0`, `0,1`, ...
+
+</li>
+</ul>
 
 ## Demo
 ```shell script
@@ -279,6 +287,8 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 - [x] Docker support
 - [ ] Frontend separation
 - [ ] A minimal product database 
+- [ ] HysiaDecode 18.04 support
+- [ ] HysiaDecode Docker GPU support
 
 ## Credits
 

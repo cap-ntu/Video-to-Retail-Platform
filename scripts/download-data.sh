@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 filenames=(hysia-decoder-lib-linux-x86-64.tar.gz weights.tar.gz object-detection-data.tar.gz)
-fileids=(1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG)
+fileids=(1O1ewejZbMWj43IxL7NInuJss7fNjYc3R 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG)
 unzip_paths=(hysia/core/HysiaDecode . third/object_detection)
 
 for i in $(seq 0 2);
