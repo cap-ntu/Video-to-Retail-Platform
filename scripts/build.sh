@@ -8,8 +8,7 @@ make clean
 
 # obtain nv driver version
 # TODO(lym): Get NV driver version for docker build, one solution could be rebuild when GPU is enabled in runtime.
-version=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1)
-major=${version%.*}
+major=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1 | cut -d. -f1)
 # check if nv driver major version higher than 396
 if ((major > 396))
 then

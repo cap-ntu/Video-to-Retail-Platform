@@ -25,7 +25,7 @@ SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 
 logger = Logger(
     name='feature_extract_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 sentence_model_path = os.path.join(SERVER_ROOT,
