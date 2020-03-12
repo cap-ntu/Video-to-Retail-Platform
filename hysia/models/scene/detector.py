@@ -108,10 +108,9 @@ class scene_visual(object):
 
         return output_dict
 
-    def batch_predict(self, batch: torch.Tensor):
+    def batch_predict(self, batch: torch.Tensor, **kwargs):
         batch = batch.to(self.device)
-        logit = self.model.forward(batch)
-        h_x = F.softmax(logit, 1).data.squeeze()
+        h_x = F.softmax(self.model.forward(batch), 1).data
 
         # top 5, post processing
         sorted, indices = h_x.topk(5, dim=1)
