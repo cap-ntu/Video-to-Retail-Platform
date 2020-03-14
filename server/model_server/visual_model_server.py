@@ -45,7 +45,7 @@ logger = Logger(
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 SSD_mobile_path = SERVER_ROOT + \
-                  '../../weights/ssd_mobilenet_v1_coco_2017_11_17/frozen_inference_graph.pb'
+                  '../../weights/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb'
 SSD_inception_path = SERVER_ROOT + \
                      '../../weights/ssd_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
 

@@ -294,10 +294,13 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 
 Here is a list of models that we used in Hysia-V2O. 
 
-| Models        | GitHub Repo           | License  |
-| ------------- |:-------------:| -----:|
-| MMDetection      |  | |
-| Google Object detection  |  |  |
+| Task                  | Model Name                  | License    | GitHub Repo |
+| --------------------- |:---------------------------:|:----------:|:-----------:|
+| MMDetection           |                             |            |             |
+| Object detection      |                             | Apache-2.0 | [TensorFlow detection model zoo] |
+|                       | [SSD MobileNet v1 COCO]     |            |             |
+|                       | [SSD Inception v2 COCO]     |            |             |
+|                       | [FasterRCNN ResNet101 COCO] |            |             |
 | Scene Recognition | | |
 | Audio Recognition | | |
 | Image Retrieval | | |
@@ -322,3 +325,10 @@ You are welcome to pull request. We will credit it in our version 2.0.
 - Wenbo Jiang (Now, Shopee) [[GitHub]](https://github.com/Lancerchiang)
 - Ziyuan Liu (Now, Tencent) [[GitHub]](https://github.com/ProgrammerYuan)
 - Yongjie Wang (Now, NTU PhD) [[GitHub]](https://github.com/iversonicter)
+
+
+[Tensorflow detection model zoo]: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+[SSD MobileNet v1 COCO]: http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
+[SSD Inception v2 COCO]: http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz
+[FasterRCNN ResNet101 COCO]: http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_2018_01_28.tar.gz
+

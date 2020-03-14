@@ -21,19 +21,21 @@ class TF_SSD(object):
     https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
     """
 
-    def __init__(self, graph, label, num_class):
+    def __init__(self, graph, label, num_class, config: tf.ConfigProto = None):
         """
         :param graph: a tensorflow graph:
         :param label: the label for this dataset:
         :param num_class: how many class in this dataset:
+        :param config: TensorFlow session configuration
         """
 
         with graph.as_default():
-            config = tf.ConfigProto()
-            config.gpu_options.allow_growth = True
+            if config is None:
+                config = tf.ConfigProto()
+                config.gpu_options.allow_growth = True
             self.sess = tf.Session(config=config)
             # Predefine image size as required by SSD
-            self.image_shape = [365, 640, 3]
+            self.image_shape = [600, 600, 3]
             # Predefine confidence threshold
             self.thresh = 0.3
             ops = tf.get_default_graph().get_operations()
@@ -105,6 +107,10 @@ class TF_SSD(object):
         """
         # Run inference
         output_dict = self.sess.run(self.tensor_dict, feed_dict={self.image_tensor: tensor})
+
+        return self.post_process(output_dict)
+
+    def post_process(self, output_dict):
         # All outputs are float32 numpy arrays, so convert types as appropriate
         # Apply threshold on detections
         result = defaultdict(list)
