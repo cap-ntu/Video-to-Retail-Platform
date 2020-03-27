@@ -4,7 +4,7 @@ import logging
 class Logger:
 
     DEFAULT_SEVERITY_LEVELS = {
-        "StreamHandler": logging.INFO,
+        "StreamHandler": 'INFO',
     }
 
     DEFAULT_FORMATTER = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -37,7 +37,7 @@ class Logger:
         else:
             formatter = logging.Formatter(self.DEFAULT_FORMATTER)
 
-        for handler_name in severity_levels:
+        for handler_name in self.severity_levels:
             if handler_name == "FileHandler":
                 if not filename:
                     raise ValueError("filename not provided with FileHandler set")
@@ -46,7 +46,7 @@ class Logger:
             else:
                 handler = getattr(logging, handler_name)()
 
-            handler.setLevel(getattr(logging, severity_levels[handler_name]))
+            handler.setLevel(getattr(logging, self.severity_levels[handler_name]))
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
 
