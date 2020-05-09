@@ -40,12 +40,12 @@ SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 
 logger = Logger(
     name='visual_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 SSD_mobile_path = SERVER_ROOT + \
-                  '../../weights/ssd_mobilenet_v1_coco_2017_11_17/frozen_inference_graph.pb'
+                  '../../weights/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb'
 SSD_inception_path = SERVER_ROOT + \
                      '../../weights/ssd_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
 
@@ -66,6 +66,7 @@ threshold = [0.7, 0.7, 0.9]
 minisize = 25
 
 # Locate place365 model
+PLACE365_NETWORK = 'resnet50'
 PLACES365_MODEL_PATH = SERVER_ROOT + '../../weights/places365/{}.pth'
 PLACES365_LABEL_PATH = SERVER_ROOT + '../../weights/places365/categories.txt'
 
@@ -120,7 +121,7 @@ def load_face_engine():
 def load_places365_engine():
     # Instantiate a place365 model
     with StreamSuppressor():
-        places365_engine = places365_detector.scene_visual('densenet161', PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
+        places365_engine = places365_detector.scene_visual(PLACE365_NETWORK, PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
                                                            'cuda:0')
     logger.info('Finished loading scene classifier')
     return places365_engine
@@ -165,8 +166,8 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
                 'face_bboxes': boxes.tolist(),
                 'face_names': name_list
             })
-        if 'res18-places365' in models:
-            logger.info('Processing with res18-places365')
+        if f'{PLACE365_NETWORK}-places365' in models:
+            logger.info(f'Processing with {PLACE365_NETWORK}-places365')
             det.update(self.places365_engine.detect(Image.fromarray(img), tensor=True))
 
         logger.info('Processing done')

@@ -25,7 +25,7 @@ PATH_TO_PB = SERVER_ROOT + '../../weights/soundnet/soundnet_fr.pb'
 
 logger = Logger(
     name='audio_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 

@@ -20,7 +20,7 @@ VIDEO_DATA_PATH = '/data/disk2/hysia_data/Stanford_Online_Products/'
 
 logger = Logger(
     name='product_search_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 

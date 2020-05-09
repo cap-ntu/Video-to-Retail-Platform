@@ -2,34 +2,40 @@
 # @Author  : Huaizheng Zhang
 # @Site    : zhanghuaizheng.info
 # @File    : tf_detector.py
+from collections import defaultdict
+from itertools import islice
+from operator import itemgetter
 
-
-import tensorflow as tf
-import numpy as np
 import cv2
-from third.object_detection.utils import ops as utils_ops
+import numpy as np
+import tensorflow as tf
+
 from third.object_detection.utils import label_map_util
+from third.object_detection.utils import ops as utils_ops
 
 
 class TF_SSD(object):
-    '''
+    """
     This is a Dectector comes from tensorflow object detector module.
 
     https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
-    '''
-    def __init__(self, graph, label, num_class):
-        '''
+    """
+
+    def __init__(self, graph, label, num_class, config: tf.ConfigProto = None):
+        """
         :param graph: a tensorflow graph:
         :param label: the label for this dataset:
         :param num_class: how many class in this dataset:
-        '''
+        :param config: TensorFlow session configuration
+        """
 
         with graph.as_default():
-            config = tf.ConfigProto()
-            config.gpu_options.allow_growth = True
+            if config is None:
+                config = tf.ConfigProto()
+                config.gpu_options.allow_growth = True
             self.sess = tf.Session(config=config)
             # Predefine image size as required by SSD
-            self.image_shape = [365, 640, 3]
+            self.image_shape = [600, 600, 3]
             # Predefine confidence threshold
             self.thresh = 0.3
             ops = tf.get_default_graph().get_operations()
@@ -76,7 +82,7 @@ class TF_SSD(object):
         :return: a dict containts class name, boxes and confidences:
         '''
         if img.shape != self.image_shape:
-            img = cv2.resize(img, (self.image_shape[0],self.image_shape[1]))
+            img = cv2.resize(img, (self.image_shape[0], self.image_shape[1]))
         # Run inference
         output_dict = self.sess.run(self.tensor_dict, feed_dict={self.image_tensor: np.expand_dims(img, 0)})
         # All outputs are float32 numpy arrays, so convert types as appropriate
@@ -85,9 +91,47 @@ class TF_SSD(object):
         output_dict['num_detections'] = keep[0].size
         output_dict['detection_classes'] = output_dict[
             'detection_classes'][0][keep].astype(np.uint8).tolist()
-        output_dict['detection_classes_names'] = [self.category_index[cls_id]['name'] for cls_id in output_dict['detection_classes']]
+        output_dict['detection_classes_names'] = [self.category_index[cls_id]['name'] for cls_id in
+                                                  output_dict['detection_classes']]
         output_dict['detection_boxes'] = (output_dict['detection_boxes'][0][keep]).tolist()
         output_dict['detection_scores'] = (output_dict['detection_scores'][0][keep]).tolist()
         if 'detection_masks' in output_dict:
             output_dict['detection_masks'] = (output_dict['detection_masks'][0]).tolist()
         return output_dict
+
+    def batch_predict(self, tensor):
+        """
+        :param tensor: a image tensor:
+
+        :return: a dict containts class name, boxes and confidences:
+        """
+        # Run inference
+        output_dict = self.sess.run(self.tensor_dict, feed_dict={self.image_tensor: tensor})
+
+        return self.post_process(output_dict)
+
+    def post_process(self, output_dict):
+        # All outputs are float32 numpy arrays, so convert types as appropriate
+        # Apply threshold on detections
+        result = defaultdict(list)
+
+        indices_bool = output_dict['detection_scores'] >= self.thresh
+        row_indices, col_indices = np.where(indices_bool)
+
+        result['num_detections'] = np.sum(indices_bool, axis=1).tolist()
+        detection_classes = output_dict['detection_classes'][row_indices, col_indices].astype(np.uint8).tolist()
+        detection_boxes = output_dict['detection_boxes'][row_indices, col_indices, :].tolist()
+        detection_scores = output_dict['detection_scores'][row_indices, col_indices].tolist()
+        detection_classes_names = list(itemgetter(*detection_classes)(self.category_index))
+
+        if 'detection_masks' in output_dict:
+            result['detection_masks'] = output_dict['detection_masks'][row_indices, col_indices, :].tolist()
+
+        # obtain all result in a sequence
+        for length in result['num_detections']:
+            result['detection_classes'].append(list(islice(detection_classes, length)))
+            result['detection_boxes'].append(list(islice(detection_boxes, length)))
+            result['detection_scores'].append(list(islice(detection_scores, length)))
+            result['detection_classes_names'].append(list(islice(detection_classes_names, length)))
+
+        return dict(result)

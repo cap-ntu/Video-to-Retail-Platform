@@ -23,7 +23,7 @@ _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 
 logger = Logger(
     name='scene_search_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 video_path = osp.join(SERVER_ROOT, '../output/multi_features')

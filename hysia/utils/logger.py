@@ -4,12 +4,12 @@ import logging
 class Logger:
 
     DEFAULT_SEVERITY_LEVELS = {
-        "StreamHandler": logging.INFO,
+        "StreamHandler": 'INFO',
     }
 
     DEFAULT_FORMATTER = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
-    def __init__(self, name=None, filename=None, severity_levels=None):
+    def __init__(self, name=None, filename=None, severity_levels=None, formatter=None, welcome=True):
         """
 
         :param name: optional name of logger
@@ -19,6 +19,8 @@ class Logger:
                 "StreamHandler": "INFO",
                 "FileHandler": "DEBUG",
             }
+        :param formatter: str formatter for output
+        :param welcome: bool Welcome message to logged when the logger is created. Default to `True`
         """
 
         self.logger = logging.getLogger(name)
@@ -29,9 +31,13 @@ class Logger:
         else:
             self.severity_levels = self.DEFAULT_SEVERITY_LEVELS
 
-        formatter = logging.Formatter(self.DEFAULT_FORMATTER)
+        if formatter:
+            assert isinstance(formatter, str)
+            formatter = logging.Formatter(formatter)
+        else:
+            formatter = logging.Formatter(self.DEFAULT_FORMATTER)
 
-        for handler_name in severity_levels:
+        for handler_name in self.severity_levels:
             if handler_name == "FileHandler":
                 if not filename:
                     raise ValueError("filename not provided with FileHandler set")
@@ -40,11 +46,12 @@ class Logger:
             else:
                 handler = getattr(logging, handler_name)()
 
-            handler.setLevel(getattr(logging, severity_levels[handler_name]))
+            handler.setLevel(getattr(logging, self.severity_levels[handler_name]))
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
 
-        self.logger.info("Logger %s created" % name)
+        if welcome:
+            self.logger.info("Logger %s created" % name)
 
     def info(self, message):
         self.logger.info(message)
