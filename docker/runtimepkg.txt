@@ -1,2 +1,11 @@
 ca-certificates
 libsndfile1
+libtheora0
+libx11-6
+libvdpau1
+libgomp1
+libnuma1
+libdrm2
+libxext6
+libxfixes3
+libopenblas-base

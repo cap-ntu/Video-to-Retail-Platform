@@ -8,7 +8,7 @@ import grpc
 
 from hysia.search.product_search import ProductSearch
 from hysia.utils.logger import Logger
-from model_server.utils import StreamSuppressor
+from hysia.utils.perf import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
@@ -20,7 +20,7 @@ VIDEO_DATA_PATH = '/data/disk2/hysia_data/Stanford_Online_Products/'
 
 logger = Logger(
     name='product_search_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 
@@ -33,7 +33,7 @@ def load_search_machine():
 # Custom request servicer
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
-        os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+        os.environ['CUDA_VISIBLE_DEVICES'] = '2'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
         self.search_machine = load_search_machine()
 

@@ -3,16 +3,16 @@
 # @Author  : Huaizheng Zhang
 # @Site    : zhanghuaizheng.info
 # @File    : detector.py
-
+from operator import itemgetter
 
 import torch
 import torchvision.models as models
-from torchvision import transforms as trn
-from torch.nn import functional as F
 from PIL import Image
-from cirtorch.layers.pooling import MAC, SPoC, GeM, RMAC
-from cirtorch.layers.normalization import L2N
-from cirtorch.networks.imageretrievalnet import ImageRetrievalNet, extract_vectors
+from torch.nn import functional as F
+from torchvision import transforms as trn
+
+from cirtorch.layers.pooling import MAC
+from cirtorch.networks.imageretrievalnet import ImageRetrievalNet
 
 
 class scene_visual(object):
@@ -33,7 +33,16 @@ class scene_visual(object):
         self.model = models.__dict__[self.network](num_classes=365)
         self.model_file = model_file.format(self.network)
         checkpoint = torch.load(self.model_file, map_location=lambda storage, loc: storage)
-        state_dict = {str.replace(k, 'module.', ''): v for k, v in checkpoint['state_dict'].items()}
+        if self.network == "densenet161":
+            state_dict = {str.replace(k, 'module.', ''): v for k, v in checkpoint['state_dict'].items()}
+            state_dict = {str.replace(k, 'norm.', 'norm'): v for k, v in state_dict.items()}
+            state_dict = {str.replace(k, 'conv.', 'conv'): v for k, v in state_dict.items()}
+            state_dict = {str.replace(k, 'normweight', 'norm.weight'): v for k, v in state_dict.items()}
+            state_dict = {str.replace(k, 'normrunning', 'norm.running'): v for k, v in state_dict.items()}
+            state_dict = {str.replace(k, 'normbias', 'norm.bias'): v for k, v in state_dict.items()}
+            state_dict = {str.replace(k, 'convweight', 'conv.weight'): v for k, v in state_dict.items()}
+        else:
+            state_dict = {str.replace(k, 'module.', ''): v for k, v in checkpoint['state_dict'].items()}
         self.model.load_state_dict(state_dict)
         self.device = device
         self.model.to(self.device)
@@ -69,12 +78,12 @@ class scene_visual(object):
         self.vector_model = ImageRetrievalNet(self.features, self.pooling, self.whiten, meta)
 
     def detect(self, image_path, tensor=False):
-        '''
+        """
 
         :param image_path:
         :param tensor:
         :return: dict:
-        '''
+        """
         output_dict = {}
         scenes = list()
         confidences = list()
@@ -98,6 +107,21 @@ class scene_visual(object):
         output_dict['score'] = confidences
 
         return output_dict
+
+    def batch_predict(self, batch: torch.Tensor, **kwargs):
+        batch = batch.to(self.device)
+        h_x = F.softmax(self.model.forward(batch), 1).data
+
+        # top 5, post processing
+        sorted, indices = h_x.topk(5, dim=1)
+        scores, indices = sorted.cpu().tolist(), indices.cpu().tolist()
+
+        scenes = [list(itemgetter(*index)(self.classes)) for index in indices]
+
+        return {
+            'scenes': scenes,
+            'scores': scores,
+        }
 
     def extract_vec(self, image_path, tensor=False):
         if not tensor:

@@ -137,7 +137,7 @@ dependencies:
     - djangorestframework==3.10.3
     - easydict==1.8
     - faiss-gpu==1.6.0
-    - gputil==1.4.0
+    - gputil==git+git://github.com/ZhouShengsheng/gputil.git@master
     - hyperlink==19.0.0
     - idna==2.6
     - imageio-ffmpeg==0.3.0

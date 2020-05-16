@@ -13,7 +13,7 @@ import numpy as np
 
 
 if __name__ == '__main__':
-    scene_model = scene_visual('resnet50', '../weights/places365/{}.pth', '../weights/places365/categories.txt', 'cuda:0')
+    scene_model = scene_visual('densenet161', '../weights/places365/{}.pth', '../weights/places365/categories.txt', 'cuda:0')
     for i in ['test1.jpg', 'test2.jpg']:
         temp = scene_model.detect(i)
         print(temp)

@@ -9,8 +9,8 @@ import grpc
 
 from hysia.search.search import DatabasePklSearch
 from hysia.utils.logger import Logger
+from hysia.utils.perf import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
-from .utils import StreamSuppressor
 
 SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 
@@ -23,7 +23,7 @@ _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 
 logger = Logger(
     name='scene_search_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 video_path = osp.join(SERVER_ROOT, '../output/multi_features')

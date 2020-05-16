@@ -8,8 +8,8 @@ import grpc
 import tensorflow as tf
 
 from hysia.utils.logger import Logger
+from hysia.utils.perf import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
-from .utils import StreamSuppressor
 
 with StreamSuppressor():
     from hysia.models.scene.soundnet_classifier import SoundNetClassifier
@@ -25,7 +25,7 @@ PATH_TO_PB = SERVER_ROOT + '../../weights/soundnet/soundnet_fr.pb'
 
 logger = Logger(
     name='audio_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 
@@ -49,7 +49,7 @@ def load_soundnet():
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
         super().__init__()
-        os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+        os.environ['CUDA_VISIBLE_DEVICES'] = '2'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
         self.soundnet = load_soundnet()
 

@@ -1,0 +1,7 @@
+# leave CUDA:0 in case of someone train models without checking GPU usage
+decoder: CPU
+visual_model_server: CUDA:1
+audio_model_server: CUDA:2
+feature_model_server: CUDA:3
+product_search_server: CUDA:2
+scene_search_server: CUDA:3

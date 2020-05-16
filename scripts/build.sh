@@ -7,14 +7,14 @@ cd "${BASE_DIR}"/hysia/core/HysiaDecode || return 1
 make clean
 
 # obtain nv driver version
-version=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1)
-major=${version%.*}
+# TODO(lym): Get NV driver version for docker build, one solution could be rebuild when GPU is enabled in runtime.
+major=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits | head -n 1 | cut -d. -f1)
 # check if nv driver major version higher than 396
 if ((major > 396))
 then
   make
 else
-  make NV_VERSION="${major}"
+  make CPU_ONLY=TRUE
 fi
 
 # build mmdect

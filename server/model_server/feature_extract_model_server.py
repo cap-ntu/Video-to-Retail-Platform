@@ -15,7 +15,7 @@ from hysia.models.nlp.sentence import TF_Sentence
 from hysia.models.object.audioset_feature_extractor import AudiosetFeatureExtractor
 from hysia.models.scene.detector import scene_visual
 from hysia.utils.logger import Logger
-from model_server.utils import StreamSuppressor
+from hysia.utils.perf import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Time constant
@@ -25,7 +25,7 @@ SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 
 logger = Logger(
     name='feature_extract_model_server',
-    severity_levels={'StreamHandler': 'INFO'}
+    severity_levels={'StreamHandler': 'ERROR'}
 )
 
 sentence_model_path = os.path.join(SERVER_ROOT,

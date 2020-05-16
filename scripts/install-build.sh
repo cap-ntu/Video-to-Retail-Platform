@@ -4,7 +4,7 @@
 conda env create -f environment.yml
 
 eval "$(conda shell.bash hook)"
-conda activate Hysia
+conda activate V2O
 
 # call build
 cd ..
