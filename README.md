@@ -1,4 +1,7 @@
-# Hysia Video to Online Platform \[V1.0\]
+<h1 align="center">
+Hysia Video to Online Platform
+</h1>
+
 <sub>* This project is supported by 
 [Cloud Application and Platform Lab](https://wiki.withcap.org) 
 led by [Prof. Yonggang Wen](https://www.ntu.edu.sg/home/ygwen/)</sub>  
@@ -11,7 +14,7 @@ into V2.
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
-<div style="text-align:center;">
+<p align="center">
   <a href="#showcase">Showcase</a> •
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
@@ -19,7 +22,7 @@ into V2.
   <a href="#demo">Demo</a> •
   <a href="#credits">Credits</a> •
   <a href="#about-us">About Us</a>
-</div>
+</p>
 
 ## Showcase
 
