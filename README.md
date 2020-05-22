@@ -11,19 +11,15 @@ into V2.
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
-## Table of Contents
-
-1. [Showcase](/#showcase)
-2. [Features](/#features)
-3. [Download Data](/#download-data)
-4. [Installation](/#installation)
-5. [Configuration](/#configuration)
-6. [Demo](/#demo)
-7. [Some Useful Tools](/#some-useful-tools)
-8. [Todo List](/#todo-list)
-9. [Credits](/#credits)
-10. [Contribute to Hysia-V2O](/#contribute-to-hysia-v2o)
-11. [About Us](/#about-us)
+<div style="text-align:center;">
+  <a href="#showcase">Showcase</a> •
+  <a href="#features">Features</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#configuration">Configuration</a> •
+  <a href="#demo">Demo</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#about-us">About Us</a>
+</div>
 
 ## Showcase
 
@@ -95,9 +91,9 @@ Requirements:
 
 These scripts are tested on Ubuntu 16.04 x86-64 with CUDA9.0 and CUDNN7. Docker is recommended for other system version.   
 
-#### Option 1: Use Docker  
+#### Option 1: :whale: Docker
 
-See [Run with Docker](docker/README.md) to build and install. 
+:point_right: See [Run with Docker](docker/README.md) to build and install. 
 
 #### Option 2: Auto-installation
 
