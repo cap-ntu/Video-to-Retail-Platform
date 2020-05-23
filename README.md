@@ -9,15 +9,13 @@ led by [Prof. Yonggang Wen](https://www.ntu.edu.sg/home/ygwen/)</sub>
 An intelligent multimodal-learning based system for video, product and ads analysis. You can build various downstream 
 applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
-**V2** is under active development currently. You are welcome to create a issue, pull request here. We will credit them
-into V2.
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
 <p align="center">
   <a href="#showcase">Showcase</a> •
   <a href="#features">Features</a> •
-  <a href="#quick-start">Quick Start</a> •
+  <a href="#setup-environment">Setup Environment</a> •
   <a href="#configuration">Configuration</a> •
   <a href="#demo">Demo</a> •
   <a href="#credits">Credits</a> •
@@ -26,7 +24,7 @@ into V2.
 
 ## Showcase
 
-:point_right: Full list of [showcase](./show-case.md).
+:point_right: Full list of [showcase](docs/Showcase.md).
 
 <ol>
 <li> Upload video and process it by selecting different models  
@@ -68,54 +66,23 @@ into V2.
     - Visualize multimodality results
     - Can be installed seperatelly
 
-## Quick Start
-
-:point_right: For [step-by-step start](./Step-by-step-start.md).
+## Setup Environment
 
 ### 1. Download Data
 
-:point_right: For [no Google Drive access](./Step-by-step-start.md#1-download-data) :x:
+:point_right: For [:x: no Google Drive access](CONTRIBUTING.md#1-download-data).
 
 ```shell script
 # Make sure this script is run from project root
 bash scripts/download-data.sh
-cd ..
 ```
 
 ### 2. Installation
 
-Requirements:
-- Conda
-- Nvidia driver
-- CUDA = 9[*](#todo-list)
-- CUDNN
-- g++
-- zlib1g-dev
-
-These scripts are tested on Ubuntu 16.04 x86-64 with CUDA9.0 and CUDNN7. Docker is recommended for other system version.   
-
-#### Option 1: :whale: Docker
-
-:point_right: See [Run with Docker](docker/README.md) to build and install. 
-
-#### Option 2: Auto-installation
-
-Run the following script:
-```shell script
-# Execute this script at project root
-bash scripts/install-build.sh
-cd ..
-```
-
-### (Optional) Rebuild the frontend
-You can omit this part as we have provided a pre-built frontend. If the frontend is updated, please run the following:  
-
-```shell script
-cd server/react-build
-bash ./build.sh
-```
+:point_right: See [Run with Docker :whale:](docker/README.md) to build and install. 
 
 ## Configuration
+
 <ul>
 <li> Decode hardware:  
 
@@ -162,17 +129,6 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 - Model profiling
 - Multimodality data testbed
 
-## Todo List
-
-- [ ] Improve models
-- [ ] Improve documents
-- [ ] CUDA 10 support
-- [x] Docker support
-- [ ] Frontend separation
-- [ ] A minimal product database 
-- [ ] HysiaDecode 18.04 support
-- [ ] HysiaDecode Docker GPU support
-
 ## Credits
 
 Here is a list of models that we used in Hysia-V2O. 
@@ -192,15 +148,15 @@ Here is a list of models that we used in Hysia-V2O.
 | Text Detection| | |
 | Text Recognition| | |
 
-## Contribute to Hysia-V2O
+## Contributing
 
-You are welcome to pull request. We will credit it in our version 2.0.
+You are welcome to contribute to Hysia! Please refer to [here](CONTRIBUTING.md) to get start.
 
 ## About Us
 
 ### Maintainers
 - Huaizheng Zhang [[GitHub]](https://github.com/HuaizhengZhang)
-- Yuanming Li yli056@e.ntu.edu.sg [[GitHub]](https://github.com/YuanmingLeee)
+- Yuanming Li [[GitHub]](https://github.com/YuanmingLeee)
 - Qiming Ai [[GitHub]](https://github.com/QimingAi)
 - Shengsheng Zhou [[GitHub]](https://github.com/ZhouShengsheng)
 
