@@ -9,6 +9,8 @@ led by [Prof. Yonggang Wen](https://www.ntu.edu.sg/home/ygwen/)</sub>
 An intelligent multimodal-learning based system for video, product and ads analysis. You can build various downstream 
 applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
+**V2** is under active development currently. You are welcome to create a issue, pull request here. We will credit them
+into V2.
 
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
@@ -151,6 +153,11 @@ Here is a list of models that we used in Hysia-V2O.
 ## Contributing
 
 You are welcome to contribute to Hysia! Please refer to [here](CONTRIBUTING.md) to get start.
+
+## Paper Citation
+
+Coming soon!
+
 
 ## About Us
 
