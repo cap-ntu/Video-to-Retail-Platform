@@ -25,11 +25,11 @@ SECRET_KEY = 'hi(o-1t(ukianx3%zxgob)@!k^@7wo17r09yx9ac9t320z0s^7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # We can access the remote
-ALLOWED_HOSTS = ['155.69.146.227', '155.69.146.227:3000']
+ALLOWED_HOSTS = ['*']
 
 # CORS configs
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ['http://155.69.146.227:3000']
+CORS_ORIGIN_WHITELIST = ['*']
 
 # Channels-specific settings
 
