@@ -81,7 +81,12 @@ bash scripts/download-data.sh
 
 ### 2. Installation
 
-:point_right: See [Run with Docker :whale:](docker/README.md) to build and install. 
+:point_right: Run with Docker :whale:
+
+```shell script
+docker pull hysia/hysia:v2o
+docker run --gpus all -d -p 8000:8000 hysia/hysia:v2o
+```
 
 ## Configuration
 
