@@ -11,8 +11,6 @@ from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
-SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
-
 # Time constant
 _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 
@@ -20,7 +18,7 @@ VIDEO_DATA_PATH = '/data/disk2/hysia_data/Stanford_Online_Products/'
 
 logger = Logger(
     name='product_search_model_server',
-    severity_levels={'StreamHandler': 'ERROR'}
+    severity_levels={'StreamHandler': 'INFO'}
 )
 
 

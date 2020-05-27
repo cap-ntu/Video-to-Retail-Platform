@@ -9,11 +9,8 @@ import time
 from concurrent import futures
 
 import cv2
-# gRPC imports
 import grpc
-# Basic imports
 import numpy as np
-import tensorflow as tf
 from PIL import Image
 
 # face imports
@@ -26,79 +23,46 @@ from hysia.models.scene import detector as places365_detector
 from hysia.models.text.tf_detector import TF_CTPN as CtpnEngine
 from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
-from hysia.utils.perf import timeit
+from model_server import config, WEIGHT_DIR
+from model_server.misc import load_tf_graph
 from protos import api2msl_pb2, api2msl_pb2_grpc
-
-# Load detector graph
 
 # Time constant
 _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 # List of the strings that is used to add correct label for each box.
 NUM_CLASS = 90
-# What model to download.
-SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 
 logger = Logger(
     name='visual_model_server',
-    severity_levels={'StreamHandler': 'ERROR'}
+    severity_levels={'StreamHandler': 'INFO'}
 )
 
-# Path to frozen detection graph. This is the actual model that is used for the object detection.
-SSD_mobile_path = SERVER_ROOT + \
-                  '../../weights/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb'
-SSD_inception_path = SERVER_ROOT + \
-                     '../../weights/ssd_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
-
-FASTERRCNN_resnet101_path = SERVER_ROOT + \
-                     '../../weights/faster_rcnn_resnet101_coco_2018_01_28/frozen_inference_graph.pb'
-
-PATH_TO_LABELS = SERVER_ROOT + '../../third/object_detection/data/mscoco_label_map.pbtxt'
-
-# Load text detector graph
-PATH_TO_FROZEN_GRAPH = SERVER_ROOT + '../../weights/ctpn/ctpn.pb'
-
 # Locate faces frozen graph and face recognition module
-mtcnn_model = SERVER_ROOT + '../../weights/mtcnn/mtcnn.pb'
-model = SERVER_ROOT + '../../weights/face_recog/InsightFace_TF.pb'
-saved_dataset = SERVER_ROOT + '../../weights/face_recog/dataset48.pkl'
 factor = 0.7
 threshold = [0.7, 0.7, 0.9]
 minisize = 25
 
-# Locate place365 model
-PLACE365_NETWORK = 'resnet50'
-PLACES365_MODEL_PATH = SERVER_ROOT + '../../weights/places365/{}.pth'
-PLACES365_LABEL_PATH = SERVER_ROOT + '../../weights/places365/categories.txt'
 
-@timeit
-def load_detector_engine(model_path=SSD_inception_path):
+def load_detector_engine():
+
+    ssd_config = config.object_detection.ssd
+    backbone = ssd_config.backbone
+    model_path = WEIGHT_DIR / getattr(ssd_config, backbone)
+    label_path = str(WEIGHT_DIR / ssd_config.label)
+
     # Load the TensorFlow graph
-    with StreamSuppressor():
-        detection_graph = tf.Graph()
-        with detection_graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(model_path, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
+    detection_graph = load_tf_graph(model_path)
 
     # Instantiate a DetectorEngine
     with StreamSuppressor():
-        detector_engine = DetectorEngine(detection_graph, PATH_TO_LABELS, NUM_CLASS)
-    logger.info('Finished loading {} detector'.format(model_path))
+        detector_engine = DetectorEngine(detection_graph, label_path, NUM_CLASS)
+    logger.info('Finished loading {} detector'.format(backbone))
 
     return detector_engine
 
-@timeit
+
 def load_ctpn_engine():
-    with StreamSuppressor():
-        text_detection_graph = tf.Graph()
-        with text_detection_graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(PATH_TO_FROZEN_GRAPH, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
+    text_detection_graph = load_tf_graph(WEIGHT_DIR / config.text.ctpn)
 
     # Instantiate a CtpnEngine as global variable
     with StreamSuppressor():
@@ -106,25 +70,22 @@ def load_ctpn_engine():
     logger.info('Finished loading text detector')
     return ctpn_engine
 
-@timeit
+
 def load_face_engine():
+
+    face_config = config.face
+    model_path = str(WEIGHT_DIR / face_config.model)
+    dataset_path = WEIGHT_DIR / face_config.saved_dataset
+    mtcnn_path = str(WEIGHT_DIR / face_config.mtcnn_model)
+
     # Instantiate a face detection and recognition engine
     with StreamSuppressor():
-        face_engine = recog(model, saved_dataset)
+        face_engine = recog(model_path, dataset_path)
         face_engine.init_tf_env()
         face_engine.load_feature()
-        face_engine.init_mtcnn_detector(mtcnn_model, threshold, minisize, factor)
+        face_engine.init_mtcnn_detector(mtcnn_path, threshold, minisize, factor)
     logger.info('Finished loading face models')
     return face_engine
-
-@timeit
-def load_places365_engine():
-    # Instantiate a place365 model
-    with StreamSuppressor():
-        places365_engine = places365_detector.scene_visual(PLACE365_NETWORK, PLACES365_MODEL_PATH, PLACES365_LABEL_PATH,
-                                                           'cuda:0')
-    logger.info('Finished loading scene classifier')
-    return places365_engine
 
 
 # Custom request servicer
@@ -134,10 +95,16 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         # todo(zhz): use device_placement.yml device
         os.environ['CUDA_VISIBLE_DEVICES'] = '1'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
-        self.detector_engine = load_detector_engine(SSD_mobile_path)
+        self.detector_engine = load_detector_engine()
         self.ctpn_engine = load_ctpn_engine()
         self.face_engine = load_face_engine()
-        self.places365_engine = load_places365_engine()
+
+        # load scene detection model
+        places365_config = config.scene.places365
+        self.backbone = places365_config.backbone
+        model = str(WEIGHT_DIR / places365_config.model)
+        label = WEIGHT_DIR / places365_config.label
+        self.places365_engine = places365_detector.scene_visual(self.backbone, model, label, 'cuda:0')
 
     def GetJson(self, request, context):
         img = cv2.imdecode(np.fromstring(request.buf, dtype=np.uint8), -1)
@@ -166,8 +133,8 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
                 'face_bboxes': boxes.tolist(),
                 'face_names': name_list
             })
-        if f'{PLACE365_NETWORK}-places365' in models:
-            logger.info(f'Processing with {PLACE365_NETWORK}-places365')
+        if f'{self.backbone}-places365' in models:
+            logger.info(f'Processing with {self.backbone}-places365')
             det.update(self.places365_engine.detect(Image.fromarray(img), tensor=True))
 
         logger.info('Processing done')

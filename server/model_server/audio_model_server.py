@@ -3,12 +3,12 @@ import os
 import time
 from concurrent import futures
 
-# rpc imports
 import grpc
-import tensorflow as tf
 
 from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
+from model_server import config, WEIGHT_DIR
+from model_server.misc import load_tf_graph
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 with StreamSuppressor():
@@ -19,29 +19,17 @@ _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 
 FRAME_RATE = 10
 
-SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
-
-PATH_TO_PB = SERVER_ROOT + '../../weights/soundnet/soundnet_fr.pb'
-
 logger = Logger(
     name='audio_model_server',
-    severity_levels={'StreamHandler': 'ERROR'}
+    severity_levels={'StreamHandler': 'INFO'}
 )
 
 
-def load_soundnet():
-    with StreamSuppressor():
-        soundnet_graph = tf.Graph()
-        with soundnet_graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(PATH_TO_PB, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
+def load_sound_net(sound_net_model_path):
+    soundnet_graph = load_tf_graph(sound_net_model_path)
+    soundnet = SoundNetClassifier(soundnet_graph)
 
-        soundnet = SoundNetClassifier(soundnet_graph)
-
-    logger.info('Soundnet loaded')
+    logger.info('SoundNet loaded')
     return soundnet
 
 
@@ -51,7 +39,7 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         super().__init__()
         os.environ['CUDA_VISIBLE_DEVICES'] = '2'
         logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
-        self.soundnet = load_soundnet()
+        self.sound_net = load_sound_net(WEIGHT_DIR / config.scene.sound_net)
 
     def GetJson(self, request, context):
         res = {}
@@ -61,7 +49,7 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
             audio_path = request.buf.decode()
             logger.info('Processing audio ' + audio_path)
             with StreamSuppressor():
-                res = self.soundnet.classify_frame(audio_path, fr=FRAME_RATE)
+                res = self.sound_net.classify_frame(audio_path, fr=FRAME_RATE)
             logger.info('Finished Processing audio ' + audio_path)
         return api2msl_pb2.JsonReply(json=json.dumps(res), meta=str(FRAME_RATE))
 

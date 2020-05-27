@@ -1,0 +1,24 @@
+object_detection:
+  ssd:
+    backbone: mobilenet
+    mobilenet: ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb
+    inception: ssd_inception_v2_coco_2018_01_28/frozen_inference_graph.pb
+    farterrcnn_resnet101: faster_rcnn_resnet101_coco_2018_01_28/frozen_inference_graph.pb
+    label: mscoco_label_map.pbtxt
+text:
+  ctpn: ctpn/ctpn.pb
+face:
+  mtcnn_model: mtcnn/mtcnn.pb
+  model: face_recog/InsightFace_TF.pb
+  saved_dataset: face_recog/dataset48.pkl
+scene:
+  places365:
+    backbone: resnet50
+    model: places365/{}.pth
+    label: places365/categories.txt
+  sound_net: soundnet/soundnet_fr.pb
+feature_extraction:
+  sentence_encoder: sentence
+  vggish:
+    fr: audioset/vggish_fr.pb
+    pca: vggish_pca_params.npz

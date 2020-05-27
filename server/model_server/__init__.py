@@ -1,15 +1,18 @@
-import os
-import sys
 from pathlib import Path
 
-current_dir = Path(__file__).absolute().parent
+import yaml
 
-# Add lib to PYTHONPATH
-root_dir = current_dir.parents[1]
-third_dir = root_dir / 'third'
+from utils.misc import dict_to_object
 
-os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
+WEIGHT_DIR = Path(__file__).absolute().parents[2] / 'weights'
 
-for path in [root_dir, third_dir]:
-    if path not in sys.path:
-        sys.path.insert(0, str(path))
+# load config
+with open(Path(__file__).absolute().parents[1] / 'config/weight_config.yml', 'r') as stream:
+    try:
+        config = yaml.safe_load(stream)
+        config = dict_to_object(config)
+    except yaml.YAMLError as e:
+        print(e)
+        exit(1)
+
+__all__ = ['WEIGHT_DIR', 'config']

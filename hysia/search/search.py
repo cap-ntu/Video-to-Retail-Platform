@@ -4,14 +4,16 @@
 # @File    : search.py
 
 
-from search.index import BasicIndex, SubtitleIndex
-from models.scene.detector import scene_visual
-from models.nlp.sentence import TF_Sentence
-import cv2
-from PIL import Image
-import numpy as np
-import time
 import os
+import time
+
+import cv2
+import numpy as np
+from PIL import Image
+
+from models.nlp.sentence import TF_Sentence
+from models.scene.detector import scene_visual
+from search.index import BasicIndex, SubtitleIndex
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -20,6 +22,7 @@ class BasicSearch(object):
     '''
     This is the product-content match module.
     '''
+
     def __init__(self, database):
         '''
 
@@ -45,7 +48,8 @@ class BasicSearch(object):
                                         os.path.join(THIS_DIR, '../../weights/places365/categories.txt'),
                                         'cuda:0')
 
-        self.sentence_model = TF_Sentence(os.path.join(THIS_DIR, '../../weights/sentence/96e8f1d3d4d90ce86b2db128249eb8143a91db73'))
+        self.sentence_model = TF_Sentence(
+            os.path.join(THIS_DIR, '../../weights/sentence'))
 
     def search(self, image_query, subtitle_query=None, audio_query=None, face_query=None, topK=30):
         '''
@@ -98,17 +102,16 @@ class BasicSearch(object):
 
         return results
 
+
 class DatabasePklSearch(BasicSearch):
     '''
     This is for pkl search and then connect to database to do more operations.
     '''
-    
+
     def __init__(self, database):
-        '''
-
+        """
         :param database: the path contains many .pkl file
-        '''
-
+        """
         try:
             self.database = database
 
@@ -127,9 +130,7 @@ class DatabasePklSearch(BasicSearch):
                                         os.path.join(THIS_DIR, '../../weights/places365/categories.txt'),
                                         'cuda:0')
 
-        self.sentence_model = TF_Sentence(os.path.join(THIS_DIR, '../../weights/sentence/96e8f1d3d4d90ce86b2db128249eb8143a91db73'))
-
-
+        self.sentence_model = TF_Sentence(os.path.join(THIS_DIR, '../../weights/sentence'))
 
     def search(self, image_query, subtitle_query=None, audio_query=None, face_query=None, topK=30, tv_name=None):
         '''
@@ -194,8 +195,6 @@ class DatabasePklSearch(BasicSearch):
         print("Reset product image GPU indexer")
 
         return results
-
-
 
     def add_pkl(self):
         '''
