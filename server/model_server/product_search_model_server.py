@@ -9,6 +9,8 @@ import grpc
 from hysia.search.product_search import ProductSearch
 from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
+from model_server import device_config
+from model_server.misc import obtain_device
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Time constant
@@ -31,8 +33,15 @@ def load_search_machine():
 # Custom request servicer
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
-        os.environ['CUDA_VISIBLE_DEVICES'] = '2'
-        logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
+        super().__init__()
+        cuda, device_num = obtain_device(device_config.product_search_server)
+
+        if cuda:
+            os.environ['CUDA_VISIBLE_DEVICES'] = str(device_num)
+        else:
+            os.environ['CUDA_VISIBLE_DEVICES'] = ''
+
+        logger.info(f'Using {"CUDA:" if cuda else "CPU"}{os.environ["CUDA_VISIBLE_DEVICES"]}')
         self.search_machine = load_search_machine()
 
     def GetJson(self, request, context):

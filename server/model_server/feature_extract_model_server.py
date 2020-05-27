@@ -13,8 +13,8 @@ from hysia.models.nlp.sentence import TF_Sentence
 from hysia.models.object.audioset_feature_extractor import AudiosetFeatureExtractor
 from hysia.models.scene.detector import scene_visual
 from hysia.utils.logger import Logger
-from model_server import config, WEIGHT_DIR
-from model_server.misc import load_tf_graph
+from model_server import config, WEIGHT_DIR, device_config
+from model_server.misc import load_tf_graph, obtain_device
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Time constant
@@ -45,8 +45,16 @@ def load_audio_model():
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
         super().__init__()
-        os.environ['CUDA_VISIBLE_DEVICES'] = '3'
-        logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
+
+        cuda, device_num = obtain_device(device_config.scene_search_server)
+
+        if cuda:
+            os.environ['CUDA_VISIBLE_DEVICES'] = str(device_num)
+        else:
+            os.environ['CUDA_VISIBLE_DEVICES'] = ''
+
+        logger.info(f'Using {"CUDA:" if cuda else "CPU"}{os.environ["CUDA_VISIBLE_DEVICES"]}')
+
         self.sentence_model = load_sentence_model()
         self.audio_model = load_audio_model()
 
@@ -55,7 +63,7 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         self.backbone = places365_config.backbone
         model_path = str(WEIGHT_DIR / places365_config.model)
         label_path = WEIGHT_DIR / places365_config.label
-        self.scene_recognition_model = scene_visual(self.backbone, model_path, label_path, 'cuda:0')
+        self.scene_recognition_model = scene_visual(self.backbone, model_path, label_path, 'cuda' if cuda else 'cpu')
 
     def GetJson(self, request, context):
         res = {}

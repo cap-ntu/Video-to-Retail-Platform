@@ -7,8 +7,8 @@ import grpc
 
 from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
-from model_server import config, WEIGHT_DIR
-from model_server.misc import load_tf_graph
+from model_server import config, WEIGHT_DIR, device_config
+from model_server.misc import load_tf_graph, obtain_device
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 with StreamSuppressor():
@@ -37,8 +37,16 @@ def load_sound_net(sound_net_model_path):
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
         super().__init__()
-        os.environ['CUDA_VISIBLE_DEVICES'] = '2'
-        logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
+
+        cuda, device_num = obtain_device(device_config.audio_model_server)
+
+        if cuda:
+            os.environ['CUDA_VISIBLE_DEVICES'] = str(device_num)
+        else:
+            os.environ['CUDA_VISIBLE_DEVICES'] = ''
+
+        logger.info(f'Using {"CUDA:" if cuda else "CPU"}{os.environ["CUDA_VISIBLE_DEVICES"]}')
+
         self.sound_net = load_sound_net(WEIGHT_DIR / config.scene.sound_net)
 
     def GetJson(self, request, context):
