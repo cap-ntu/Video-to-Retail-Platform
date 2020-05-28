@@ -1,32 +1,27 @@
 import json
 import os
-import os.path as osp
 import time
 from concurrent import futures
+from pathlib import Path
 
-# rpc imports
 import grpc
 
 from hysia.search.search import DatabasePklSearch
 from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
+from model_server import device_config
+from model_server.misc import obtain_device
 from protos import api2msl_pb2, api2msl_pb2_grpc
-
-SERVER_ROOT = os.path.dirname(os.path.abspath(__file__)) + '/'
 
 # Time constant
 _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 
-# TVQA dataset for efficient test
-# VIDEO_DATA_PATH = '/data/disk2/hysia_data/UNC_TVQA_DATASET'
-# search_machine = BasicSearch(VIDEO_DATA_PATH)
-
 logger = Logger(
     name='scene_search_model_server',
-    severity_levels={'StreamHandler': 'ERROR'}
+    severity_levels={'StreamHandler': 'INFO'}
 )
 
-video_path = osp.join(SERVER_ROOT, '../output/multi_features')
+video_path = Path(__file__).absolute().parents[1] / 'output/multi_features'
 
 
 def load_search_machine():
@@ -39,8 +34,16 @@ def load_search_machine():
 class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
     def __init__(self):
         super().__init__()
-        os.environ['CUDA_VISIBLE_DEVICES'] = '3'
-        logger.info('Using GPU:' + os.environ['CUDA_VISIBLE_DEVICES'])
+
+        cuda, device_num = obtain_device(device_config.feature_model_server)
+
+        if cuda:
+            os.environ['CUDA_VISIBLE_DEVICES'] = str(device_num)
+        else:
+            os.environ['CUDA_VISIBLE_DEVICES'] = ''
+
+        logger.info(f'Using {"CUDA:" if cuda else "CPU"}{os.environ["CUDA_VISIBLE_DEVICES"]}')
+
         self.search_machine = load_search_machine()
 
     def GetJson(self, request, context):

@@ -100,7 +100,7 @@ def index_scene_feature(rpc_client, video, img, frame, idx, middle_time, scene_l
     # Audio feature extraction
     audio_feature, _ = rpc_client.service_request(
         osp.join(settings.MEDIA_ROOT, video.audio_path).encode(),
-        "audio,%d,%d" % (scene.start_time, scene.end_time)
+        f"audio,{scene.start_time},{scene.end_time}"
     )
     audio_feature = np.array(json.loads(audio_feature)["features"])
     scene.audio_feature = audio_feature.tobytes()
@@ -110,7 +110,7 @@ def index_scene_feature(rpc_client, video, img, frame, idx, middle_time, scene_l
         subtitle_path = osp.join(settings.MEDIA_ROOT, str(video.subtitle_file))
         subtitle_feature, sentence = rpc_client.service_request(
             subtitle_path.encode(),
-            "subtitle,%d,%d" % (scene.start_time, scene.end_time)
+            f"subtitle,{scene.start_time},{scene.end_time}"
         )
         subtitle_feature = np.array(json.loads(subtitle_feature)["features"])
         scene.subtitle_feature = subtitle_feature.tobytes()
@@ -171,8 +171,8 @@ def visual_postproc(video, video_path, json_response, splits_frame, splits_ms):
                         json.dump(decoded, fw)
                     frame_serializer = FrameSerializer(data={"video": video.pk, 'json_path': json_path})
                     frame = None
-                    if frame_serializer.is_valid():  # TODO: this does not work when json_path (aka. video name is
-                                                     # longer than certain characters
+                    if frame_serializer.is_valid():
+                        # TODO: this does not work when json_path (aka. video name is longer than certain characters)
                         frame = frame_serializer.save()
                     # Switch scene
                     if frame_idx > cur_scene_end:
