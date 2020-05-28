@@ -17,13 +17,15 @@ import tqdm
 from django.conf import settings
 from django.db import transaction
 
+from config import device_config
 from hysia.models.scene.shot_detecor import Shot_Detector
 from restapi.models import Scene
 from restapi.rpc_client import RpcClient
 from restapi.serializers import FrameSerializer
-
 # Do set HYSIA_BUILD=TRUE when reset django. As PyDecoder will seeking for CUDA if HYSIA_BUILD is not set. This will
 # lead to an libcuda.so not found error if you do not have cuda support during building (e.g. in docker)
+from utils.misc import obtain_device
+
 try:
     build_flag = os.environ['HYSIA_BUILD'].upper() == 'TRUE'
 except KeyError:
@@ -133,6 +135,14 @@ def index_scene_feature(rpc_client, video, img, frame, idx, middle_time, scene_l
 
 
 def visual_postproc(video, video_path, json_response, splits_frame, splits_ms):
+
+    # get decoding device
+    cuda, device_num = obtain_device(device_config.decoder)
+    if cuda:
+        decode_device = f'GPU:{device_num}'
+    else:
+        decode_device = 'CPU'
+
     middle_frame = list()
     middle_time = {}
 
@@ -141,7 +151,7 @@ def visual_postproc(video, video_path, json_response, splits_frame, splits_ms):
         middle_frame.append(temp)
         middle_time[temp] = [splits_ms[i], splits_ms[i + 1]]
 
-    decoder = PyDecoder.Decoder(settings.DECODING_HARDWARE)
+    decoder = PyDecoder.Decoder(decode_device)
     decoder.ingestVideo(video_path)
     decoder.decode()
 
@@ -222,7 +232,15 @@ def visual_postproc(video, video_path, json_response, splits_frame, splits_ms):
 
 
 def visual_process(video, video_path, models_to_apply):
-    # Process visual content
+    """Process visual content"""
+
+    # get decoding device
+    cuda, device_num = obtain_device(device_config.decoder)
+    if cuda:
+        decode_device = f'GPU:{device_num}'
+    else:
+        decode_device = 'CPU'
+
     # Read frame count through imageio
     # TODO: add get_frame_cnt function to Hysia decoder
     with imageio.get_reader(video_path, "ffmpeg") as vid:
@@ -230,7 +248,7 @@ def visual_process(video, video_path, models_to_apply):
         video.frame_cnt = frame_cnt
 
     # Initiate Hysia GPU decoder
-    decoder = PyDecoder.Decoder(settings.DECODING_HARDWARE)
+    decoder = PyDecoder.Decoder(decode_device)
     decoder.ingestVideo(video_path)
     # Start a decoding thread
     decoder.decode()

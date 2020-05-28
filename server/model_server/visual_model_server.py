@@ -13,18 +13,14 @@ import grpc
 import numpy as np
 from PIL import Image
 
-# face imports
+from config import WEIGHT_DIR, weight_config, device_config
 from hysia.models.face.recognition.recognition import recog
-# object_detection imports
 from hysia.models.object.tf_detector import TF_SSD as DetectorEngine
-# place 365 imports
 from hysia.models.scene import detector as places365_detector
-# Import ctpn models
 from hysia.models.text.tf_detector import TF_CTPN as CtpnEngine
 from hysia.utils.logger import Logger
+from hysia.utils.misc import load_tf_graph, obtain_device
 from hysia.utils.perf import StreamSuppressor
-from model_server import config, WEIGHT_DIR, device_config
-from model_server.misc import load_tf_graph, obtain_device
 from protos import api2msl_pb2, api2msl_pb2_grpc
 
 # Time constant
@@ -45,7 +41,7 @@ minisize = 25
 
 def load_detector_engine():
 
-    ssd_config = config.object_detection.ssd
+    ssd_config = weight_config.object_detection.ssd
     backbone = ssd_config.backbone
     model_path = WEIGHT_DIR / getattr(ssd_config, backbone)
     label_path = str(WEIGHT_DIR / ssd_config.label)
@@ -62,7 +58,7 @@ def load_detector_engine():
 
 
 def load_ctpn_engine():
-    text_detection_graph = load_tf_graph(WEIGHT_DIR / config.text.ctpn)
+    text_detection_graph = load_tf_graph(WEIGHT_DIR / weight_config.text.ctpn)
 
     # Instantiate a CtpnEngine as global variable
     with StreamSuppressor():
@@ -73,7 +69,7 @@ def load_ctpn_engine():
 
 def load_face_engine():
 
-    face_config = config.face
+    face_config = weight_config.face
     model_path = str(WEIGHT_DIR / face_config.model)
     dataset_path = WEIGHT_DIR / face_config.saved_dataset
     mtcnn_path = str(WEIGHT_DIR / face_config.mtcnn_model)
@@ -107,7 +103,7 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
         self.face_engine = load_face_engine()
 
         # load scene detection model
-        places365_config = config.scene.places365
+        places365_config = weight_config.scene.places365
         self.backbone = places365_config.backbone
         model = str(WEIGHT_DIR / places365_config.model)
         label = WEIGHT_DIR / places365_config.label
