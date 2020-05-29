@@ -70,7 +70,7 @@ version.
 Requirements:
 - Conda
 - Nvidia driver
-- CUDA = 9[*](#todo-list)
+- CUDA = 9
 - CUDNN
 - g++
 - zlib1g-dev
@@ -173,3 +173,21 @@ rm -r tmp
 ```
 
 ## Testing
+
+## Demo
+
+Start model server:
+```shell script
+cd server
+
+# Start model server
+python start_model_servers.py
+```
+
+Start Django server
+```shell script
+cd server
+
+# Run Django
+python manage.py runserver 0.0.0.0:8000
+```

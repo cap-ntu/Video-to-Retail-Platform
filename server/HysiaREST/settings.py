@@ -168,6 +168,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "output")
 # Third party apps configuration
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# Decoding hardware
-DECODING_HARDWARE = "CPU"

@@ -5,11 +5,11 @@ from concurrent import futures
 
 import grpc
 
+from config import WEIGHT_DIR, weight_config, device_config
 from hysia.utils.logger import Logger
 from hysia.utils.perf import StreamSuppressor
-from model_server import config, WEIGHT_DIR, device_config
-from model_server.misc import load_tf_graph, obtain_device
 from protos import api2msl_pb2, api2msl_pb2_grpc
+from utils.misc import obtain_device, load_tf_graph
 
 with StreamSuppressor():
     from hysia.models.scene.soundnet_classifier import SoundNetClassifier
@@ -26,8 +26,8 @@ logger = Logger(
 
 
 def load_sound_net(sound_net_model_path):
-    soundnet_graph = load_tf_graph(sound_net_model_path)
-    soundnet = SoundNetClassifier(soundnet_graph)
+    sound_net_graph = load_tf_graph(sound_net_model_path)
+    soundnet = SoundNetClassifier(sound_net_graph)
 
     logger.info('SoundNet loaded')
     return soundnet
@@ -47,7 +47,7 @@ class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
 
         logger.info(f'Using {"CUDA:" if cuda else "CPU"}{os.environ["CUDA_VISIBLE_DEVICES"]}')
 
-        self.sound_net = load_sound_net(WEIGHT_DIR / config.scene.sound_net)
+        self.sound_net = load_sound_net(WEIGHT_DIR / weight_config.scene.sound_net)
 
     def GetJson(self, request, context):
         res = {}

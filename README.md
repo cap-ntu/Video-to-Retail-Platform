@@ -81,50 +81,34 @@ bash scripts/download-data.sh
 
 ### 2. Installation
 
-:point_right: Run with Docker :whale:
+:point_right: Install with Docker :whale:
 
 ```shell script
 docker pull hysia/hysia:v2o
-docker run --gpus all -d -p 8000:8000 hysia/hysia:v2o
 ```
 
 ## Configuration
 
-<ul>
-<li> Decode hardware:  
-
-Change the configuration [here](server/HysiaREST/settings.py) at last line:  
-```python
-DECODING_HARDWARE = 'CPU'
+Change decoder and model server running devices at [device_placement.yml](server/config/device_placement.yml):  
+```yaml
+decoder: CPU
+visual_model_server: CUDA:1
+audio_model_server: CUDA:2
+feature_model_server: CUDA:3
+product_search_server: CUDA:2
+scene_search_server: CUDA:3
 ```
-Value can be `CPU` or `GPU:<number>` (e.g. `GPU:0`)
-</li>
-<li> ML model running hardware:
 
-Change the configuration of model servers under this [directory](server/model_server):
-```python
-import os
-
-# Custom request servicer
-class Api2MslServicer(api2msl_pb2_grpc.Api2MslServicer):
-    def __init__(self):
-        ...
-        os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-```
-A possible value can be your device ID `0`, `0,1`, ...
-
-</li>
-</ul>
+Device value format: `cpu`, `cuda` or `cuda:<int>`.
 
 ## Demo
+
+Run with docker :whale:
 ```shell script
-cd server
-
-# Start model server
-python start_model_servers.py
-
-# Run Django
-python manage.py runserver 0.0.0.0:8000
+docker run --rm \
+  --gpus all -d -p 8000:8000 \
+  --mount source=server/config/device_placement.yml,target=/content/server/config/device_placement.yml \
+  hysia/hysia:v2o
 ```
 
 Then you can go to http://localhost:8000. Use username: admin and password: admin to login.
