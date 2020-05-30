@@ -21,4 +21,4 @@ feature_extraction:
   sentence_encoder: sentence
   vggish:
     fr: audioset/vggish_fr.pb
-    pca: vggish_pca_params.npz
+    pca: audioset/vggish_pca_params.npz
