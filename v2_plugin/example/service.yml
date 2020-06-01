@@ -1,0 +1,8 @@
+- name: maskrcnn-service
+  base_root: maskrcnn-service
+  predictor: predictor.py
+  engine: engine.py
+  device: CUDA:1
+  env:
+    conda: environment.yml
+    pre_install: install.sh

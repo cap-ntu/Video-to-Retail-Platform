@@ -1,6 +1,0 @@
-name: maskrcnn-service
-predictor:
-  servicer: predictor.PredictorServicer
-  endpoints: predictor.PredictEndPoints
-engine: engine.Engine
-device: CUDA:1
