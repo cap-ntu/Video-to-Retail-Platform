@@ -1,0 +1,48 @@
+// Protocol buffer that defines the gRPC communication between RESTfull API layer and Model schedule layer
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.api2msl";
+option java_outer_classname = "A2MProto";
+option objc_class_prefix = "A2M";
+
+package api2visual;
+
+service Api2Msl {
+    // Inference
+    rpc Infer (InferRequest) returns (InferResponse) {
+    }
+
+    // Stream Interface
+    rpc StreamInfer (stream InferRequest) returns (stream InferResponse) {
+    }
+
+    rpc Stop (Empty) returns (StopResponse) {
+    }
+}
+
+message InferRequest {
+    // Model name
+    string model_name = 1;
+
+    // Meta data
+    string meta = 2;
+
+    // List of bytes (etc. encoded frame)
+    repeated bytes raw_input = 3;
+}
+
+message InferResponse {
+    // Json as string
+    string json = 1;
+    // Meta data
+    string meta = 2;
+}
+
+message Empty {
+}
+
+message StopResponse {
+    bool status = 1;
+}
