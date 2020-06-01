@@ -1,6 +1,5 @@
 import abc
 import json
-import os
 from functools import partial
 from typing import Iterable, Tuple, Union, Callable, Any
 
@@ -8,45 +7,29 @@ import numpy as np
 import torch
 from toolz import compose
 
-from hysia.utils.misc import obtain_device, str_to_type
+from common.engine import BaseEngine
 from protos import api2msl_pb2_grpc, api2msl_pb2
+from utils import type_deserializer
 
 
 class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
     torch_flag: bool = False
     predict_func = 'batch_predict'
 
-    def __init__(self, config, suppress=False):
+    def __init__(self, engine: BaseEngine):
 
-        cuda, device_num = obtain_device(config.device)
+        self.engine = engine
 
-        if cuda:
-            os.environ['CUDA_VISIBLE_DEVICES'] = str(device_num)
-        else:
-            os.environ['CUDA_VISIBLE_DEVICES'] = ''
-
-        self.logger.info(f'Using {"CUDA:" if cuda else "CPU"}{os.environ["CUDA_VISIBLE_DEVICES"]}')
-
-        self.device = (cuda, device_num)
-        self.name = config.name
-
-        if not suppress:  # do not run `load_engine`
-            self.engine = self.load_engine(config)
-
-            # type checking
-            assert hasattr(self.engine, self.predict_func), \
-                f'Wrong value for `predict_func`, engine does not have attribute {self.predict_func}'
-            assert isinstance(getattr(self.engine, self.predict_func), Callable), \
-                f'`{self.predict_func}` is not callable attribute of engine {self.engine}'
-
-    @abc.abstractmethod
-    def load_engine(self, config) -> Any:
-        raise NotImplementedError('Method `load_engine` is not implemented.')
+        # type checking
+        assert hasattr(self.engine, self.predict_func), \
+            f'Wrong value for `predict_func`, engine does not have attribute {self.predict_func}'
+        assert isinstance(getattr(self.engine, self.predict_func), Callable), \
+            f'`{self.predict_func}` is not callable attribute of engine {self.engine}'
 
     def grpc_decode(self, buffer: Iterable, meta) -> Tuple[Union[torch.Tensor, np.ndarray, Any], dict]:
         meta: dict = json.loads(meta)
         shape = meta['shape']
-        dtype = str_to_type(meta['dtype'])
+        dtype = type_deserializer(meta['dtype'])
 
         decode_pipeline = compose(
             partial(np.reshape, newshape=shape),
@@ -62,6 +45,7 @@ class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
 
         return buffer, meta
 
+    # noinspection PyMethodMayBeStatic
     def post_processing(self, x):
         return x
 
