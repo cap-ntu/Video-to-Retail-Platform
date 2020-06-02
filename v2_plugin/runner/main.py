@@ -4,7 +4,6 @@ import multiprocessing as mp
 
 import grpc
 import uvicorn
-import yaml
 from fastapi import FastAPI
 from grpc._cython import cygrpc
 from starlette.middleware.cors import CORSMiddleware
@@ -12,19 +11,7 @@ from starlette.middleware.cors import CORSMiddleware
 from engine import Engine
 from predictor import PredictorServicer, PredictorEndPoints
 from protos import api2msl_pb2_grpc
-from utils import dict_to_object
-
-
-def load_config():
-    with open('config.yml', 'r') as stream:
-        try:
-            config = yaml.safe_load(stream)
-            config = dict_to_object(config)
-        except yaml.YAMLError as e:
-            print(e)
-            exit(1)
-
-    return config
+from utils import load_config
 
 
 def load_engine(config):

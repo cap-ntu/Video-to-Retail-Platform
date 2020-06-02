@@ -6,3 +6,7 @@ http:
   host: 0.0.0.0
   port: 8001
 engine:
+env:
+  conda:
+  pip:
+  pre_install: sh install.sh

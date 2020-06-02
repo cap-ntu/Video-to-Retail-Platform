@@ -5,4 +5,4 @@
   device: CUDA:1
   env:
     conda: environment.yml
-    pre_install: install.sh
+    pre_install: sh install.sh

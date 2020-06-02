@@ -1,0 +1,17 @@
+name: auto-serve-base
+channels:
+  - defaults
+dependencies:
+  - grpcio=1.27.2
+  - grpcio-tools=1.16.1
+  - pip=20.0.2
+  - protobuf=3.11.4
+  - python=3.7.6
+  - pyyaml=5.3.1
+  - toolz=0.10.0
+  - yaml=0.1.7
+  - pip:
+    - fastapi==0.55.1
+    - python-multipart==0.0.5
+    - starlette==0.13.2
+    - uvicorn==0.11.5

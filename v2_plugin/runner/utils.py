@@ -3,8 +3,7 @@ import re
 from collections import defaultdict
 from typing import Tuple, Optional
 
-import numpy as np
-import torch
+import yaml
 
 
 class _Struct(object):
@@ -18,6 +17,18 @@ class _Struct(object):
 
 def dict_to_object(dictionary: dict):
     return _Struct(dictionary)
+
+
+def load_config():
+    with open('config.yml', 'r') as stream:
+        try:
+            config = yaml.safe_load(stream)
+            config = dict_to_object(config)
+        except yaml.YAMLError as e:
+            print(e)
+            exit(1)
+
+    return config
 
 
 def obtain_device(device: str) -> Tuple[bool, Optional[int]]:
@@ -50,8 +61,11 @@ def obtain_device(device: str) -> Tuple[bool, Optional[int]]:
     return cuda, device_num
 
 
-def type_serializer(dtype: np.dtype):
-    """Serialize data type to string"""
+def type_serializer(dtype):
+    """Serialize data type to string."""
+    import torch
+    import numpy as np
+
     mapper = defaultdict(
         lambda x: 'INVALID',
         {
@@ -66,7 +80,9 @@ def type_serializer(dtype: np.dtype):
 
 
 def type_deserializer(dtype_string: str):
-    """Deserialize data type from string"""
+    """Deserialize data type from string."""
+    import numpy as np
+
     mapper = {
         'UINT8': np.uint8,
         'FP32': np.float32,
