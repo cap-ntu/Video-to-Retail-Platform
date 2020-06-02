@@ -8,5 +8,5 @@ class PredictorServicer(BaseServicer, ABC):
     pass
 
 
-class PredictEndPoints(BaseEndPoints, ABC):
+class PredictorEndPoints(BaseEndPoints, ABC):
     pass

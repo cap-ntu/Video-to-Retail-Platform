@@ -1,6 +1,8 @@
+name: test
 grpc:
   max_workers: 8
   port: 8000
 http:
+  host: 0.0.0.0
   port: 8001
 engine:

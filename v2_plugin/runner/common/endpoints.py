@@ -1,19 +1,18 @@
 import abc
 
-import FastAPI
+from fastapi import APIRouter
+
+from common.engine import BaseEngine
 
 
 class BaseEndPoints(abc.ABC):
 
-    name: str
-    app = FastAPI(title=name, openapi_url='/openapi.json')
+    router = APIRouter()
 
-    @property
-    @abc.abstractmethod
-    def name(self) -> str:
-        raise NotImplementedError()
+    def __init__(self, engine: BaseEngine):
+        self.engine = engine
+        self.predict = self.router.post('/predict')(self.predict)
 
-    @app.post('/predict')
     @abc.abstractmethod
     async def predict(self):
-        raise NotImplementedError()
+        raise NotImplementedError('Endpoint method `predict` does not implemented.')
