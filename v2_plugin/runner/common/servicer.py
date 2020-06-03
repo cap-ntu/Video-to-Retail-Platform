@@ -4,12 +4,16 @@ from functools import partial
 from typing import Iterable, Tuple, Union, Callable, Any
 
 import numpy as np
-import torch
 from toolz import compose
 
 from common.engine import BaseEngine
 from protos import api2msl_pb2_grpc, api2msl_pb2
 from utils import type_deserializer
+
+try:
+    import torch
+except ImportError:
+    torch = None
 
 
 class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
@@ -26,7 +30,7 @@ class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
         assert isinstance(getattr(self.engine, self.predict_func), Callable), \
             f'`{self.predict_func}` is not callable attribute of engine {self.engine}'
 
-    def grpc_decode(self, buffer: Iterable, meta) -> Tuple[Union[torch.Tensor, np.ndarray, Any], dict]:
+    def grpc_decode(self, buffer: Iterable, meta) -> Tuple[Union[np.ndarray, Any], dict]:
         meta: dict = json.loads(meta)
         shape = meta['shape']
         dtype = type_deserializer(meta['dtype'])
@@ -45,10 +49,6 @@ class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
 
         return buffer, meta
 
-    # noinspection PyMethodMayBeStatic
-    def post_processing(self, x):
-        return x
-
     def Infer(self, request, context):
         raw_input = request.raw_input
         meta = request.meta
@@ -56,7 +56,7 @@ class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
 
         result = getattr(self.engine, self.predict_func)(inputs)
 
-        result = self.post_processing(result)
+        result = self.engine.post_process(result)
 
         return api2msl_pb2.InferResponse(json=json.dumps(result))
 

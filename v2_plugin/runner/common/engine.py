@@ -7,11 +7,11 @@ class BaseEngine(abc.ABC):
         self.config = config
 
     @abc.abstractmethod
-    def single_predict(self):
+    def single_predict(self, **kwargs):
         raise NotImplementedError('Method `single_predict` not implemented')
 
     @abc.abstractmethod
-    def batch_predict(self):
+    def batch_predict(self, **kwargs):
         raise NotImplementedError('Method `batch_predict` not implemented')
 
     # noinspection PyMethodMayBeStatic

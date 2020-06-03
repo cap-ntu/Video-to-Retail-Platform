@@ -33,4 +33,4 @@ RUN conda env update --name base -f /content/base-env.yml
 
 WORKDIR /content
 
-ENTRYPOINT ["python", "pre_run.py"]
+ENTRYPOINT ["sh", "docker-entry.sh"]

@@ -9,4 +9,4 @@ engine:
 env:
   conda:
   pip:
-  pre_install: sh install.sh
+  pre_install:

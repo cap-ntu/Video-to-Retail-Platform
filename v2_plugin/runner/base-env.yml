@@ -4,6 +4,8 @@ channels:
 dependencies:
   - grpcio=1.27.2
   - grpcio-tools=1.16.1
+  - numpy=1.16.4
+  - numpy-base=1.16.4
   - pip=20.0.2
   - protobuf=3.11.4
   - python=3.7.6
