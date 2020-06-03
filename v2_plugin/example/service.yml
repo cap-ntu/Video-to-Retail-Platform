@@ -1,8 +1,19 @@
-- name: maskrcnn-service
-  base_root: maskrcnn-service
+- name: hello-world-service
+  base_root: hello-world
   predictor: predictor.py
   engine: engine.py
-  device: CUDA:1
+  device: CPU
   env:
     conda: environment.yml
-    pre_install: sh install.sh
+  grpc_port: 8000
+  http_port: 8001
+#- name: maskrcnn-service
+#  base_root: maskrcnn-service
+#  predictor: predictor.py
+#  engine: engine.py
+#  device: CUDA:1
+#  env:
+#    conda: environment.yml
+#    pre_install: sh install.sh
+#  grpc_port: 8000
+#  http_port: 8001
