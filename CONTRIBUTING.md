@@ -191,3 +191,19 @@ cd server
 # Run Django
 python manage.py runserver 0.0.0.0:8000
 ```
+
+## Coding Standards
+
+### Unit Tests
+[PyTest](https://docs.pytest.org/en/latest/) is used to execute tests. PyTest can be installed 
+from PyPI via `pip install pytest`.
+
+```shell script
+python -m pytest tests/
+```
+
+You can also provide the `-v` flag to `pytest` to see additional information about the test.
+
+### Code Style
+We have some static checks when you filing a PR or pushing commits to the projects, please make sure 
+you can pass all the tests and make sure the coding style meets the requirements.

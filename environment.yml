@@ -137,7 +137,7 @@ dependencies:
     - djangorestframework==3.10.3
     - easydict==1.8
     - faiss-gpu==1.6.0
-    - gputil==git+git://github.com/ZhouShengsheng/gputil.git@master
+    - git+git://github.com/ZhouShengsheng/gputil.git@master
     - hyperlink==19.0.0
     - idna==2.6
     - imageio-ffmpeg==0.3.0
@@ -147,6 +147,7 @@ dependencies:
     - llvmlite==0.29.0
     - numba==0.45.1
     - pyhamcrest==1.9.0
+    - pytest==5.4.3
     - resampy==0.2.2
     - service-identity==18.1.0
     - scenedetect==0.5.1.1

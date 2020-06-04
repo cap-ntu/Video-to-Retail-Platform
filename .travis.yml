@@ -1,20 +1,61 @@
 language: python
-dist: trusty
-git:
-  submodules: false
-
-# This reportedly works around an issue downloading packages from pypi on
-# travis.  Consider removing this after the underlying issue is fixed.
-# https://github.com/travis-ci/travis-ci/issues/2389
-sudo: false
+sudo: enabled
 
 matrix:
-    fast_finish: true
-    include:
-      - env: CPP_DOC_CHECK
-        python: "3.6"
-        install: 
-          - sudo apt-get install -y doxygen
-          - pip install django djangorestframework tensorflow opencv-python imageio grpcio
+  include:
+    - name: CUDA 9
+      env:
+        - CUDA=9.2.148-1
+        - CUDA_SHORT=9.2
+        - UBUNTU_VERSION=ubuntu1604
+        - PYTHONPATH=${PYTHONPATH}:${PWD}:${PWD}/hysia
+        - CUDA_VISIBLE_DEVICES="-1"
+        - TRAVIS_BUILD="1"
+      dist: xenial
+
+python:
+  - "3.6"
+
+# Refer to https://github.com/jeremad/cuda-travis
+before_install:
+  - INSTALLER=cuda-repo-${UBUNTU_VERSION}_${CUDA}_amd64.deb
+  - wget http://developer.download.nvidia.com/compute/cuda/repos/${UBUNTU_VERSION}/x86_64/${INSTALLER}
+  - sudo dpkg -i ${INSTALLER}
+  - wget https://developer.download.nvidia.com/compute/cuda/repos/${UBUNTU_VERSION}/x86_64/7fa2af80.pub
+  - sudo apt-key add 7fa2af80.pub
+  - sudo apt update -qq
+  - sudo apt install -y cuda-core-${CUDA_SHORT/./-} cuda-cudart-dev-${CUDA_SHORT/./-} cuda-cufft-dev-${CUDA_SHORT/./-}
+  - sudo apt clean
+  - CUDA_HOME=/usr/local/cuda-${CUDA_SHORT}
+  - CUDA_PATH=${CUDA_HOME}
+  - LD_LIBRARY_PATH=${CUDA_PATH}/lib64/stubs:${LD_LIBRARY_PATH}
+  - PATH=${CUDA_PATH}/include:${PATH}
+  - sudo ln -s ${CUDA_PATH}/lib64/stubs/libcuda.so ${CUDA_PATH}/lib64/stubs/libcuda.so.1
+  - sudo ln -s ${CUDA_PATH} /usr/local/cuda
+
+# Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/use-conda-with-travis-ci.html
+install:
+  - sudo apt update
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - source "$HOME/miniconda/etc/profile.d/conda.sh"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda env create -f environment.yml
+  - conda activate V2O
+
+before_script:
+  - echo $LD_LIBRARY_PATH
+  - echo $PATH
+  - echo $TRAVIS_BUILD
+  - echo $CUDA_PATH
+  - bash scripts/download-data.sh
+  - bash scripts/build.sh
+
 script:
-  - pytest
+  - python -m pytest --ignore=tests/test_clipper/ tests/
+
+notifications:
+  email: false
