@@ -1,7 +1,7 @@
 ARG CUDA="10.1"
 ARG CUDNN="7"
 
-FROM nvidia/cuda:${CUDA}-cudnn${CUDNN}-runtime-ubuntu16.04
+FROM nvidia/cuda:${CUDA}-cudnn${CUDNN}-devel-ubuntu16.04
 
 # set built-time arguments
 ARG CUDA
