@@ -1,16 +1,14 @@
 import concurrent.futures
 import logging
-import multiprocessing as mp
 
 import grpc
 import uvicorn
+from app.engine import Engine
+from app.predictor import PredictorServicer, PredictorEndPoints
 from fastapi import FastAPI
 from grpc._cython import cygrpc
-from starlette.middleware.cors import CORSMiddleware
-
-from engine import Engine
-from predictor import PredictorServicer, PredictorEndPoints
 from protos import api2msl_pb2_grpc
+from starlette.middleware.cors import CORSMiddleware
 from utils import load_config
 
 
@@ -75,10 +73,7 @@ if __name__ == "__main__":
     engine_ = load_engine(config_)
 
     # start services
-    grpc_proc = mp.Process(target=grpc_service_starter, args=(engine_, config_,))
-    grpc_proc.start()
+    grpc_service_starter(engine_, config_)
 
     # blocking call
-    http_service_starter(engine_, config_)
-
-    grpc_proc.terminate()
+    # http_service_starter(engine_, config_)

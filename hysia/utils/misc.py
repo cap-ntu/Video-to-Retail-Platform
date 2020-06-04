@@ -1,3 +1,4 @@
+import json
 import logging
 import re
 from pathlib import Path
@@ -17,8 +18,20 @@ class _Struct(object):
                 setattr(self, a, _Struct(b) if isinstance(b, dict) else b)
 
 
+class ObjectEncoder(json.JSONEncoder):
+    def default(self, o: object):
+        if isinstance(o, object):
+            return o.__dict__
+        else:
+            return json.JSONEncoder.default(self, o)
+
+
 def dict_to_object(dictionary: dict):
     return _Struct(dictionary)
+
+
+def object_to_dict(struct: object):
+    return json.dumps(struct, cls=ObjectEncoder)
 
 
 def load_tf_graph(graph_pb_path: Union[Path, str]) -> tf.Graph:

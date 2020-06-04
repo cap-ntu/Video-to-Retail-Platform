@@ -1,11 +1,11 @@
 import argparse
 from pathlib import Path
 
-import docker as docker
 import yaml
 from docker.types import Mount
 
-from hysia.utils.misc import dict_to_object, obtain_device
+import docker as docker
+from hysia.utils.misc import dict_to_object, object_to_dict, obtain_device
 
 DEFAULT_GRPC_PORT = 8000
 DEFAULT_HTTP_PORT = 8001
@@ -38,7 +38,7 @@ def generate_config(service_config_list, base_root: Path):
                 'host': '0.0.0.0',
                 'port': DEFAULT_HTTP_PORT,
             },
-            'engine': None,
+            'engine': object_to_dict(getattr(config, 'engine_config', None)),
             'env': {
                 'conda': getattr(env_config, 'conda', None),
                 'pip': getattr(env_config, 'pip', None),
@@ -70,17 +70,17 @@ def start_container(service_config_list, base_root: Path):
         common_kwargs = {'detach': True, 'auto_remove': False, 'name': f'auto.{config.name}'}
 
         # set mount
-        mount_common_kwargs = {'type': 'bind', 'read_only': True}
+        mount_common_kwargs = {'type': 'bind'}
         mounts = [
-            Mount(target=f'/content/third', source=str(service_base_root), **mount_common_kwargs),
+            Mount(target=f'/content/app', source=str(service_base_root), **mount_common_kwargs),
             Mount(target=f'/content/config.yml', source=str(service_base_root / '.config.yml'), **mount_common_kwargs),
             Mount(
-                target=f'/content/predictor.py',
+                target=f'/content/app/predictor.py',
                 source=str(service_base_root / config.predictor),
                 **mount_common_kwargs
             ),
             Mount(
-                target=f'/content/engine.py',
+                target=f'/content/app/engine.py',
                 source=str(service_base_root / config.engine),
                 **mount_common_kwargs
             ),

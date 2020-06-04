@@ -72,9 +72,9 @@ if __name__ == '__main__':
     config_env = load_config().env
 
     # change to third plugged-in directory
-    print('Switch to /content/third')
-    Path('/content/third').mkdir(parents=True, exist_ok=True)
-    os.chdir('/content/third')
+    print('Switch to /content/app')
+    Path('/content/app').mkdir(parents=True, exist_ok=True)
+    os.chdir('/content/app')
 
     fix_eol()
     print('Installing environment...')

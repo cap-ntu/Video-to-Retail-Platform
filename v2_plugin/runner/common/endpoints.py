@@ -1,8 +1,7 @@
 import abc
 
-from fastapi import APIRouter
-
 from common.engine import BaseEngine
+from fastapi import APIRouter
 
 
 class BaseEndPoints(abc.ABC):
@@ -14,5 +13,5 @@ class BaseEndPoints(abc.ABC):
         self.predict = self.router.post('/predict')(self.predict)
 
     @abc.abstractmethod
-    async def predict(self):
+    async def predict(self, *args, **kwargs):
         raise NotImplementedError('Endpoint method `predict` does not implemented.')
