@@ -1,0 +1,10 @@
+apt-utils
+git
+curl
+bzip2
+cmake
+tree
+htop
+bmon
+iotop
+g++

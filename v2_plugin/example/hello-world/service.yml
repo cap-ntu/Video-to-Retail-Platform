@@ -1,0 +1,9 @@
+- name: hello-world-service
+  base_root: hello-world
+  predictor: predictor.py
+  engine: engine.py
+  device: CPU
+  env:
+    conda: environment.yml
+  grpc_port: 8000
+  http_port: 8001
