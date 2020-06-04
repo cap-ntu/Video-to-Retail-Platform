@@ -1,5 +1,5 @@
 - name: hello-world-service
-  base_root: hello-world
+  base_root: .
   predictor: predictor.py
   engine: engine.py
   device: CPU

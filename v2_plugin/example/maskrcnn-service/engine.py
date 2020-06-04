@@ -15,7 +15,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class Engine(BaseEngine):
-    CFG_ROOT = Path(__file__).parent.absolute() / 'maskrcnn-benchmark/configs'
+    CFG_ROOT = Path(__file__).parent.absolute() / 'third/maskrcnn-benchmark/configs'
 
     def __init__(self, config):
         super().__init__(config)

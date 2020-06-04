@@ -1,10 +1,10 @@
 import argparse
 from pathlib import Path
 
+import docker as docker
 import yaml
 from docker.types import Mount
 
-import docker as docker
 from hysia.utils.misc import dict_to_object, object_to_dict, obtain_device
 
 DEFAULT_GRPC_PORT = 8000
@@ -119,7 +119,9 @@ def deploy(service_yml_path: str):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Deploy and run user defined application.')
-    parser.add_argument('file', type=str, default='service.yml', help='Path to `service.yml` configuration file.')
+    parser.add_argument(
+        'file', type=str, nargs='?', default='service.yml', help='Path to `service.yml` configuration file.'
+    )
 
     args = parser.parse_args()
     deploy(args.file)

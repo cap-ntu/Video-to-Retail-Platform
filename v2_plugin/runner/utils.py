@@ -29,7 +29,7 @@ def dict_to_object(dictionary: dict):
 
 
 def object_to_dict(struct: object):
-    return json.dumps(struct, cls=ObjectEncoder)
+    return json.loads(json.dumps(struct, cls=ObjectEncoder))
 
 
 def load_config():

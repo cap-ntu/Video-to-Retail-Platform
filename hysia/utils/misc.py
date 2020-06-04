@@ -31,7 +31,7 @@ def dict_to_object(dictionary: dict):
 
 
 def object_to_dict(struct: object):
-    return json.dumps(struct, cls=ObjectEncoder)
+    return json.loads(json.dumps(struct, cls=ObjectEncoder))
 
 
 def load_tf_graph(graph_pb_path: Union[Path, str]) -> tf.Graph:
