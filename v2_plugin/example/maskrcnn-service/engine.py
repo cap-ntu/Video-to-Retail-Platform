@@ -1,4 +1,3 @@
-# cancel ssl certificate verify
 import ssl
 from pathlib import Path
 from typing import Dict
@@ -11,6 +10,7 @@ from maskrcnn_benchmark.structures.bounding_box import BoxList
 from common.engine import BaseEngine
 from .mask_rcnn_predictor import COCODemo
 
+# cancel ssl certificate verify
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
@@ -51,27 +51,34 @@ class Engine(BaseEngine):
                 labels, boxes and scores.
         """
         # get label
-        labels = predictions.get_field("labels")
+        label_ids = predictions.get_field('labels').tolist()
         boxes = predictions.bbox
         boxes = boxes.to(torch.int64).tolist()
-        scores = predictions.get_field("scores").tolist()
+        scores = predictions.get_field('scores').tolist()
 
-        return labels, boxes, scores
+        if predictions.has_field('mask'):
+            mask = predictions.get_field('mask').tolist()
+        else:
+            mask = None
+
+        return label_ids, boxes, scores, mask
 
     def single_predict(self, np_array: np.ndarray, **kwargs) -> Dict[str, list]:
-        width, height, _ = np_array.shape
+        height, width, _ = np_array.shape
 
         predictions = self._model.compute_prediction(np_array)
         top_predictions = self._model.select_top_predictions(predictions)
-        labels, boxes, scores = self.decode_bbox(top_predictions)
-        labels = [self._model.CATEGORIES[i] for i in labels]
+        label_ids, boxes, scores, mask = self.decode_bbox(top_predictions)
+        labels = [self._model.CATEGORIES[i] for i in label_ids]
 
         return {
-            "labels": labels,
-            "boxes": boxes,
-            "scores": scores,
-            "width": width,
-            "height": height
+            'labels': labels,
+            'label_ids': label_ids,
+            'boxes': boxes,
+            'scores': scores,
+            'mask': mask,
+            'width': width,
+            'height': height
         }
 
     def batch_predict(self, *args, **kwargs):

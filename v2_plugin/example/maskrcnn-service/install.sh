@@ -13,13 +13,13 @@ THIRD_DIR=${PWD}
 conda install pytorch=1.4.0 torchvision cudatoolkit=10.1 -c pytorch -y
 
 # install apex
-git clone https://github.com/NVIDIA/apex.git && cd apex || exit 1
+git clone https://github.com/NVIDIA/apex.git || true && cd apex || exit 1
 python setup.py install --cuda_ext --cpp_ext
 
 # install maskrcnn-benchmark
 cd "${THIRD_DIR}" || exit 1
-git clone https://github.com/facebookresearch/maskrcnn-benchmark.git \
- && cd maskrcnn-benchmark \
+git clone https://github.com/facebookresearch/maskrcnn-benchmark.git || true \
+ && cd maskrcnn-benchmark || exit 1 \
  && python setup.py build develop
 
 # uninstall build dependency
