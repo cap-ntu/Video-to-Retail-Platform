@@ -42,7 +42,12 @@ class Predict(APIView):
 
         encoded_string = base64.b64encode(buffer)
 
-        return Response({'time': time.time(), 'data': encoded_string.decode()})
+        return Response({
+            'timestamp': time.time(),
+            'data': {'raw': encoded_string.decode()},
+            'message': 'ok',
+            'statusCode': 200
+        })
 
 
 __all__ = ['Predict']
