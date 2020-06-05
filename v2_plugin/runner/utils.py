@@ -1,12 +1,10 @@
 import json
 import logging
 import re
-from pathlib import Path
-from typing import Union, Tuple, Optional
+from collections import defaultdict
+from typing import Tuple, Optional
 
-import tensorflow as tf
-
-from .perf import StreamSuppressor
+import yaml
 
 
 class _Struct(object):
@@ -34,19 +32,16 @@ def object_to_dict(struct: object):
     return json.loads(json.dumps(struct, cls=ObjectEncoder))
 
 
-def load_tf_graph(graph_pb_path: Union[Path, str]) -> tf.Graph:
+def load_config():
+    with open('config.yml', 'r') as stream:
+        try:
+            config = yaml.safe_load(stream)
+            config = dict_to_object(config)
+        except yaml.YAMLError as e:
+            print(e)
+            exit(1)
 
-    graph_pb_path = str(graph_pb_path)
-
-    with StreamSuppressor():
-        tf_graph = tf.Graph()
-        with tf_graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(graph_pb_path, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
-    return tf_graph
+    return config
 
 
 def obtain_device(device: str) -> Tuple[bool, Optional[int]]:
@@ -77,3 +72,34 @@ def obtain_device(device: str) -> Tuple[bool, Optional[int]]:
                 device_num = 0
 
     return cuda, device_num
+
+
+def type_serializer(dtype):
+    """Serialize data type to string."""
+    import torch
+    import numpy as np
+
+    mapper = defaultdict(
+        lambda x: 'INVALID',
+        {
+            np.dtype(np.uint8): 'UINT8',
+            np.dtype(np.float32): 'FP32',
+            torch.float32: 'FP32',
+            torch.int64: 'INT64',
+        }
+    )
+
+    return mapper[dtype]
+
+
+def type_deserializer(dtype_string: str):
+    """Deserialize data type from string."""
+    import numpy as np
+
+    mapper = {
+        'UINT8': np.uint8,
+        'FP32': np.float32,
+        'INT64': np.int64,
+    }
+
+    return mapper[dtype_string]

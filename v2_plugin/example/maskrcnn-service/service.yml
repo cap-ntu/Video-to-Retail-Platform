@@ -1,0 +1,11 @@
+- name: maskrcnn-service
+  base_root: .
+  predictor: predictor.py
+  engine: engine.py
+  device: CUDA:1
+  env:
+    conda: environment.yml
+    pre_install: sh install.sh
+  grpc_port: 50056
+  http_port: 8001
+  engine_config: caffe2/e2e_faster_rcnn_R_50_C4_1x_caffe2
