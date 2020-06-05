@@ -3,12 +3,13 @@ import logging
 
 import grpc
 import uvicorn
-from app.engine import Engine
-from app.predictor import PredictorServicer, PredictorEndPoints
 from fastapi import FastAPI
 from grpc._cython import cygrpc
-from protos import api2msl_pb2_grpc
 from starlette.middleware.cors import CORSMiddleware
+
+from app.engine import Engine
+from app.predictor import PredictorServicer, PredictorEndPoints
+from protos import infer_pb2_grpc
 from utils import load_config
 
 
@@ -35,7 +36,7 @@ def grpc_service_starter(engine: Engine, config):
         ],
     )
 
-    api2msl_pb2_grpc.add_Api2MslServicer_to_server(servicer, server)
+    infer_pb2_grpc.add_InferProtoServicer_to_server(servicer, server)
     server.add_insecure_port(f'[::]:{port}')
 
     server.start()

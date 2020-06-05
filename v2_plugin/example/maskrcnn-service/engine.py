@@ -5,10 +5,10 @@ from typing import Dict
 
 import numpy as np
 import torch
-from common.engine import BaseEngine
 from maskrcnn_benchmark.config import cfg
 from maskrcnn_benchmark.structures.bounding_box import BoxList
 
+from common.engine import BaseEngine
 from .mask_rcnn_predictor import COCODemo
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -59,7 +59,7 @@ class Engine(BaseEngine):
         return labels, boxes, scores
 
     def single_predict(self, np_array: np.ndarray, **kwargs) -> Dict[str, list]:
-        width, height, _ = np_array.size
+        width, height, _ = np_array.shape
 
         predictions = self._model.compute_prediction(np_array)
         top_predictions = self._model.select_top_predictions(predictions)
@@ -74,5 +74,5 @@ class Engine(BaseEngine):
             "height": height
         }
 
-    def batch_predict(self, **kwargs):
+    def batch_predict(self, *args, **kwargs):
         print('Hello world from batch predict.')
