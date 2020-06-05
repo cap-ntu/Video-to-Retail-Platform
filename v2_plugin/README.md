@@ -25,3 +25,17 @@ For example, deploy a simple hello world service.
 ```shell script
 python container_service.py example/hello-world/service.yml
 ```
+
+## Test
+
+Test gRPC service
+```shell script
+cd test
+python test_grpc.py -p 8000  # gRPC service port, find at service.yml.grpc_port
+```
+
+Test HTTP service
+```shell script
+cd test
+python test_http.py -p 8001 # HTTP service port, find at service.yml.grpc_port
+```
