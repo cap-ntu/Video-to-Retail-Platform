@@ -7,7 +7,7 @@ import numpy as np
 from toolz import compose
 
 from common.engine import BaseEngine
-from protos import api2msl_pb2_grpc, api2msl_pb2
+from protos import infer_pb2_grpc, infer_pb2
 from utils import type_deserializer
 
 try:
@@ -16,7 +16,7 @@ except ImportError:
     torch = None
 
 
-class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
+class BaseServicer(infer_pb2_grpc.InferProtoServicer, abc.ABC):
     torch_flag: bool = False
     predict_func = 'batch_predict'
 
@@ -58,7 +58,7 @@ class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
 
         result = self.engine.post_process(result)
 
-        return api2msl_pb2.InferResponse(json=json.dumps(result))
+        return infer_pb2.InferResponse(json=json.dumps(result))
 
     def StreamInfer(self, request_iterator, context):
         for request in request_iterator:
@@ -68,4 +68,4 @@ class BaseServicer(api2msl_pb2_grpc.Api2MslServicer, abc.ABC):
     def Stop(self, request, context):
         del self.engine
 
-        return api2msl_pb2.StopResponse(status=True)
+        return infer_pb2.StopResponse(status=True)

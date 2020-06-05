@@ -3,13 +3,13 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.examples.api2msl";
-option java_outer_classname = "A2MProto";
-option objc_class_prefix = "A2M";
+option java_package = "io.grpc.examples.proto";
+option java_outer_classname = "InferProto";
+option objc_class_prefix = "Infer";
 
-package api2visual;
+package infer;
 
-service Api2Msl {
+service InferProto {
     // Inference
     rpc Infer (InferRequest) returns (InferResponse) {
     }
