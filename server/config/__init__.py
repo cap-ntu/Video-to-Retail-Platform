@@ -2,7 +2,7 @@ from pathlib import Path
 
 import yaml
 
-from utils.misc import dict_to_object
+from hysia.utils.misc import dict_to_object
 
 WEIGHT_DIR = Path(__file__).absolute().parents[2] / 'weights'
 
