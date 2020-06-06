@@ -5,7 +5,7 @@ Create V2O application and automatically serve it.
 
 Generate gRPC python code
 ```shell script
-python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. proto/api2msl.proto
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. proto/infer.proto
 # copy to runner
 cp protos/*.py runner/protos
 ```
@@ -34,7 +34,8 @@ cd test
 python test_grpc.py -p 8000  # gRPC service port, find at service.yml.grpc_port
 ```
 
-Test HTTP service
+Test HTTP service  
+:warning: Currently this does not work
 ```shell script
 cd test
 python test_http.py -p 8001 # HTTP service port, find at service.yml.grpc_port
