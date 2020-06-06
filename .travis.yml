@@ -27,11 +27,12 @@ install:
   - sudo apt install -y cuda
   - sudo apt clean
   - export CUDA_HOME=/usr/local/cuda
+  # for HysiaDecoder
   - export CUDA_PATH=$CUDA_HOME
   - export PATH=${CUDA_HOME}/include:${PATH}
+  # fix libcuda.so.1 not found issue
   - sudo ln -s ${CUDA_HOME}/lib64/stubs/libcuda.so ${CUDA_HOME}/lib64/stubs/libcuda.so.1
   - export LD_LIBRARY_PATH=${CUDA_HOME}/lib64/stubs:${LD_LIBRARY_PATH}
-
   # Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/use-conda-with-travis-ci.html
   - sudo apt update
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
@@ -46,7 +47,6 @@ install:
   - travis_retry conda activate V2O
   # fix dependencies
   - pip install requests requests_futures h5py mmcv torchstat
-  # fix dependencies
   - sudo apt-get install libopenblas-dev
   - sudo apt-get install --reinstall libtheora0
   - export LD_LIBRARY_PATH=$HOME/miniconda/envs/V2O/lib:/usr/local/lib:/$LD_LIBRARY_PATH
@@ -60,7 +60,10 @@ script:
   # `tests/test_build_classifier.py`: no target file.
   # `tests/test_search.py`: no TVQA dataset.
   # skip testing ray, clipper and tfs.
-  - python -m pytest --ignore=tests/test_monitor.py --ignore=tests/test_build_classifier.py --ignore=tests/test_clipper/ --ignore=tests/test_tfs/ --ignore=tests/test_search.py --ignore=tests/test_clipper_mmdet.py --ignore=tests/test_mmdet.py --ignore=tests/test_product.py --ignore=tests/test_ray_tf.py tests/
+  # `test_monitor.py`: no GPU available in travis.
+  # skip testing mmdet: pytorch needs to be upgraded to 1.x
+  # `test_profiler/`: no target files.
+  - python -m pytest --ignore=tests/test_monitor/test_monitor.py --ignore=tests/test_profiler/ --ignore=tests/test_build_classifier.py --ignore=tests/test_clipper/ --ignore=tests/test_tfs/ --ignore=tests/test_search.py --ignore=tests/test_clipper_mmdet.py --ignore=tests/test_mmdet.py --ignore=tests/test_product.py --ignore=tests/test_ray_tf.py tests/
 
 notifications:
   email: false
