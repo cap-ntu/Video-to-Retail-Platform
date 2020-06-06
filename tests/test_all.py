@@ -26,16 +26,16 @@ from search.product_search import ProductSearch
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'
 
 ## test files listed here
-test1 = "test1.jpg"
-test3 = "test3.jpg"
-test_sofa = "test_sofa1.jpg"
-test_beach = "test_beach.jpg"
-VIDEO_DATA_PATH = "/data/disk2/hysia_data/Stanford_Online_Products/"
+test1 = "tests/test1.jpg"
+test3 = "tests/test3.jpg"
+test_sofa = "tests/test_sofa1.jpg"
+test_beach = "tests/test_beach.jpg"
+# VIDEO_DATA_PATH = "/data/disk2/hysia_data/Stanford_Online_Products/"
 
 ## pretrained weights
-mtcnn_model = '../weights/mtcnn/mtcnn.pb'
-face_model = '../weights/face_recog/InsightFace_TF.pb'
-saved_dataset = '../weights/face_recog/dataset48.pkl'
+mtcnn_model = 'weights/mtcnn/mtcnn.pb'
+face_model = 'weights/face_recog/InsightFace_TF.pb'
+saved_dataset = 'weights/face_recog/dataset48.pkl'
 
 
 class TestHysia(unittest.TestCase):
@@ -93,30 +93,30 @@ class TestHysia(unittest.TestCase):
 
 
     def test_place365(self):
-        scene_model = scene_visual('resnet50', '../weights/places365/{}.pth', '../weights/places365/categories.txt', 'cuda:0')
-        for i in ['test1.jpg', 'test2.jpg']:
+        scene_model = scene_visual('resnet50', 'weights/places365/{}.pth', 'weights/places365/categories.txt', 'cuda:0')
+        for i in ['tests/test1.jpg', 'tests/test2.jpg']:
             temp = scene_model.detect(i)
             print(temp)
-        temp = cv2.imread('test1.jpg')
+        temp = cv2.imread('tests/test1.jpg')
         temp = Image.fromarray(cv2.cvtColor(temp, cv2.COLOR_BGR2RGB))
         temp = scene_model.detect(temp, True)
         print(temp)
         # Test vector extraction and cosine similarity
         # TODO The accuracy is decreasing when transforming
-        temp = cv2.imread('test_sofa1.jpg')
+        temp = cv2.imread('tests/test_sofa1.jpg')
         q_tensor = Image.fromarray(cv2.cvtColor(temp, cv2.COLOR_BGR2RGB))
         q_vec = scene_model.extract_vec(q_tensor, True)
         print(type(q_vec))
-        temp = cv2.imread('test_beach.jpg')
+        temp = cv2.imread('tests/test_beach.jpg')
         search_tensor = Image.fromarray(cv2.cvtColor(temp, cv2.COLOR_BGR2RGB))
         search_vec = scene_model.extract_vec(search_tensor, True)
         scores = np.dot(search_vec.T, q_vec)
         print(scores)
 
-    def test_product(self):
-        product_machine = ProductSearch()
-        results = product_machine.search(100, 'test_clip_1.mp4')
-        print(results)
+    # def test_product(self):
+    #     product_machine = ProductSearch()
+    #     results = product_machine.search(100, 'test_clip_1.mp4')
+    #     print(results)
 
 
 if __name__ == '__main__':
