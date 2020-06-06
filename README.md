@@ -25,13 +25,13 @@ into V2.
 ![hysia-block-diagram](docs/img/hysia-block-diagram.png)
 
 <p align="center">
-  <a href="#showcase">Showcase</a> •
-  <a href="#features">Features</a> •
-  <a href="#setup-environment">Setup Environment</a> •
-  <a href="#configuration">Configuration</a> •
-  <a href="#demo">Demo</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#about-us">About Us</a>
+    <a href="#showcase">Showcase</a> •
+    <a href="#features">Features</a> •
+    <a href="#setup-environment">Setup Environment</a> •
+    <a href="#configuration">Configuration</a> •
+    <a href="#demo">Demo</a> •
+    <a href="#credits">Credits</a> •
+    <a href="#about-us">About Us</a>
 </p>
 
 ## Showcase
@@ -68,15 +68,15 @@ into V2.
 ## Features
 
 -   Multimodal learning-based video analysis:
-  -   Scene / Object / Face detection and recognition
-  -   Multimodality data pre-processing
-  -   Results align and store
+    -   Scene / Object / Face detection and recognition
+    -   Multimodality data pre-processing
+    -   Results align and store
 -   Downstream applications:
-  -   Intelligent ads insertion
-  -   Content-product match
+    -   Intelligent ads insertion
+    -   Content-product match
 -   Visualized testbed
-  -   Visualize multimodality results
-  -   Can be installed separately
+    -   Visualize multimodality results
+    -   Can be installed separately
 
 ## Setup Environment
 
