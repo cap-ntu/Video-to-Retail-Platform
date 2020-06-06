@@ -67,16 +67,16 @@ into V2.
 
 ## Features
 
-- Multimodal learning-based video analysis:
-  - Scene / Object / Face detection and recognition
-  - Multimodality data preprocessing
-  - Results align and store
-- Downstream applications:
-  - Intelligent ads insertion
-  - Content-product match
-- Visualized testbed
-  - Visualize multimodality results
-  - Can be installed seperatelly
+-   Multimodal learning-based video analysis:
+  -   Scene / Object / Face detection and recognition
+  -   Multimodality data pre-processing
+  -   Results align and store
+-   Downstream applications:
+  -   Intelligent ads insertion
+  -   Content-product match
+-   Visualized testbed
+  -   Visualize multimodality results
+  -   Can be installed separately
 
 ## Setup Environment
 
@@ -161,15 +161,15 @@ Coming soon!
 
 ### Maintainers
 
-- Huaizheng Zhang [:octocat:](https://github.com/HuaizhengZhang)
-- Yuanming Li [:octocat:](https://github.com/YuanmingLeee)
-- Qiming Ai [:octocat:](https://github.com/QimingAi)
-- Shengsheng Zhou [:octocat:](https://github.com/ZhouShengsheng)
+-   Huaizheng Zhang [:octocat:](https://github.com/HuaizhengZhang)
+-   Yuanming Li [:octocat:](https://github.com/YuanmingLeee)
+-   Qiming Ai [:octocat:](https://github.com/QimingAi)
+-   Shengsheng Zhou [:octocat:](https://github.com/ZhouShengsheng)
 
 ### Previous Contributors
-- Wenbo Jiang (Now, Shopee) [:octocat:](https://github.com/Lancerchiang)
-- Ziyuan Liu (Now, Tencent) [:octocat:(https://github.com/ProgrammerYuan)
-- Yongjie Wang (Now, NTU PhD) [:octocat:](https://github.com/iversonicter)
+-   Wenbo Jiang (Now, Shopee) [:octocat:](https://github.com/Lancerchiang)
+-   Ziyuan Liu (Now, Tencent) [:octocat:](https://github.com/ProgrammerYuan)
+-   Yongjie Wang (Now, NTU PhD) [:octocat:](https://github.com/iversonicter)
 
 [Tensorflow detection model zoo]: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
 [SSD MobileNet v1 COCO]: http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
