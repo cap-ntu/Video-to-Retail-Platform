@@ -14,17 +14,14 @@ project root.
 
 Here is a summary of required data / packed libraries.
 
-| File name     | Description | File ID | Unzipped directory  |
-| ------------- | ----------- | ------- | ------------------- |
+| File name                               | Description                 | File ID                           | Unzipped directory       |
+| --------------------------------------- | --------------------------- | --------------------------------- | ------------------------ |
 | [hysia-decoder-lib-linux-x86-64.tar.gz] | Hysia Decoder dependent lib | 1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O | `hysia/core/HysiaDecode` |
-| [weights.tar.gz] | Pretrained model weights | 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX | `.` |
-| [object-detection-data.tar.gz] | Object detection data | 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG | `third/object_detection` |
+| [weights.tar.gz]                        | Pretrained model weights    | 1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX | `.`                      |
+| [object-detection-data.tar.gz]          | Object detection data       | 1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG | `third/object_detection` |
 
-For users without Google Drive access, you can download from [Baidu Wangpan](https://pan.baidu.com/s/12ZsA__TSNPl0riQ6hSciFQ) and unzip files correspondingly.  
-
-[hysia-decoder-lib-linux-x86-64.tar.gz]: https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O
-[weights.tar.gz]: https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing
-[object-detection-data.tar.gz]: https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing
+For users without Google Drive access, you can download from 
+[Baidu Wangpan](https://pan.baidu.com/s/12ZsA__TSNPl0riQ6hSciFQ) and unzip files correspondingly.  
 
 #### Option 1: auto-download
 
@@ -34,7 +31,8 @@ bash scripts/download-data.sh
 
 #### Option 2: manually download
 
-1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/file/d/1O1ewejZbMWj43IxL7NInuJss7fNjYc3R) and unzip it:
+1\. Download [Hysia Decoder dependent libraries](https://drive.google.com/file/d/1O1ewejZbMWj43IxL7NInuJss7fNjYc3R) 
+and unzip it:
 ```shell script
 deocder_path=hysia/core/HysiaDecode
 mv hysia-decoder-lib-linux-x86-64.tar.gz "${deocder_path}"
@@ -44,7 +42,8 @@ rm -f hysia-decoder-lib-linux-x86-64.tar.gz
 cd -
 ```
 
-2\. Download pretrained [model weights](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing)
+2\. Download pretrained 
+[model weights](https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing)
 and unzip it:
 ```shell script
 tar xvzf weights.tar.gz
@@ -68,12 +67,12 @@ These scripts are tested on Ubuntu 16.04 x86-64 with CUDA9.0 and CUDNN7. Docker 
 version.
 
 Requirements:
-- Conda
-- Nvidia driver
-- CUDA = 9
-- CUDNN
-- g++
-- zlib1g-dev
+-   Conda
+-   Nvidia driver
+-   CUDA = 9
+-   CUDNN
+-   g++
+-   zlib1g-dev
 
 #### Option 1: auto-installation 
 
@@ -133,6 +132,7 @@ unset BASE_DIR
 ```
 
 ### (Optional) Rebuild the frontend
+
 If the frontend is updated, please run the following:  
 
 #### Option 1: auto-build
@@ -191,3 +191,7 @@ cd server
 # Run Django
 python manage.py runserver 0.0.0.0:8000
 ```
+
+[hysia-decoder-lib-linux-x86-64.tar.gz]: https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O
+[weights.tar.gz]: https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing
+[object-detection-data.tar.gz]: https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing
