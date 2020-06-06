@@ -1,61 +1,66 @@
 language: python
 sudo: enabled
+cache:
+  directories:
+    - $HOME/weights
 
 matrix:
   include:
     - name: CUDA 9
+      python: 3.6
       env:
         - CUDA=9.2.148-1
         - CUDA_SHORT=9.2
         - UBUNTU_VERSION=ubuntu1604
-        - PYTHONPATH=${PYTHONPATH}:${PWD}:${PWD}/hysia
-        - CUDA_VISIBLE_DEVICES="-1"
-        - TRAVIS_BUILD="1"
       dist: xenial
 
-python:
-  - "3.6"
 
-# Refer to https://github.com/jeremad/cuda-travis
-before_install:
+install:
+  # Refer to https://github.com/jeremad/cuda-travis
   - INSTALLER=cuda-repo-${UBUNTU_VERSION}_${CUDA}_amd64.deb
   - wget http://developer.download.nvidia.com/compute/cuda/repos/${UBUNTU_VERSION}/x86_64/${INSTALLER}
   - sudo dpkg -i ${INSTALLER}
   - wget https://developer.download.nvidia.com/compute/cuda/repos/${UBUNTU_VERSION}/x86_64/7fa2af80.pub
   - sudo apt-key add 7fa2af80.pub
   - sudo apt update -qq
-  - sudo apt install -y cuda-core-${CUDA_SHORT/./-} cuda-cudart-dev-${CUDA_SHORT/./-} cuda-cufft-dev-${CUDA_SHORT/./-}
+#  - sudo apt install -y cuda-core-${CUDA_SHORT/./-} cuda-cudart-dev-${CUDA_SHORT/./-} cuda-cufft-dev-${CUDA_SHORT/./-} cuda
+  - sudo apt install -y cuda
   - sudo apt clean
-  - CUDA_HOME=/usr/local/cuda-${CUDA_SHORT}
-  - CUDA_PATH=${CUDA_HOME}
-  - LD_LIBRARY_PATH=${CUDA_PATH}/lib64/stubs:${LD_LIBRARY_PATH}
-  - PATH=${CUDA_PATH}/include:${PATH}
-  - sudo ln -s ${CUDA_PATH}/lib64/stubs/libcuda.so ${CUDA_PATH}/lib64/stubs/libcuda.so.1
-  - sudo ln -s ${CUDA_PATH} /usr/local/cuda
+  - export CUDA_HOME=/usr/local/cuda
+  - export CUDA_PATH=$CUDA_HOME
+  - export PATH=${CUDA_HOME}/include:${PATH}
+  - sudo ln -s ${CUDA_HOME}/lib64/stubs/libcuda.so ${CUDA_HOME}/lib64/stubs/libcuda.so.1
+  - export LD_LIBRARY_PATH=${CUDA_HOME}/lib64/stubs:${LD_LIBRARY_PATH}
 
-# Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/use-conda-with-travis-ci.html
-install:
+  # Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/use-conda-with-travis-ci.html
   - sudo apt update
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
+  - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
   - conda env create -f environment.yml
-  - conda activate V2O
-
-before_script:
-  - echo $LD_LIBRARY_PATH
-  - echo $PATH
-  - echo $TRAVIS_BUILD
-  - echo $CUDA_PATH
-  - bash scripts/download-data.sh
-  - bash scripts/build.sh
+  - travis_retry conda activate V2O
+  # fix dependencies
+  - pip install requests requests_futures h5py mmcv torchstat
+  # fix dependencies
+  - sudo apt-get install libopenblas-dev
+  - sudo apt-get install --reinstall libtheora0
+  - export LD_LIBRARY_PATH=$HOME/miniconda/envs/V2O/lib:/usr/local/lib:/$LD_LIBRARY_PATH
 
 script:
-  - python -m pytest --ignore=tests/test_clipper/ tests/
+  - export CUDA_VISIBLE_DEVICES="-1"
+  - export BUILD_FLAG="1"
+  - bash scripts/download-data.sh
+  - bash scripts/build.sh
+  - export PYTHONPATH=$PYTHONPATH:$PWD/hysia::$PWD
+  # `tests/test_build_classifier.py`: no target file.
+  # `tests/test_search.py`: no TVQA dataset.
+  # skip testing ray, clipper and tfs.
+  - python -m pytest --ignore=tests/test_build_classifier.py --ignore=tests/test_clipper/ --ignore=tests/test_tfs/ --ignore=tests/test_search.py --ignore=tests/test_clipper_mmdet.py --ignore=tests/test_mmdet.py --ignore=tests/test_product.py --ignore=tests/test_ray_tf.py tests/
 
 notifications:
   email: false
