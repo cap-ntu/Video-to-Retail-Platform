@@ -192,7 +192,6 @@ cd server
 python manage.py runserver 0.0.0.0:8000
 ```
 
-
 [hysia-decoder-lib-linux-x86-64.tar.gz]: https://drive.google.com/open?id=1fi-MSLLsJ4ALeoIP4ZjUQv9DODc1Ha6O
 [weights.tar.gz]: https://drive.google.com/file/d/1O1-QT8HJRL1hHfkRqprIw24ahiEMkfrX/view?usp=sharing
 [object-detection-data.tar.gz]: https://drive.google.com/file/d/1an7KGVer6WC3Xt2yUTATCznVyoSZSlJG/view?usp=sharing

@@ -16,7 +16,6 @@ led by [Prof. Yonggang Wen](https://www.ntu.edu.sg/home/ygwen/)</sub>
     <a href="https://hub.docker.com/repository/docker/hysia/hysia"><img src="https://img.shields.io/docker/image-size/hysia/hysia/v2o"></a>
 </p>
 
-
 An intelligent multimodal-learning based system for video, product and ads analysis. You can build various downstream 
 applications with the system, such as product recommendation, video retrieval. Several examples are provided.
 
@@ -69,15 +68,15 @@ into V2.
 ## Features
 
 - Multimodal learning-based video analysis:
-    - Scene / Object / Face detection and recognition
-    - Multimodality data preprocessing
-    - Results align and store
+  - Scene / Object / Face detection and recognition
+  - Multimodality data preprocessing
+  - Results align and store
 - Downstream applications:
-    - Intelligent ads insertion
-    - Content-product match
+  - Intelligent ads insertion
+  - Content-product match
 - Visualized testbed
-    - Visualize multimodality results
-    - Can be installed seperatelly
+  - Visualize multimodality results
+  - Can be installed seperatelly
 
 ## Setup Environment
 
@@ -158,23 +157,21 @@ You are welcome to contribute to Hysia! Please refer to [here](CONTRIBUTING.md) 
 
 Coming soon!
 
-
 ## About Us
 
 ### Maintainers
-- Huaizheng Zhang [[GitHub]](https://github.com/HuaizhengZhang)
-- Yuanming Li [[GitHub]](https://github.com/YuanmingLeee)
-- Qiming Ai [[GitHub]](https://github.com/QimingAi)
-- Shengsheng Zhou [[GitHub]](https://github.com/ZhouShengsheng)
+
+- Huaizheng Zhang [:octocat:](https://github.com/HuaizhengZhang)
+- Yuanming Li [:octocat:](https://github.com/YuanmingLeee)
+- Qiming Ai [:octocat:](https://github.com/QimingAi)
+- Shengsheng Zhou [:octocat:](https://github.com/ZhouShengsheng)
 
 ### Previous Contributors
-- Wenbo Jiang (Now, Shopee) [[GitHub]](https://github.com/Lancerchiang)
-- Ziyuan Liu (Now, Tencent) [[GitHub]](https://github.com/ProgrammerYuan)
-- Yongjie Wang (Now, NTU PhD) [[GitHub]](https://github.com/iversonicter)
-
+- Wenbo Jiang (Now, Shopee) [:octocat:](https://github.com/Lancerchiang)
+- Ziyuan Liu (Now, Tencent) [:octocat:(https://github.com/ProgrammerYuan)
+- Yongjie Wang (Now, NTU PhD) [:octocat:](https://github.com/iversonicter)
 
 [Tensorflow detection model zoo]: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
 [SSD MobileNet v1 COCO]: http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
 [SSD Inception v2 COCO]: http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz
 [FasterRCNN ResNet101 COCO]: http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_2018_01_28.tar.gz
-
