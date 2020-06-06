@@ -118,7 +118,7 @@ Run with docker :whale:
 ```shell script
 docker run --rm \
   --gpus all -d -p 8000:8000 \
-  --mount source=server/config/device_placement.yml,target=/content/server/config/device_placement.yml \
+  -v ${PWD}/server/config/device_placement.yml:/content/server/config/device_placement.yml \
   hysia/hysia:v2o
 ```
 
@@ -135,20 +135,20 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 
 Here is a list of models that we used in Hysia-V2O. 
 
-| Task                  | Model Name                  | License    | GitHub Repo |
-| --------------------- |:---------------------------:|:----------:|:-----------:|
-| MMDetection           |                             |            |             |
+| Task                  | Model Name                  | License    | GitHub Repo                      |
+| --------------------- |:---------------------------:|:----------:|:--------------------------------:|
+| MMDetection           |                             |            |                                  |
 | Object detection      |                             | Apache-2.0 | [TensorFlow detection model zoo] |
-|                       | [SSD MobileNet v1 COCO]     |            |             |
-|                       | [SSD Inception v2 COCO]     |            |             |
-|                       | [FasterRCNN ResNet101 COCO] |            |             |
-| Scene Recognition | | |
-| Audio Recognition | | |
-| Image Retrieval | | |
-| Face Detection | | |
-| Face Recognition | | |
-| Text Detection| | |
-| Text Recognition| | |
+|                       | [SSD MobileNet v1 COCO]     |            |                                  |
+|                       | [SSD Inception v2 COCO]     |            |                                  |
+|                       | [FasterRCNN ResNet101 COCO] |            |                                  |
+| Scene Recognition     |                             |            |                                  |
+| Audio Recognition     |                             |            |                                  |
+| Image Retrieval       |                             |            |                                  |
+| Face Detection        |                             |            |                                  |
+| Face Recognition      |                             |            |                                  |
+| Text Detection        |                             |            |                                  |
+| Text Recognition      |                             |            |                                  |
 
 ## Contributing
 
