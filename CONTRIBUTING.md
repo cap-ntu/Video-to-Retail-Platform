@@ -67,12 +67,12 @@ These scripts are tested on Ubuntu 16.04 x86-64 with CUDA9.0 and CUDNN7. Docker 
 version.
 
 Requirements:
-  - Conda
-  - Nvidia driver
-  - CUDA = 9
-  - CUDNN
-  - g++
-  - zlib1g-dev
+- Conda
+- Nvidia driver
+- CUDA = 9
+- CUDNN
+- g++
+- zlib1g-dev
 
 #### Option 1: auto-installation 
 
