@@ -8,6 +8,6 @@ class PredictorServicer(BaseServicer):
 
 class PredictorEndPoints(BaseEndPoints):
     async def predict(self):
-        self.engine.single_predict()
+        result = self.engine.single_predict()
 
-        return {'result': 'hello world!'}
+        return {'result': result}
