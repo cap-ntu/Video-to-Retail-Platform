@@ -1,8 +1,5 @@
 language: python
 sudo: enabled
-cache:
-  directories:
-    - $HOME/weights
 
 matrix:
   include:
@@ -27,7 +24,6 @@ install:
   - sudo apt install -y cuda
   - sudo apt clean
   - export CUDA_HOME=/usr/local/cuda
-  # for HysiaDecoder
   - export CUDA_PATH=$CUDA_HOME
   - export PATH=${CUDA_HOME}/include:${PATH}
   # fix libcuda.so.1 not found issue
@@ -45,8 +41,7 @@ install:
   - conda info -a
   - conda env create -f environment.yml
   - travis_retry conda activate V2O
-  # fix dependencies
-  - pip install requests requests_futures h5py mmcv torchstat
+  - pip install requests requests_futures h5py mmcv torchstat pytest
   - sudo apt-get install libopenblas-dev
   - sudo apt-get install --reinstall libtheora0
   - export LD_LIBRARY_PATH=$HOME/miniconda/envs/V2O/lib:/usr/local/lib:/$LD_LIBRARY_PATH
