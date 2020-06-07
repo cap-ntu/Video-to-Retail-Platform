@@ -50,15 +50,8 @@ script:
   - export CUDA_VISIBLE_DEVICES="-1"
   - export BUILD_FLAG="1"
   - export PYTHONPATH=$PYTHONPATH:$PWD/hysia:$PWD
-  - echo $PYTHONPATH
   - bash scripts/download-data.sh
   - bash scripts/build.sh
-  # `tests/test_build_classifier.py`: no target file.
-  # `tests/test_search.py`: no TVQA dataset.
-  # skip testing ray, clipper and tfs.
-  # `test_monitor.py`: no GPU available in travis.
-  # skip testing mmdet: pytorch needs to be upgraded to 1.x
-  # `test_profiler/`: no target files.
   - python -m pytest --ignore=tests/test_monitor/test_monitor.py --ignore=tests/test_profiler/ --ignore=tests/test_build_classifier.py --ignore=tests/test_clipper/ --ignore=tests/test_tfs/ --ignore=tests/test_search.py --ignore=tests/test_clipper_mmdet.py --ignore=tests/test_mmdet.py --ignore=tests/test_product.py --ignore=tests/test_ray_tf.py tests/
 
 notifications:
