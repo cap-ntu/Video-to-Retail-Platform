@@ -28,6 +28,10 @@ bash ./compile.sh
 
 # build server
 echo "Building server"
+
+cd "${BASE_DIR}"/v2_plugin || return 1
+python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/infer.proto
+
 cd "${BASE_DIR}"/server || return 1
 # generate rpc
 python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. protos/api2msl.proto
