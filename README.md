@@ -1,5 +1,5 @@
 <h1 align="center">
-Hysia Video to Online Platform
+Hysia Video to Retail Platform
 </h1>
 
 <sub>* This project is supported by 
