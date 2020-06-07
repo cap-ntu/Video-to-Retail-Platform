@@ -15,7 +15,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # import hysia models
 # import your personal models based on the following example
-from  models.face.mtcnn.detector import mtcnn_detector
+from models.face.mtcnn.detector import mtcnn_detector
 from models.face.alignment.alignment import transform
 from models.face.recognition.recognition import recog
 from models.object.pretrained_imagenet import Img2Vec
@@ -26,16 +26,16 @@ from search.product_search import ProductSearch
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'
 
 ## test files listed here
-test1 = "tests/test1.jpg"
-test3 = "tests/test3.jpg"
-test_sofa = "tests/test_sofa1.jpg"
-test_beach = "tests/test_beach.jpg"
+test1 = "./test1.jpg"
+test3 = "./test3.jpg"
+test_sofa = "./test_sofa1.jpg"
+test_beach = "./test_beach.jpg"
 # VIDEO_DATA_PATH = "/data/disk2/hysia_data/Stanford_Online_Products/"
 
 ## pretrained weights
-mtcnn_model = 'weights/mtcnn/mtcnn.pb'
-face_model = 'weights/face_recog/InsightFace_TF.pb'
-saved_dataset = 'weights/face_recog/dataset48.pkl'
+mtcnn_model = '../weights/mtcnn/mtcnn.pb'
+face_model = '../weights/face_recog/InsightFace_TF.pb'
+saved_dataset = '../weights/face_recog/dataset48.pkl'
 
 
 class TestHysia(unittest.TestCase):
@@ -50,7 +50,6 @@ class TestHysia(unittest.TestCase):
         for rec in rectangles:
             cv2.rectangle(img, (int(rec[0]), int(rec[1])), (int(rec[2]), int(rec[3])), (0, 0, 255), 1)
         cv2.imwrite('mtcnn_test1.jpg', img)
-
 
     def test_alignment(self):
         threshold = [0.6, 0.7, 0.9]
@@ -72,14 +71,16 @@ class TestHysia(unittest.TestCase):
         test.load_feature()
         test.init_mtcnn_detector(mtcnn_model, threshold, minisize, factor)
         image = cv2.imread(test1)
-        rectangles, name_lists, features = test.get_indentity(image, role = True)
+        rectangles, name_lists, features = test.get_indentity(image, role=True)
         for i in range(len(rectangles)):
-            rec = rectangles[i,:]
+            rec = rectangles[i, :]
             cv2.rectangle(image, (int(rec[0]), int(rec[1])), (int(rec[2]), int(rec[3])), (0, 0, 255), 1)
-            cv2.putText(image, name_lists[i], (int(rec[0]), int(rec[1])), cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.75,color=(152, 255, 204), thickness=2)
+            cv2.putText(image, name_lists[i], (int(rec[0]), int(rec[1])), cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.75,
+                        color=(152, 255, 204), thickness=2)
 
         cv2.imwrite('recognition_test1.jpg', image)
 
+    @unittest.skipIf("BUILD_FLAG" in os.environ, reason="skip on travis")
     def test_imagenet(self):
         img = Image.open(test_sofa)
         model = Img2Vec(cuda=True)
@@ -88,10 +89,10 @@ class TestHysia(unittest.TestCase):
         search_vec = model.extract_vec(temp, True)
         scores = np.dot(search_vec.T, q_vec)
         print(scores)
-        cos = cosine_similarity(np.reshape(q_vec, (1,-1)), np.reshape(search_vec,(1, -1)))
+        cos = cosine_similarity(np.reshape(q_vec, (1, -1)), np.reshape(search_vec, (1, -1)))
         print(cos)
 
-
+    @unittest.skipIf("BUILD_FLAG" in os.environ, reason="skip on travis")
     def test_place365(self):
         scene_model = scene_visual('resnet50', 'weights/places365/{}.pth', 'weights/places365/categories.txt', 'cuda:0')
         for i in ['tests/test1.jpg', 'tests/test2.jpg']:
@@ -113,12 +114,13 @@ class TestHysia(unittest.TestCase):
         scores = np.dot(search_vec.T, q_vec)
         print(scores)
 
-    # def test_product(self):
-    #     product_machine = ProductSearch()
-    #     results = product_machine.search(100, 'test_clip_1.mp4')
-    #     print(results)
+    @unittest.skipIf("BUILD_FLAG" in os.environ, reason="skip on travis")
+    def test_product(self):
+        product_machine = ProductSearch()
+        results = product_machine.search(100, 'test_clip_1.mp4')
+        print(results)
 
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestHysia)
-    unittest.TextTestRunner(verbosity = 2).run(suite)
+    unittest.TextTestRunner(verbosity=2).run(suite)
