@@ -26,16 +26,16 @@ from search.product_search import ProductSearch
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'
 
 ## test files listed here
-test1 = "./test1.jpg"
-test3 = "./test3.jpg"
-test_sofa = "./test_sofa1.jpg"
-test_beach = "./test_beach.jpg"
+test1 = "tests/test1.jpg"
+test3 = "tests/test3.jpg"
+test_sofa = "tests/test_sofa1.jpg"
+test_beach = "tests/test_beach.jpg"
 # VIDEO_DATA_PATH = "/data/disk2/hysia_data/Stanford_Online_Products/"
 
 ## pretrained weights
-mtcnn_model = '../weights/mtcnn/mtcnn.pb'
-face_model = '../weights/face_recog/InsightFace_TF.pb'
-saved_dataset = '../weights/face_recog/dataset48.pkl'
+mtcnn_model = 'weights/mtcnn/mtcnn.pb'
+face_model = 'weights/face_recog/InsightFace_TF.pb'
+saved_dataset = 'weights/face_recog/dataset48.pkl'
 
 
 class TestHysia(unittest.TestCase):
@@ -71,7 +71,7 @@ class TestHysia(unittest.TestCase):
         test.load_feature()
         test.init_mtcnn_detector(mtcnn_model, threshold, minisize, factor)
         image = cv2.imread(test1)
-        rectangles, name_lists, features = test.get_indentity(image, role=True)
+        rectangles, name_lists = test.get_indentity(image, role=True)
         for i in range(len(rectangles)):
             rec = rectangles[i, :]
             cv2.rectangle(image, (int(rec[0]), int(rec[1])), (int(rec[2]), int(rec[3])), (0, 0, 255), 1)
