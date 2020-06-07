@@ -1,6 +1,6 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
 
+from . import views
 
 app_name = "restapi"
 
@@ -59,6 +59,7 @@ urlpatterns = [
     path('defaultdlmodels/', default_dlmodel_list, name="default-dlmodel-list"),
     path('scenesearch/', views.SceneSearch.as_view(), name="scene-search"),
     path('productinsert/', views.ProductInsert.as_view(), name="product-insert"),
+    path('v2/', include('restapi.v2.urls'))
 ]
 
 # For android client

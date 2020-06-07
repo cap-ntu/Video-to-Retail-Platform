@@ -1,0 +1,12 @@
+- name: hello-world-service
+  base_root: .
+  predictor: predictor.py
+  engine: engine.py
+  device: CPU
+  env:
+    conda: environment.yml
+    pre_install:
+      - sh install.sh
+      - sh install.sh
+  grpc_port: 8000
+  http_port: 8001

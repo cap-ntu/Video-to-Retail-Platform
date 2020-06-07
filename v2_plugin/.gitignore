@@ -1,0 +1,2 @@
+**/protos/*.py
+!runner/protos/__init__.py

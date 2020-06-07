@@ -19,12 +19,13 @@ from django.db import transaction
 
 from config import device_config
 from hysia.models.scene.shot_detecor import Shot_Detector
+from hysia.utils.misc import obtain_device
 from restapi.models import Scene
 from restapi.rpc_client import RpcClient
 from restapi.serializers import FrameSerializer
+
 # Do set HYSIA_BUILD=TRUE when reset django. As PyDecoder will seeking for CUDA if HYSIA_BUILD is not set. This will
 # lead to an libcuda.so not found error if you do not have cuda support during building (e.g. in docker)
-from utils.misc import obtain_device
 
 try:
     build_flag = os.environ['HYSIA_BUILD'].upper() == 'TRUE'
