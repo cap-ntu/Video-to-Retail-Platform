@@ -54,11 +54,9 @@ install:
 script:
   - export CUDA_VISIBLE_DEVICES="-1"
   - export BUILD_FLAG="1"
-  - export PYTHONPATH=$PYTHONPATH:$PWD/hysia::$PWD
+  - export PYTHONPATH=$PYTHONPATH:$PWD/hysia:$PWD
+  - echo $PYTHONPATH
   - bash scripts/download-data.sh
-  - ls
-  - cd weights
-  - ls
   - bash scripts/build.sh
   # `tests/test_build_classifier.py`: no target file.
   # `tests/test_search.py`: no TVQA dataset.
