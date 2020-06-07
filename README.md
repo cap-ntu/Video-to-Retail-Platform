@@ -56,6 +56,7 @@ V1.1:
     - Visualize multimodality results
     - Can be installed seperatelly
 
+
 ## Showcase
 
 #### 1. Upload video and process it by selecting different models  
@@ -289,26 +290,6 @@ python manage.py runserver 0.0.0.0:8000
 ```
 
 Then you can go to http://localhost:8000. Use username: admin and password: admin to login.
-
-#### a. Video Analysis
-
-![video-analysis](docs/img/video-analysis.png)
-
-#### b. Ads Insertion
-
-![ads-insertion](docs/img/ads-insertion.png)
-
-#### c. Ads Display
-
-![ads-display](docs/img/ads-display.png)
-
-#### d. New Model Binding
-
-![model-binding](docs/img/model-binding.png)
-
-#### e. Product App
-
-![app](docs/img/app.gif)
 
 ## Some Useful Tools
 
