@@ -29,7 +29,6 @@ into V2.
     <a href="#setup-environment">Setup Environment</a> •
     <a href="#configuration">Configuration</a> •
     <a href="#demo">Demo</a> •
-    <a href="#credits">Credits</a> •
     <a href="#about-us">About Us</a>
 </p>
 
@@ -129,25 +128,6 @@ Then you can go to http://localhost:8000. Use username: admin and password: admi
 - Model profiling
 - Multimodality data testbed
 
-## Credits
-
-Here is a list of models that we used in Hysia-V2O. 
-
-| Task                  | Model Name                  | License    | GitHub Repo                      |
-| --------------------- |:---------------------------:|:----------:|:--------------------------------:|
-| MMDetection           |                             |            |                                  |
-| Object detection      |                             | Apache-2.0 | [TensorFlow detection model zoo] |
-|                       | [SSD MobileNet v1 COCO]     |            |                                  |
-|                       | [SSD Inception v2 COCO]     |            |                                  |
-|                       | [FasterRCNN ResNet101 COCO] |            |                                  |
-| Scene Recognition     |                             |            |                                  |
-| Audio Recognition     |                             |            |                                  |
-| Image Retrieval       |                             |            |                                  |
-| Face Detection        |                             |            |                                  |
-| Face Recognition      |                             |            |                                  |
-| Text Detection        |                             |            |                                  |
-| Text Recognition      |                             |            |                                  |
-
 ## Contributing
 
 You are welcome to contribute to Hysia! Please refer to [here](CONTRIBUTING.md) to get start.
@@ -163,9 +143,9 @@ Coming soon!
 -   Huaizheng Zhang [:octocat:](https://github.com/HuaizhengZhang)
 -   Yuanming Li [:octocat:](https://github.com/YuanmingLeee)
 -   Qiming Ai [:octocat:](https://github.com/QimingAi)
--   Shengsheng Zhou [:octocat:](https://github.com/ZhouShengsheng)
 
 ### Previous Contributors
+-   Shengsheng Zhou [:octocat:](https://github.com/ZhouShengsheng)
 -   Wenbo Jiang (Now, Shopee) [:octocat:](https://github.com/Lancerchiang)
 -   Ziyuan Liu (Now, Tencent) [:octocat:](https://github.com/ProgrammerYuan)
 -   Yongjie Wang (Now, NTU PhD) [:octocat:](https://github.com/iversonicter)
