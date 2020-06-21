@@ -29,7 +29,8 @@ into V2.
     <a href="#setup-environment">Setup Environment</a> •
     <a href="#configuration">Configuration</a> •
     <a href="#demo">Demo</a> •
-    <a href="#about-us">About Us</a>
+    <a href="#paper-citation">Citation</a>
+    
 </p>
 
 ## Showcase
@@ -134,8 +135,15 @@ You are welcome to contribute to Hysia! Please refer to [here](CONTRIBUTING.md) 
 
 ## Paper Citation
 
-Coming soon!
-
+If you use Hysia in your work, please cite
+```
+@article{zhang2020hysia,
+  title={Hysia: Serving DNN-Based Video-to-Retail Applications in Cloud},
+  author={Zhang, Huaizheng and Li, Yuanming and Ai, Qiming and Luo, Yong and Wen, Yonggang and Jin, Yichao and Ta, Nguyen Binh Duong},
+  journal={arXiv preprint arXiv:2006.05117},
+  year={2020}
+}
+```
 ## About Us
 
 ### Maintainers
