@@ -143,13 +143,14 @@ You are welcome to contribute to Hysia! Please refer to [here](CONTRIBUTING.md) 
 
 ## Paper Citation
 
-If you use Hysia in your work, please cite
+If you use Hysia in your work, we would be very grateful if you cite
 ```
-@article{zhang2020hysia,
-  title={Hysia: Serving DNN-Based Video-to-Retail Applications in Cloud},
-  author={Zhang, Huaizheng and Li, Yuanming and Ai, Qiming and Luo, Yong and Wen, Yonggang and Jin, Yichao and Ta, Nguyen Binh Duong},
-  journal={arXiv preprint arXiv:2006.05117},
-  year={2020}
+@inproceedings{10.1145/3394171.3414536,
+    author = {Zhang, Huaizheng and Li, Yuanming and Ai, Qiming and Luo, Yong and Wen, Yonggang and Jin, Yichao and Ta, Nguyen Binh Duong},
+    title = {Hysia: Serving DNN-Based Video-to-Retail Applications in Cloud},
+    year = {2020},
+    booktitle = {Proceedings of the 28th ACM International Conference on Multimedia},
+    pages = {4457–4460},
 }
 ```
 ## About Us
