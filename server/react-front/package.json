@@ -15,7 +15,7 @@
     "@nivo/stream": "^0.51.5",
     "@types/react": "^16.8.5",
     "@types/react-dom": "^16.8.5",
-    "ajv": "6.8.1",
+    "ajv": "6.14.0",
     "classnames": "^2.2.6",
     "dplayer": "^1.25.0",
     "filepond": "^4.1.0",
